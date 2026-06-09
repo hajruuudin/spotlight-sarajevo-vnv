@@ -1,0 +1,37 @@
+<section class="max-w-application w-full mx-auto px-4 py-6">
+    <app-page-header 
+    [title]="'Community Requests Overview'"
+    [subtitle]="'Overview of all community requests in the system. You can search, approve, reject, delete, and integrate requests into the system.'"
+    [class]="'mb-4'"
+    ></app-page-header>
+
+    <!-- Filter Form Section -->
+    <div class="w-full mb-6 p-4 rounded-2xl dark:bg-(--background-200) bg-(--background-800)">
+      <form [formGroup]="this.filterForm" class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-sm">Filter by Status</label>
+          <app-select-group
+            [options]="this.filterOptions"
+            [placeholder]="'Select a filter...'"
+            formControlName="filter"
+          ></app-select-group>
+        </div>
+      </form>
+    </div>
+
+    <app-community-overview-table
+    [columnDefinitions]="this.tableDefinitions"
+    [tableData]="this.tableShorthandData"
+    [itemOverview]="this.tableSelectedItem"
+    [currentPage]="this.currentPage"
+    [totalItems]="this.totalItems"
+    [totalPages]="this.totalPages"
+    (onOverviewSelect)="this.handleOverviewSelect($event)"
+    (onRequestApproval)="this.handleRequestApproval($event)"
+    (onRequestRejection)="this.handleRequestRejection($event)"
+    (onRequestDelete)="this.handleRequestDelete($event)"
+    (onRequestIntegration)="this.handleRequestIntegration($event)"
+    (onNextPage)="this.handleNextPage($event)"
+    (onPreviousPage)="this.handlePreviousPage($event)"
+    ></app-community-overview-table>
+</section>

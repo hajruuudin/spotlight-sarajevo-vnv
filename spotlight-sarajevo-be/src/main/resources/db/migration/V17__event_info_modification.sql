@@ -1,0 +1,1 @@
+ALTER TABLE ss_event ALTER COLUMN cancel_refund TYPE boolean USING cancel_refund::boolean;

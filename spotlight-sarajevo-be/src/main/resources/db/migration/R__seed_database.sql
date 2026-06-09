@@ -1,0 +1,158 @@
+---- ===================================================================
+---- Repeatable Flyway Seed: Initial Data for Spot and Event related tables. ONLY FOR DEVELOPMENT PURPOSES. NEEDS UPDATING!!!
+---- ===================================================================
+--INSERT INTO ss_spot (
+--    id, slug, official_name,
+--    small_description_bs, small_description_en,
+--    full_description_bs, full_description_en,
+--    latitude, longitude, address, category_id,
+--    initial_overall_rating, initial_cleanliness, initial_affordability,
+--    initial_accessibility, initial_staff_kindness, initial_locale_quality, initial_atmosphere,
+--    created, created_by, modified, modified_by
+--)
+--VALUES
+---- 1. 🍽️ Restoran - Kibe Mahala
+--( 1, 'kibe-mahala', 'Kibe Mahala',
+-- 'Tradicionalni restoran s pogledom na Sarajevo.',
+-- 'Traditional restaurant overlooking Sarajevo.',
+-- 'Kibe Mahala je jedan od najpoznatijih restorana u Sarajevu, smješten na brdu s predivnim pogledom na cijeli grad. Nudi bogat izbor bosanskih i mediteranskih jela uz autentičan ambijent.',
+-- 'Kibe Mahala is one of Sarajevo’s most famous restaurants, located on a hill with a stunning panoramic view. It offers a rich selection of Bosnian and Mediterranean dishes in an authentic setting.',
+-- 43.8689, 18.4124, 'Vrbanjuša 164, Sarajevo', 1002,
+-- 9.5, 9.4, 8.8, 9.0, 9.8, 9.6, 9.7,
+-- NOW(), 'admin', NOW(), 'admin'),
+--
+---- 2. 🫖 Kafić - Ministry of Ćejf
+--( 2, 'ministry-of-cejf', 'Ministry of Ćejf',
+-- 'Moderan kafić s bosanskim duhom.',
+-- 'Modern cafe with Bosnian charm.',
+-- 'Ministry of Ćejf je savršeno mjesto za jutarnju kafu ili popodnevno druženje. Kombinuje savremeni dizajn s tradicionalnim okusima i domaćom atmosferom.',
+-- 'Ministry of Ćejf is a perfect spot for morning coffee or afternoon relaxation. It combines modern design with traditional flavors and a homely atmosphere.',
+-- 43.8583, 18.4212, 'Kaptol 25, Sarajevo', 1003,
+-- 9.0, 9.5, 8.5, 9.2, 9.8, 9.3, 9.6,
+-- NOW(), 'admin', NOW(), 'admin'),
+--
+---- 3. 🏛️ Muzej - Muzej Sarajeva 1878–1918
+--( 3, 'muzej-sarajeva-1878-1918', 'Muzej Sarajeva 1878–1918',
+-- 'Historijski muzej na mjestu Sarajevskog atentata.',
+-- 'Historical museum marking the site of the Sarajevo Assassination.',
+-- 'Muzej Sarajeva 1878–1918 čuva eksponate iz perioda Austro-Ugarske vladavine i nalazi se na mjestu Sarajevskog atentata. Jedna od najvažnijih kulturno-historijskih lokacija u gradu.',
+-- 'The Sarajevo Museum 1878–1918 preserves artifacts from the Austro-Hungarian period and stands at the site of the Sarajevo Assassination. It is one of the city’s most significant cultural landmarks.',
+-- 43.8577, 18.4283, 'Zelenih Beretki 1, Sarajevo', 1004,
+-- 9.2, 9.0, 8.7, 8.9, 9.4, 9.1, 9.0,
+-- NOW(), 'admin', NOW(), 'admin'),
+--
+---- 4. 🥩 Ćevabdžinica - Željo
+--( 4, 'cevabdzinica-zeljo', 'Ćevabdžinica Željo',
+-- 'Najpoznatija ćevabdžinica u Sarajevu.',
+-- 'The most famous cevapi grill in Sarajevo.',
+-- 'Ćevabdžinica Željo je legendarno mjesto u srcu Baščaršije poznato po sočnim ćevapima i brzom servisu. Popularna destinacija i za lokalce i za turiste.',
+-- 'Ćevabdžinica Željo is a legendary spot in Baščaršija known for its juicy ćevapi and quick service. A must-visit destination for both locals and tourists.',
+-- 43.8598, 18.4313, 'Kundurdžiluk 19, Sarajevo', 1015,
+-- 9.8, 9.5, 9.3, 8.9, 9.6, 9.7, 9.8,
+-- NOW(), 'admin', NOW(), 'admin'),
+--
+---- 5. 🌳 Park - Vilsonovo Šetalište
+--( 5, 'vilsonovo-setaliste', 'Vilsonovo Šetalište',
+-- 'Najpoznatija šetnica u Sarajevu.',
+-- 'The most famous promenade in Sarajevo.',
+-- 'Vilsonovo šetalište pruža kilometre staza uz rijeku Miljacku, savršeno za šetnju, vožnju biciklom ili jutarnje trčanje. Tokom ljeta postaje centralno mjesto okupljanja građana.',
+-- 'Vilsonovo Šetalište offers kilometers of walking paths along the Miljacka River, ideal for walks, cycling, or morning runs. In summer, it becomes a central gathering spot for locals.',
+-- 43.8487, 18.3834, 'Vilsonovo šetalište bb, Sarajevo', 1022,
+-- 9.4, 9.6, 9.9, 9.5, 9.8, 9.9, 9.7,
+-- NOW(), 'admin', NOW(), 'admin')
+--ON CONFLICT (slug) DO UPDATE SET
+--    id = EXCLUDED.id,
+--    official_name = EXCLUDED.official_name,
+--    small_description_bs = EXCLUDED.small_description_bs,
+--    small_description_en = EXCLUDED.small_description_en,
+--    full_description_bs = EXCLUDED.full_description_bs,
+--    full_description_en = EXCLUDED.full_description_en,
+--    latitude = EXCLUDED.latitude,
+--    longitude = EXCLUDED.longitude,
+--    address = EXCLUDED.address,
+--    category_id = EXCLUDED.category_id,
+--    initial_overall_rating = EXCLUDED.initial_overall_rating,
+--    initial_cleanliness = EXCLUDED.initial_cleanliness,
+--    initial_affordability = EXCLUDED.initial_affordability,
+--    initial_accessibility = EXCLUDED.initial_accessibility,
+--    initial_staff_kindness = EXCLUDED.initial_staff_kindness,
+--    initial_locale_quality = EXCLUDED.initial_locale_quality,
+--    initial_atmosphere = EXCLUDED.initial_atmosphere,
+--    modified = NOW(),
+--    modified_by = EXCLUDED.modified_by;
+--
+--INSERT INTO ss_spot_tags (id, spot_id, tag_id) VALUES
+---- Spot 1: Kibe Mahala
+--(1, 1, 3001),
+--(2, 1, 3003),
+--(3, 1, 3005),
+--(4, 1, 3006),
+--(5, 1, 3027),
+--
+---- Spot 2: Ministry of Ćejf
+--(6, 2, 3001),
+--(7, 2, 3007),
+--(8, 2, 3024),
+--(9, 2, 3037),
+--(10, 2, 3018),
+--
+---- Spot 3: Muzej Sarajeva 1878–1918
+--(11, 3, 3012),
+--(12, 3, 3044),
+--(13, 3, 3017),
+--(14, 3, 3033),
+--(15, 3, 3038),
+--
+---- Spot 4: Ćevabdžinica Željo
+--(16, 4, 3001),
+--(17, 4, 3004),
+--(18, 4, 3003),
+--(19, 4, 3021),
+--(20, 4, 3027),
+--
+---- Spot 5: Vilsonovo Šetalište
+--(21, 5, 3008),
+--(22, 5, 3011),
+--(23, 5, 3030),
+--(24, 5, 3048),
+--(25, 5, 3020)
+--ON CONFLICT (id) DO NOTHING;
+--
+--INSERT INTO ss_spot_work_hours (id, day, start_time, end_time, spot_id) VALUES
+---- Spot 1: Kibe Mahala (Restaurant)
+--(1, 'MON', '11:00', '23:00', 1),
+--(2, 'TUE', '11:00', '23:00', 1),
+--(3, 'WED', '11:00', '23:00', 1),
+--(4, 'THU', '11:00', '23:00', 1),
+--(5, 'FRI', '11:00', '00:00', 1),
+--(6, 'SAT', '11:00', '00:00', 1),
+--(7, 'SUN', '12:00', '22:00', 1),
+--
+---- Spot 2: Ministry of Ćejf (Cafe)
+--(8, 'MON', '08:00', '20:00', 2),
+--(9, 'TUE', '08:00', '20:00', 2),
+--(10, 'WED', '08:00', '20:00', 2),
+--(11, 'THU', '08:00', '20:00', 2),
+--(12, 'FRI', '08:00', '22:00', 2),
+--(13, 'SAT', '09:00', '22:00', 2),
+--(14, 'SUN', '09:00', '18:00', 2),
+--
+---- Spot 3: Muzej Sarajeva 1878–1918 (Museum)
+--(15, 'MON', '10:00', '18:00', 3),
+--(16, 'TUE', '10:00', '18:00', 3),
+--(17, 'WED', '10:00', '18:00', 3),
+--(18, 'THU', '10:00', '18:00', 3),
+--(19, 'FRI', '10:00', '18:00', 3),
+--(20, 'SAT', '11:00', '17:00', 3),
+--(21, 'SUN', '11:00', '17:00', 3),
+--
+---- Spot 4: Ćevabdžinica Željo (Ćevapi Grill)
+--(22, 'MON', '09:00', '21:00', 4),
+--(23, 'TUE', '09:00', '21:00', 4),
+--(24, 'WED', '09:00', '21:00', 4),
+--(25, 'THU', '09:00', '21:00', 4),
+--(26, 'FRI', '09:00', '23:00', 4),
+--(27, 'SAT', '10:00', '23:00', 4),
+--(28, 'SUN', '10:00', '20:00', 4)
+--ON CONFLICT (id) DO NOTHING;
+--

@@ -1,0 +1,20 @@
+#homepageHeadersSectionContainer {
+    background-image: url(/assets/images/SECTION_BG_01.jpg);
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+#homepagePopularSectionContainer {
+    background-image: url(/assets/images/WM.svg);
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#homepageDiscoverSectionContainer {
+    background-image: url(/assets/images/SECTION_BG_03.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

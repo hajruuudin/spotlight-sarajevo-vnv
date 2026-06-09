@@ -1,0 +1,14 @@
+<div
+  (click)="this.toggleSelection()"
+  (mouseenter)="onHover()"
+  (mouseleave)="onLeave()"
+  [ngClass]="{
+    'dark:bg-(--accent-400) hover:dark:bg-(--accent-600) bg-(--accent-700) hover:bg-(--accent-500)':
+      selected,
+    'dark:bg-(--primary-300) hover:dark:bg-(--primary-500) bg-(--primary-900) hover:bg-(--primary-600)':
+      !selected
+  }"
+  class="py-2 px-4 rounded-full flex flex-row justify-center space-x-2 items-center"
+>
+  <span>{{ this.categoryName }}</span>
+</div>

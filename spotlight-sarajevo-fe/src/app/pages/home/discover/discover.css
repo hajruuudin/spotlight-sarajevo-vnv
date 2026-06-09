@@ -1,0 +1,11 @@
+#discoverHeaderAndFirstSectionContainer {
+    background-image: url(/assets/images/SECTION_BG_03.png);
+    background-size: cover;
+}
+
+#discoverPopularUpcomingSectionContainer {
+    background-image: url(/assets/images/WM.svg);
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}

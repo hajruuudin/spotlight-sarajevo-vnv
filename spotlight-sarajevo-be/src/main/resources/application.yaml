@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: spotlight-sarajevo
+
+  profiles:
+    active: dev
+
+  jpa:
+      hibernate:
+        ddl-auto: validate
+      show-sql: false
+      properties:
+        hibernate:
+            format_sql: true
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate: INFO
+    org.springframework: INFO
+    com.spotlight-sarajevo: DEBUG
+
+imagebb:
+  api:
+    key: 512c6dd79f04550caa5f7b152601612f

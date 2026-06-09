@@ -1,0 +1,17 @@
+<div class="flex flex-row justify-center items-center py-16">
+    <section class="flex flex-col justify-center items-center md:items-start">
+        <h1 class="text-2xl md:text-4xl font-bold my-2">Create an account for more!</h1>
+        <span class="text-lg md:text-2xl text-center md:text-start">SpotlightSarajevo can be used without an account, but to have the best experience, make sure to create an account! Creating an account unlocks a multitude of new features for You, including:</span>
+        <ul class="w-full flex flex-col justify-center items-center md:items-start space-y-2 py-4">
+            <li class="text-base md:text-xl dark:bg-(--background-200) bg-(--background-700) rounded-2xl py-1 px-2">Keeping track of items in collections</li>
+            <li class="text-base md:text-xl dark:bg-(--background-200) bg-(--background-700) rounded-2xl py-1 px-2">Creating custom collections</li>
+            <li class="text-base md:text-xl dark:bg-(--background-200) bg-(--background-700) rounded-2xl py-1 px-2">Leaving and viewing reviews for spots and organisers</li>
+            <li class="text-base md:text-xl dark:bg-(--background-200) bg-(--background-700) rounded-2xl py-1 px-2">Create community requests to help admins add new events and spots</li>
+            <li class="text-base md:text-xl dark:bg-(--background-200) bg-(--background-700) rounded-2xl py-1 px-2">Tracking which spots you've visited and events you've attended!</li>
+            <li class="text-base md:text-xl dark:bg-(--background-200) bg-(--background-700) rounded-2xl py-1 px-2">Get recomendations based on your favourite categories!</li>
+        </ul>
+
+        <app-button-primary (click)="this.navigateToRegister()" classAddons="px-4 mt-10" [buttonContent]="'Create an account'" [buttonType]="'DEFAULT'"></app-button-primary>
+    </section>
+</div>
+

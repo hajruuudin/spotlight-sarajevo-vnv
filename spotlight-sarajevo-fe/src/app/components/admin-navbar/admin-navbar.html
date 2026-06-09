@@ -1,0 +1,133 @@
+<nav
+  id="navbarAdminMain"
+  [style]="
+    this.session.theme() == 'dark' ? 'box-shadow: 0px -5px 100px #00000055;' : ''
+  "
+  class="whitespace-nowrap hidden md:flex w-full h-14 dark:bg-(--background-200) bg-(--background-800) flex-row justify-between items-center"
+>
+  <div id="navIconContainer" class="w-1/6 flex flex-row justify-start items-center ml-4">
+    <img src="/assets/images/LogoSolo.png" class="h-14" />
+  </div>
+  <div id="navListContainer" class="w-4/6">
+    <ul class="grow flex flex-row justify-center items-center space-x-3">
+      <li class="relative group">
+        <span>
+          <app-stack-icon
+            classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+          ></app-stack-icon>
+        </span>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+        >
+          <span
+            routerLink="/admin/spots-overview"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-spots-icon classes="w-6"></app-spots-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.spotsOverview' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/admin/events-overview"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-events-icon classes="w-6"></app-events-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.eventsOverview' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/admin/guide-overview"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-guides-icon classes="w-6"></app-guides-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.guidesOverview' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/admin/requests-overview"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-add-icon classes="w-6"></app-add-icon>
+            <a class="block text-center py-1">Requests Overview</a>
+          </span>
+          <span
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 opacity-50 cursor-not-allowed space-x-2"
+          >
+            <app-profile-icon classes="w-6"></app-profile-icon>
+            <a class="block text-center py-1 line-through">Users Overview</a>
+          </span>
+          <span
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 opacity-50 cursor-not-allowed space-x-2"
+          >
+            <app-transport-icon classes="w-6"></app-transport-icon>
+            <a class="block text-center py-1 line-through">Transport Overview</a>
+          </span>
+        </div>
+        
+      </li>
+
+      
+      <li class="relative group">
+        <span>
+          <app-homepage-icon
+            classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+          ></app-homepage-icon
+        ></span>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+        >
+          <span
+            routerLink="/admin/dashboard"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-homepage-icon classes="w-6"></app-homepage-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.dashboard' | transloco }}</a>
+          </span>
+        </div>
+      </li>
+
+      <li class="relative group">
+        <app-add-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+        ></app-add-icon>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-64 text-center transition-all duration-200"
+        >
+          <span
+            routerLink="/admin/add-spot"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-spots-icon classes="w-6"></app-spots-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.addSpot' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/admin/add-event"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-events-icon classes="w-6"></app-events-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.addEvent' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/admin/add-guide"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-guides-icon classes="w-6"></app-guides-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.addGuide' | transloco }}</a>
+          </span>
+          <span
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 opacity-50 cursor-not-allowed space-x-2"
+          >
+            <app-transport-icon classes="w-6"></app-transport-icon>
+            <a class="block text-center py-1 line-through">Add Transport</a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div id="navProfileContainer" class="w-1/6 flex flex-row justify-end items-center mr-4">
+    <app-button-primary
+      (click)="logout()"
+      classAddons="px-4"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'profile.logout' | transloco"
+    ></app-button-primary>
+  </div>
+</nav>

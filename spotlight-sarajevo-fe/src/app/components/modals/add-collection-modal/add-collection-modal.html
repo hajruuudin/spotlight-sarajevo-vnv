@@ -1,0 +1,51 @@
+<div
+  animate.enter="fade-in-animation"
+  animate.exit="fade-out-animation"
+  class="w-5/6 md:w-1/2 h-auto max-h-11/12 dark:bg-(--background-200) bg-white rounded-xl p-6 flex flex-col justify-between items-center"
+>
+  <header class="w-full h-auto text-center font-bold text-xl md:text-2xl">
+    {{ 'collection.create' | transloco }}
+  </header>
+
+  <div class="w-full h-0.5 rounded-full dark:bg-white bg-black mt-2"></div>
+
+  <content class="w-full h-76 overflow-y-scroll py-4">
+    <form [formGroup]="this.form" class="w-full flex flex-col justify-start items-stretch gap-4">
+      <app-text-input
+        [classAddons]="'w-full'"
+        [id]="'headerInput'"
+        [type]="'text'"
+        [placeholder]="'Collection name'"
+        formControlName="collectionName"
+      ></app-text-input>
+      <app-text-input
+        [classAddons]="'w-full'"
+        [id]="'headerInput'"
+        [type]="'text'"
+        [placeholder]="'Collection description'"
+        formControlName="collectionDescription"
+      ></app-text-input>
+      <app-select-group
+        [options]="this.selectOptions"
+        formControlName="collectionType"
+      ></app-select-group>
+    </form>
+  </content>
+
+  <footer class="w-full h-auto flex flex-row justify-center items-center gap-4">
+    <app-button-primary
+      (click)="this.onFormSubmit()"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'collection.create' | transloco"
+      [classAddons]="'w-full'"
+      class="w-full"
+    ></app-button-primary>
+    <app-button-primary
+      (click)="this.onClose()"
+      [buttonType]="'DANGER'"
+      [buttonContent]="'collection.cancel' | transloco"
+      [classAddons]="'w-full'"
+      class="w-full"
+    ></app-button-primary>
+  </footer>
+</div>

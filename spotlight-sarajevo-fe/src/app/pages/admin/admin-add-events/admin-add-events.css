@@ -1,0 +1,11 @@
+/* Admin Add Events Page Styles */
+
+/* Ensure smooth scrolling for the horizontal 5-column layout */
+:host {
+  display: block;
+}
+
+/* Additional hover effects for improved UX */
+.w-full {
+  transition: all 0.2s ease-in-out;
+}

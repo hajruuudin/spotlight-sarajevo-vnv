@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS ss_event_review;
+
+ALTER TABLE IF EXISTS ss_event_organiser_reviews
+    ADD COLUMN IF NOT EXISTS created DATE DEFAULT CURRENT_DATE,
+    ADD COLUMN IF NOT EXISTS  modified DATE,
+    ADD COLUMN IF NOT EXISTS username VARCHAR;

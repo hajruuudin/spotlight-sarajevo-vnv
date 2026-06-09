@@ -1,0 +1,42 @@
+@if (this.event) {
+<div
+  [ngClass]="[this.classAddons, this.isPastEvent ? 'opacity-60' : '']"
+  class="dark:bg-black bg-(--primary-200) text-(--text-900) h-auto outline-2 dark:outline-(--primary-200) outline-(--primary-700) hover:outline-2 hover:dark:outline-(--primary-500) hover:outline-(--primary-100) flex flex-row rounded-2xl hover:pl-1 transition-all relative"
+>
+  @if (this.isPastEvent) {
+    <div class="absolute top-2 left-2 z-30 bg-gray-400 px-3 py-1 rounded-full">
+      <span class="text-xs md:text-sm text-black font-semibold">{{ 'eventOverview.eventPassed' | transloco }}</span>
+    </div>
+  }
+  <div class="p-3 flex flex-col md:mt-16 mt-6 justify-center items-start w-2/3 md:w-1/2 z-20">
+    <span class="text-sm md:text-xl">{{
+      this.lang == 'en' ? this.event.categoryNameEn : this.event.categoryNameBs
+    }}</span>
+    <div class="w-1/4 bg-white h-0.5 rounded-full"></div>
+    <h3 class="text-xl md:text-3xl font-bold mt-1 whitespace-nowrap">
+      {{ this.lang == 'en' ? this.event.officialNameEn : this.event.officialNameBs }}
+    </h3>
+    <span class="text-sm md:text-base whitespace-nowrap">{{
+      this.lang == 'en' ? this.event.smallDescriptionEn : this.event.smallDescriptionBs
+    }}</span>
+    <div
+      class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full"
+    >
+      <span class="text-xs md:text-base text-black font-semibold">{{
+        this.lang == 'en' ? this.event.eventTags[0].tagNameEn : this.event.eventTags[0].tagNameBs
+      }}</span>
+    </div>
+  </div>
+  <div
+    class="w-1/2 md:w-2/3 lg:w-1/2 h-auto rounded-r-2xl relative z-10"
+    [style.backgroundImage]="
+      this.event.thumbnailImage ? 'url(' + this.event.thumbnailImage.imageUrl + ')' : ''
+    "
+    style="background-size: cover; background-position: end; transform: scale(1)"
+  >
+    <div
+      class="absolute inset-0 rounded-r-2xl bg-gradient-to-r dark:from-black from-(--primary-200) dark:via-black/20 via-(--primary-700)/30 to-transparent"
+    ></div>
+  </div>
+</div>
+}

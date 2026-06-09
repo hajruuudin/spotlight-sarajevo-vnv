@@ -1,0 +1,13 @@
+<input
+  [ngClass]="
+    this.classAddons +
+    ' rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200'
+  "
+  [placeholder]="this.placeholder"
+  [id]="this.id"
+  [type]="this.type"
+  [value]="this.value"
+  [step]="this.step"
+  (input)="onInput($event)"
+  (blur)="onTouched()"
+/>

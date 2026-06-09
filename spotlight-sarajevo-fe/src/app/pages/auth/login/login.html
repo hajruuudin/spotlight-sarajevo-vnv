@@ -1,0 +1,24 @@
+<img src="/assets/images/LogoFullHorizontal.png" class="w-64">
+<div class="w-full flex flex-row justify-center items-center space-x-4">
+    <div class="w-full h-1 rounded-full dark:bg-(--background-900) bg-(--background-100)"></div>
+    <span class="font-semibold text-2xl tracking-wider">Login</span>
+    <div class="w-full h-1 rounded-full dark:bg-(--background-900) bg-(--background-100)"></div>
+</div>
+
+<form [formGroup]="this.loginForm" class="w-full h-auto flex flex-col justify-center items-center space-y-2">
+    <app-text-input formControlName="email" classAddons="w-full" type="text"
+        [placeholder]="'login.emailInput' | transloco " id="emailInput" value=""></app-text-input>
+    <app-text-input formControlName="password" classAddons="w-full" type="password"
+        [placeholder]="'login.passwordInput' | transloco "></app-text-input>
+    <span>{{ 'login.forgotPassword' | transloco}} <a href="#" class="font-bold">{{ 'login.forgotPasswordLink' | transloco}}</a></span>
+    <div class="w-full flex flex-col justify-center items-center space-y-2 py-4">
+        <div class="w-full flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-2">
+            <app-button-regular (pressed)="this.loginWithSystem()" buttonContent="Login" buttonIcon="DEFAULT"
+                classAddons="w-full" [buttonTheme]="this.session.theme()"></app-button-regular>
+            <app-button-regular (pressed)="this.loginWithGoogle()" buttonContent="" buttonIcon="GOOGLE"
+                classAddons="w-full" [buttonTheme]="this.session.theme()"></app-button-regular>
+        </div>
+        <span>{{ 'login.register' | transloco}}<a routerLink="/auth/register" class="font-bold"> {{ 'login.registerLink'
+                | transloco}}</a></span>
+    </div>
+</form>

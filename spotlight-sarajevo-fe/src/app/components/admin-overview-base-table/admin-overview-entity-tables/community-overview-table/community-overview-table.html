@@ -1,0 +1,188 @@
+<section
+  class="max-w-application w-full rounded-2xl dark:bg-(--background-200) bg-(--background-800) flex flex-col justify-center items-stretch"
+>
+  <div
+    id="tableBody"
+    class="rounded-t-2xl w-full dark:bg-(--primary-200) bg-(--primary-200) text-white"
+  >
+    <!----------------------------------------------------------------->
+    <!--------------------- TABLE COLUMN HEADERS ---------------------->
+    <!----------------------------------------------------------------->
+    <div
+      id="tableColumnHeaders"
+      class="w-full flex flex-row justify-between items-center gap-4 p-2 border-(--primary-700)"
+    >
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[0] }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[1] }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[2] }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[3] }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[4] }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[5] }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[6] }}</div>
+      <div class="text-sm font-bold w-2/12"></div>
+    </div>
+
+    <div
+      id="tableDataContainer"
+      class="w-full dark:bg-(--background-100) bg-(--background-900) dark:text-white text-black flex flex-col justify-start items-stretch gap-2"
+    >
+    <!----------------------------------------------------------------->
+    <!----------------------- TABLE COLUMN DATA ----------------------->
+    <!----------------------------------------------------------------->
+      @for (item of this.tableData; track $index) {
+        <div class="w-full flex flex-col">
+          <div
+            class="w-full flex h-auto flex-row justify-between items-center text-center"
+            [class.bg-(--background-800)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-100)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-700)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-200)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-200)]="this.selectedItemId === item.id"
+            [class.dark:bg-(--accent-300)]="this.selectedItemId === item.id"
+          >
+            <span class="w-1/12 flex flex-col justify-center items-center">{{ item.id }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.username }} | {{ item.userId }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.requestHeader }}</span>
+            <span class="w-1/12 flex flex-col justify-center items-center truncate">{{ item.requestType }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.objectType }}</span>
+            <span class="w-1/12 flex flex-col justify-center items-center">
+              {{ item.createdAt | date:'short' }}
+            </span>
+            <span class="w-1/12 flex flex-col justify-center items-center truncate">{{ item.status }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">
+              <app-button-secondary
+                [buttonContent]="this.selectedItemId === item.id ? 'Hide' : 'View More'"
+                [size]="'SMALL'"
+                (pressed)="this.onOverviewSelected(item.id)"
+              >
+              </app-button-secondary>
+            </span>
+          </div>
+
+          <!----------------------------------------------------------------->
+          <!------------------ OVERVIEW EXTENDED SECTION -------------------->
+          <!----------------------------------------------------------------->
+          <div
+            class="w-full border-t border-b border-(--primary-700) dark:border-(--primary-400) transition-all duration-300 ease-in-out overflow-hidden"
+            [class.max-h-0]="this.selectedItemId !== item.id"
+            [class.max-h-auto]="this.selectedItemId === item.id"
+            [class.opacity-0]="this.selectedItemId !== item.id"
+            [class.opacity-100]="this.selectedItemId === item.id"
+          >
+            <div
+              class="w-full p-3 bg-(--background-900) dark:bg-(--background-200) text-black dark:text-white flex flex-col gap-3"
+            >
+              <!-- Request Overview Section -->
+              <div
+                class="w-full rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-4 bg-(--background-800) dark:bg-(--background-100)"
+              >
+                <h4 class="font-bold text-lg mb-3">Request Overview</h4>
+
+                <!-- Request Information -->
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="font-semibold text-sm">Request ID</span>
+                    <span class="text-base">{{ this.itemOverview?.id }}</span>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <span class="font-semibold text-sm">User</span>
+                    <span class="text-base">{{ this.itemOverview?.username }} (ID: {{ this.itemOverview?.userId }})</span>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <span class="font-semibold text-sm">Request Type</span>
+                    <span class="text-base">{{ this.itemOverview?.requestType }}</span>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <span class="font-semibold text-sm">Object Type</span>
+                    <span class="text-base">{{ this.itemOverview?.objectType }}</span>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <span class="font-semibold text-sm">Status</span>
+                    <span
+                      [class.text-green-500]="this.itemOverview?.status === 'APPROVED'"
+                      [class.text-yellow-500]="this.itemOverview?.status === 'PENDING'"
+                      [class.text-red-500]="this.itemOverview?.status === 'REJECTED'"
+                      class="font-semibold text-base"
+                    >
+                      {{ this.itemOverview?.status }}
+                    </span>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <span class="font-semibold text-sm">Created At</span>
+                    <span class="text-base">{{ this.itemOverview?.createdAt | date:'medium' }}</span>
+                  </div>
+                </div>
+
+                <!-- Request Header -->
+                <div class="flex flex-col gap-1 mb-3">
+                  <span class="font-semibold text-sm">Request Header</span>
+                  <span class="text-base">{{ this.itemOverview?.requestHeader }}</span>
+                </div>
+
+                <!-- Request Description -->
+                <div class="flex flex-col gap-1 mb-3">
+                  <span class="font-semibold text-sm">Request Description</span>
+                  <span class="text-base">{{ this.itemOverview?.requestDescription }}</span>
+                </div>
+
+                <!-- Pending Information -->
+                <div *ngIf="this.itemOverview?.pendingInfo" class="flex flex-col gap-1 mb-4">
+                  <span class="font-semibold text-sm">Pending Information (JSON)</span>
+                  <div
+                    class="p-3 rounded-lg bg-(--background-900) dark:bg-(--background-200) font-mono text-xs overflow-x-auto"
+                  >
+                    {{ this.itemOverview?.pendingInfo | json }}
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-row gap-3 mt-4 border-t border-(--primary-700) dark:border-(--primary-400) pt-4">
+                  <app-button-secondary
+                    [buttonContent]="'Approve'"
+                    [size]="'DEFAULT'"
+                    (pressed)="this.onApprove()"
+                  >
+                  </app-button-secondary>
+
+                  <app-button-secondary
+                    [buttonContent]="'Reject'"
+                    [size]="'DEFAULT'"
+                    (pressed)="this.onReject()"
+                  >
+                  </app-button-secondary>
+
+                  <div
+                    class="h-10 text-base py-2 px-4 rounded-2xl font-semibold flex items-center justify-center opacity-50 cursor-not-allowed bg-gray-500 dark:bg-gray-600"
+                  >
+                    Integrate (v2)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="tableFooter"
+    class="w-full dark:bg-(--primary-200) bg-(--primary-200) text-white rounded-b-2xl flex p-2 flex-row justify-between items-center"
+  >
+    <div class="text-sm">Page {{ this.currentPage + 1 }} of {{ this.totalPages }}</div>
+    <div class="flex flex-row gap-4">
+      <app-button-primary
+        [buttonContent]="'Previous Page'"
+        [buttonType]="'DEFAULT'"
+        (click)="previousPage()"
+        [classAddons]="'p-2'"
+      ></app-button-primary>
+      <app-button-primary
+        [buttonContent]="'Next Page'"
+        [buttonType]="'DEFAULT'"
+        [classAddons]="'p-2'"
+        (click)="nextPage()"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>

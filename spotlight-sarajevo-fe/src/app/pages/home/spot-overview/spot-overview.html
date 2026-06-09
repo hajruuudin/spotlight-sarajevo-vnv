@@ -1,0 +1,366 @@
+<section
+  animate.enter="fade-in-animation"
+  id="spotOverviewHeadersSectionContainer"
+  class="w-full h-auto flex flex-col justify-start items-center"
+>
+  <div
+    #headerContainer
+    id="headerContainer"
+    class="relative flex flex-col justify-end items-center w-full h-96 dark:bg-black bg-(--primary-900)"
+  >
+    <div
+      class="hidden dark:absoulte inset-0 bg-gradient-to-r dark:from-black/100 from-white/100 via-transparent dark:to-black/100 to-white/100"
+    ></div>
+    <img
+      [src]="this.spotOverview.thumbnailImage.imageUrl"
+      [style]="
+        this.session.theme() == 'dark'
+          ? 'mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent)'
+          : ''
+      "
+      class="absolute feathered inset-0 left-auto right-auto w-3/4 h-full object-cover opacity-40"
+    />
+    <app-page-header
+      class="max-w-application relative bottom-2"
+      [title]="
+        this.session.language() == 'en'
+          ? this.spotOverview.officialNameEn
+          : this.spotOverview.officialNameBs
+      "
+      [subtitle]="
+        this.session.language() == 'en'
+          ? this.spotOverview.smallDescriptionEn
+          : this.spotOverview.smallDescriptionBs
+      "
+      [theme]="'DYNAMIC'"
+    ></app-page-header>
+
+    <div
+      id="tagContainer"
+      class="flex flex-row flex-wrap gap-2 items-center justify-center pb-4 z-20"
+    >
+      @for (tag of this.spotOverview.spotTags; track $index) {
+        <div
+          class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
+        >
+          <span class="text-sm md:text-base text-black font-semibold">{{
+            this.session.language() == 'en' ? tag.tagNameEn : tag.tagNameBs
+          }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="descriptionAndImageContainer"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center z-30 dark:bg-(--background-50) bg-white"
+  >
+    <div
+      id="descriptionAndImage"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col jusitfy-start items-center space-y-4"
+    >
+      <div class="w-full flex flex-row justify-around items-start gap-1 md:gap-4">
+        <div class="w-2/6 flex flex-col justify-center items-center">
+          <app-bnw-rating-icon [theme]="this.session.theme().toUpperCase()"></app-bnw-rating-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'spotOverview.rating' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{
+            this.spotOverview.combinedRating | number: '1.1-1' | zeroReview: 'N/A'
+          }}</span>
+        </div>
+
+        <div class="w-2/6 md:w-3/6 flex flex-col justify-center items-center">
+          <app-bnw-location-icon
+            [theme]="this.session.theme().toUpperCase()"
+          ></app-bnw-location-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'spotOverview.address' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{ this.spotOverview.address }}</span>
+        </div>
+
+        <div class="w-2/6 flex flex-col justify-center items-center">
+          <app-bnw-category-icon
+            [theme]="this.session.theme().toUpperCase()"
+          ></app-bnw-category-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'spotOverview.category' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{
+            this.session.language() == 'en'
+              ? this.spotOverview.categoryNameEn
+              : this.spotOverview.categoryNameBs
+          }}</span>
+        </div>
+      </div>
+
+      @if (this.session.getUser() != null) {
+        <div class="w-full md:w-2/3 flex flex-row justify-around items-center space-x-2">
+          @if (this.isSaved) {
+            <app-button-primary
+              (click)="this.removeFromAllSpots()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Unsave Spot'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              (click)="this.saveToAllSpots()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Save Spot'"
+            ></app-button-primary>
+          }
+
+          <app-button-primary
+            (click)="this.openAddCollectionModal()"
+            classAddons="px-4 py-2"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Add to Collection'"
+          ></app-button-primary>
+          @if (this.isVisited) {
+            <app-button-primary
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              (click)="this.removeSpotFromVisited()"
+              [buttonContent]="'Unmark as visited'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              (click)="this.markSpotAsVisited()"
+              [buttonContent]="'Mark as visited'"
+            ></app-button-primary>
+          }
+          <app-button-primary
+            classAddons="px-4 py-2"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Report an update'"
+          ></app-button-primary>
+        </div>
+      }
+
+      <div class="w-full h-auto flex flex-col justify-center items-center py-4">
+        <app-subheading
+          [alignment]="'CENTER'"
+          [sectionDescription]="'spotOverview.descriptionTitle' | transloco"
+          [sectionHead]="'spotOverview.descriptionHead' | transloco"
+        ></app-subheading>
+        <p class="text-base">
+          {{
+            this.session.language() == 'en'
+              ? this.spotOverview.fullDescriptionEn
+              : this.spotOverview.fullDescriptionBs
+          }}. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus ipsa impedit quidem,
+          voluptates illo quisquam consequatur sapiente dolorem rem, et provident reprehenderit
+          labore nobis fugit maiores autem error, inventore necessitatibus!
+        </p>
+      </div>
+
+      @if (this.images.length > 0) {
+      <div class="w-full h-auto flex flex-col justify-center items-center py-4">
+        <app-subheading
+          [alignment]="'CENTER'"
+          [sectionHead]="'spotOverview.imagesHead' | transloco"
+          [sectionDescription]="'spotOverview.imagesTitle' | transloco"
+        ></app-subheading>
+        <app-image-carousel class="my-2" [images]="this.images || null"></app-image-carousel>
+      </div>
+    }
+    </div>
+  </div>
+
+  <div
+    id="workHoursAndRatingContainer"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center dark:bg-(--background-100) bg-(--primary-900)"
+  >
+    <div
+      id="workHoursAndRatingContainer"
+      class="max-w-application px-2 md:px-4 w-full md:w-5/6 lg:w-3/4 flex flex-col lg:flex-row jusitfy-center items-center gap-6"
+    >
+      <div
+        class="w-full lg:w-1/3 flex flex-col jusitfy-center items-center space-y-3 md:space-y-6 dark:bg-(--background-200) bg-white shadow-2xl px-4 pb-4 pt-2 rounded-2xl"
+      >
+        <app-subheading
+          [sectionHead]="'spotOverview.workHoursHead' | transloco"
+          [alignment]="'CENTER'"
+          [sectionDescription]="'spotOverview.workHoursTitle' | transloco"
+        ></app-subheading>
+        @for (workDay of this.formattedSpotWorkHours; track workDay.dayIndex) {
+          <div class="w-full h-auto flex flex-row justify-center items-center space-x-2">
+            <span class="w-auto uppercase text-lg text-start font-semibold">{{ workDay.day }}</span>
+            <div class="w-full rounded-2xl h-0.5 dark:bg-white bg-(--primary-200)"></div>
+            @if (workDay.startTime == 'Closed' && workDay.endTime == 'Closed') {
+              <span class="w-auto uppercase text-lg text-end font-semibold">{{
+                'spotOverview.closed' | transloco
+              }}</span>
+            } @else {
+              <span class="w-auto uppercase text-lg whitespace-nowrap font-semibold"
+                >{{ workDay.startTime.slice(0, 5) }} - {{ workDay.endTime.slice(0, 5) }}</span
+              >
+            }
+          </div>
+        }
+      </div>
+
+      @if (this.spotOverview.combinedRating != 0) {
+        <div
+          class="w-full lg:w-2/3 flex flex-col justify-end items-center space-y-4 px-4 mt-16 rounded-2xl h-[500px]"
+        >
+          <app-subheading
+            [sectionHead]="'spotOverview.ratingsHead' | transloco"
+            [alignment]="'CENTER'"
+            [sectionDescription]="'spotOverview.ratingsTitle' | transloco"
+          ></app-subheading>
+          <div class="w-full h-full">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [type]="'bar'"
+              [options]="barChartOptions"
+              class="w-full h-auto"
+            >
+            </canvas>
+          </div>
+        </div>
+      } @else {
+        <div
+          class="w-full lg:w-2/3 flex flex-col justify-end items-center space-y-4 px-4 pb-4 pt-2 rounded-2xl h-full"
+        >
+          <app-not-found-component
+            [headerMessage]="'spotOverview.noGraphHeading' | transloco"
+            [messageDescription]="'spotOverview.noGraphDesc' | transloco"
+          ></app-not-found-component>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="locationContainer"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full h-auto flex flex-col justify-center items-center dark:bg-(--background-50) bg-white"
+  >
+    <div
+      id="location"
+      class="w-full pb-16 md:w-full flex flex-col gap-4 py-4 jusitfy-center items-center"
+    >
+      <app-subheading
+        [alignment]="'CENTER'"
+        [sectionDescription]="'spotOverview.locationTitle' | transloco"
+        [sectionHead]="'spotOverview.locationHead' | transloco"
+      ></app-subheading>
+      <app-map-regular
+        class="z-10"
+        [layoutMode]="this.session.theme()"
+        [objectLat]="this.spotOverview.latitude"
+        [objectLong]="this.spotOverview.longitude"
+        [objectCategoryEn]="this.spotOverview.categoryNameEn"
+        [objectCategoryBs]="this.spotOverview.categoryNameBs"
+      ></app-map-regular>
+    </div>
+  </div>
+
+  <div
+    id="reviewsContainer"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center dark:bg-(--background-100) bg-(--primary-900)"
+  >
+    <div
+      id="reviews"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col jusitfy-center items-center space-y-8"
+    >
+      <app-subheading
+        [sectionDescription]="'spotOverview.reviewsTitle' | transloco"
+        [sectionHead]="'spotOverview.reviewsHead' | transloco"
+      ></app-subheading>
+      <div class="dark:bg-(--primary-200) bg-white p-10 rounded-2xl w-full">
+        @if (this.session.getUser() == null) {
+          <app-not-found-component
+            class="col-span-2"
+            [headerMessage]="'spotOverview.noAuthReviewHeader' | transloco"
+            [messageDescription]="'spotOverview.noAuthReviewSubheading' | transloco"
+          ></app-not-found-component>
+          <app-button-primary
+            class="col-span-2 w-full"
+            (click)="this.redirectToLogin()"
+            [classAddons]="'w-full'"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Log in'"
+          ></app-button-primary>
+        } @else {
+          <div class="w-full grid grid-cols-2 gap-2">
+            @if (this.userReview == null) {
+              <app-not-found-component
+                class="col-span-2"
+                [headerMessage]="'spotOverview.noUserReviewHeader' | transloco"
+                [messageDescription]="'spotOverview.noUserReviewSubheading' | transloco"
+              ></app-not-found-component>
+              <app-button-primary
+                class="col-span-2"
+                (click)="this.openAddModal()"
+                [classAddons]="'w-full'"
+                [buttonType]="'DEFAULT'"
+                [buttonContent]="'spotReview.create' | transloco"
+              ></app-button-primary>
+            } @else {
+              <app-spot-review-card
+                [review]="this.userReview"
+                class="col-span-2"
+              ></app-spot-review-card>
+              <app-button-primary
+                (click)="this.openEditModal()"
+                [classAddons]="'w-full'"
+                [buttonType]="'DEFAULT'"
+                [buttonContent]="'spotReview.update' | transloco"
+              ></app-button-primary>
+              <app-button-primary
+                (click)="this.openDeleteReviewModal()"
+                [classAddons]="'w-full'"
+                [buttonType]="'DANGER'"
+                [buttonContent]="'spotReview.delete' | transloco"
+              ></app-button-primary>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="w-full flex flex-col justify-start items-center">
+        @if (this.spotReviews.length == 0) {
+          <app-not-found-component
+            class="col-span-full"
+            [headerMessage]="'spotOverview.noOtherReviewHeading' | transloco"
+            [messageDescription]="'spotOverview.noOtherReviewSubheading' | transloco"
+          ></app-not-found-component>
+        } @else {
+          <div class="w-full flex flex-row justify-center items-center gap-2 mb-4">
+            @for (option of this.reviewSortOptions; track $index) {
+              <app-sorting-selector
+                [sortingMethod]="this.reviewSortTranslationKeys[option] | transloco"
+                [isSelected]="this.reviewSortOption === option"
+                (selectedMethod)="this.onReviewSortChange(option)"
+              ></app-sorting-selector>
+            }
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch space-y-4">
+            @for (review of this.spotReviews; track $index) {
+              <app-spot-review-card [review]="review"></app-spot-review-card>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

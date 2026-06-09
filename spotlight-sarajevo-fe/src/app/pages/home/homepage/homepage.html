@@ -1,0 +1,309 @@
+<section
+  animate.enter="fade-in-animation"
+  id="homepageHeadersSectionContainer"
+  [style.backgroundImage]="
+    this.session.theme() == 'dark'
+      ? 'url(/assets/images/SECTION_BG_01.jpg)'
+      : 'url(/assets/images/SECTION_BG_01_L.jpg)'
+  "
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <app-page-header
+    animate.enter="fade-in-animation"
+    class="max-w-application pt-4"
+    [title]="'homepage.headerTitle' | transloco"
+    [subtitle]="'homepage.headerSubtitle' | transloco"
+  ></app-page-header>
+  <div
+    id="homepageHeadersSection"
+    class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-4 md:px-8 space-y-4 md:space-y-0 md:space-x-4"
+  >
+    <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-center items-stretch">
+      <span class="text-xl w-full md:text-start font-semibold">{{
+        'homepage.headlineSectionSpot' | transloco
+      }}</span>
+      <app-headline-spot
+        classAddons="w-full"
+        (click)="navigateToSpotOverview(this.headlineSpot!.slug)"
+        [lang]="this.session.language()!"
+        [spot]="this.headlineSpot!"
+        class="cursor-pointer"
+      ></app-headline-spot>
+    </div>
+    <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-start items-stretch">
+      <span class="text-xl w-full md:text-end font-semibold">{{
+        'homepage.headlineSectionEvent' | transloco
+      }}</span>
+      <app-headline-event
+        classAddons="w-full"
+        (click)="navigateToEventOverview(this.headlineEvent!.slug)"
+        [lang]="this.session.language()!"
+        [event]="this.headlineEvent!"
+        class="cursor-pointer"
+      ></app-headline-event>
+    </div>
+  </div>
+
+  <div
+    id="homepageFavouritesSection"
+    class="max-w-application px-4 md:px-8 w-full flex flex-col justify-center items-center"
+  >
+    <div class="w-full flex flex-row justify-center items-center space-x-2 md:space-x-6">
+      <div
+        class="sm:hidden md:inline w-1/6 md:w-full h-1 rounded-2xl dark:bg-(--secondary-900) bg-(--secondary-200)"
+      ></div>
+      <span class="text-xl w-4/6 md:w-full font-semibold whitespace-nowrap">{{
+        'homepage.headlineSectionFavourites' | transloco
+      }}</span>
+      <div
+        class="sm:hidden md:inline w-1/6 md:w-full h-1 rounded-2xl dark:bg-(--secondary-900) bg-(--secondary-200)"
+      ></div>
+    </div>
+
+    <div
+      class="w-full max-w-application flex flex-row space-x-6 justify-center py-4 items-center overflow-x-auto overflow-y-hidden"
+    >
+      <div class="scroll-container-slow flex flex-row justify-center items-center space-x-4">
+        @for (spot of this.favouriteSpots; track spot.id) {
+          <app-small-spot-card
+            (click)="navigateToSpotOverview(spot.slug)"
+            [lang]="this.session.language()!"
+            [spot]="spot"
+            classAddons="cursor-pointer"
+          ></app-small-spot-card>
+        }
+        @for (spot of this.favouriteSpots; track spot.id) {
+          <app-small-spot-card
+            (click)="navigateToSpotOverview(spot.slug)"
+            [lang]="this.session.language()!"
+            [spot]="spot"
+            classAddons="cursor-pointer"
+          ></app-small-spot-card>
+        }
+      </div>
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>
+
+<section
+  style="box-shadow: 0px -10px 40px #00000044"
+  animate.enter="fade-in-animation"
+  id="homepagePopularSectionContainer"
+  class="w-full h-auto flex flex-col justify-start items-center space-y-4 dark:bg-(--background-100) light:bg-(--background-800)"
+>
+  <div
+    id="homepagePopularSection"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full py-6"
+  >
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto mb-2">
+      <app-subheading
+        [sectionHead]="'homepage.popularSectionSpotsSpan' | transloco"
+        [sectionDescription]="'homepage.popularSectionSpots' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div
+      class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
+    >
+      <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[0].slug)"
+        [lang]="this.session.language()!"
+        [spot]="this.popularSpots[0]"
+        class="cursor-pointer"
+      ></app-search-spot-card>
+      <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[1].slug)"
+        [lang]="this.session.language()!"
+        [spot]="this.popularSpots[1]"
+        class="cursor-pointer"
+      ></app-search-spot-card>
+    </div>
+
+    <div
+      class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
+    >
+      <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[3].slug)"
+        [lang]="this.session.language()!"
+        [spot]="this.popularSpots[3]"
+        class="cursor-pointer"
+      ></app-search-spot-card>
+      <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[4].slug)"
+        [lang]="this.session.language()!"
+        [spot]="this.popularSpots[4]"
+        class="cursor-pointer"
+      ></app-search-spot-card>
+    </div>
+  </div>
+
+  <div
+    id="homepageCalendarSection"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full my-2"
+  >
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
+      <app-subheading
+        [sectionHead]="'homepage.popularSectionEventsSpan' | transloco"
+        [sectionDescription]="'homepage.popularSectionEvents' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+      
+    <div
+      class="w-full h-auto flex flex-row justify-center items-center overflow-x-scroll sm:overflow-hidden my-2"
+    >
+      <div class="w-1/3 hidden sm:inline h-1 rounded-full bg-white"></div>
+      <div class="w-full sm:w-auto flex flex-row justify-around items-center space-x-1 mx-1">
+        @for (day of this.eventCalendarDays; track $index) {
+          <app-calendar-date-icon
+            [day]="day"
+            [isSelectedDay]="day.queryDate === selectedDate"
+            (daySelected)="handleDaySelection($event)"
+          ></app-calendar-date-icon>
+        }
+      </div>
+      <div class="w-1/3 hidden sm:inline h-1 rounded-full bg-white"></div>
+    </div>
+
+    <div
+      class="w-full h-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 my-2"
+    >
+      @if (this.isLoadingEventsForDate) {
+        <app-spinner-small-component></app-spinner-small-component>
+      } @else if (this.eventsForSelectedDate.length === 0) {
+        <app-not-found-component
+          [headerMessage]="'homepage.noEventsOnDateHeader' | transloco"
+          [messageDescription]="'homepage.noEventsOnDateDescription' | transloco"
+        ></app-not-found-component>
+      } @else {
+        @for (event of this.eventsForSelectedDate; track event.id) {
+          <app-search-event-card
+            (click)="navigateToEventOverview(event.slug)"
+            [lang]="this.session.language()!"
+            [event]="event"
+            class="cursor-pointer"
+          ></app-search-event-card>
+        }
+      }
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application my-4">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>
+
+<section
+  animate.enter="fade-in-animation"
+  id="homepageDiscoverSectionContainer"
+  [style.backgroundImage]="
+    this.session.theme() == 'dark'
+      ? 'url(/assets/images/SECTION_BG_03.png)'
+      : 'url(/assets/images/SECTION_BG_03_L.png)'
+  "
+  class="w-full h-auto flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="homepageDiscoverLandmarks"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-6 pb-0"
+  >
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
+      <app-subheading
+        [sectionHead]="'homepage.discoverSectionLandmarksSpan' | transloco"
+        [sectionDescription]="'homepage.discoverSectionLandmarks' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4"
+    >
+      @for (spot of this.landmarkSpots; track spot.id) {
+        <app-historical-spot-card
+          (click)="navigateToSpotOverview(spot.slug)"
+          [lang]="this.session.language()!"
+          [spot]="spot"
+          class="cursor-pointer"
+        ></app-historical-spot-card>
+      }
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+
+  <div
+    id="homepageDiscoverCategories"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-0 pb-6"
+  >
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+      <app-subheading
+        [sectionHead]="'homepage.discoverSectionCategoriesSpan' | transloco"
+        [sectionDescription]="'homepage.discoverSectionCategories' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div class="w-full max-w-application h-auto overflow-x-auto mb-1 mt-2">
+      <div class="scroll-container-fast flex flex-row justify-start items-center space-x-2">
+        @for (cat of this.spotCategories; track $index) {
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="cat"
+            [eventCategoryModel]="null"
+          ></app-category-card>
+        }
+        @for (cat of this.spotCategories; track $index) {
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="cat"
+            [eventCategoryModel]="null"
+          ></app-category-card>
+        }
+      </div>
+    </div>
+
+    <div class="w-full max-w-application h-auto overflow-x-auto group mt-1 mb-2">
+      <div
+        class="scroll-container-fast flex flex-row justify-center items-center space-x-2 scroll-in"
+      >
+        @for (cat of this.eventCategories; track $index) {
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="null"
+            [eventCategoryModel]="cat"
+          ></app-category-card>
+        }
+        @for (cat of this.eventCategories; track $index) {
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="null"
+            [eventCategoryModel]="cat"
+          ></app-category-card>
+        }
+      </div>
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application mt-2">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>

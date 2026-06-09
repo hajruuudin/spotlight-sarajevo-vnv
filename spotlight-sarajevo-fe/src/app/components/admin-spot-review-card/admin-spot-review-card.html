@@ -1,0 +1,52 @@
+<div class="w-full flex flex-col justify-start items-start gap-2">
+  <!-- Review Header: Title, Username, Date, and Overall Rating -->
+  <div class="w-full flex flex-row justify-between items-start gap-2">
+    <div class="flex flex-col justify-start items-start gap-1">
+      @if (this.review.header) {
+        <span class="font-semibold text-sm">{{ this.review.header }}</span>
+      }
+      <div class="flex flex-row justify-start items-center gap-3 text-xs opacity-75">
+        <span>{{ this.review.username }}</span>
+        @if (this.review.modified) {
+          <span>{{ this.review.modified | date: 'short' }}</span>
+        }
+      </div>
+    </div>
+    <span [ngClass]="'font-bold text-sm px-2 py-1 rounded ' + this.getOverallRatingClass(this.review.userOverallRating)">
+      {{ this.review.userOverallRating | zeroReview }}
+    </span>
+  </div>
+
+  <!-- Review Body -->
+  @if (this.review.body) {
+    <p class="text-xs w-full text-wrap">{{ this.review.body }}</p>
+  }
+
+  <!-- Rating Attributes -->
+  <div class="w-full grid grid-cols-3 gap-1 text-xs">
+    <div>
+      <span class="font-semibold">{{ 'spotReview.atmosphere' | transloco }}:</span>
+      <span> {{ this.review.userAtmosphere | number: '1.0-2' }}</span>
+    </div>
+    <div>
+      <span class="font-semibold">{{ 'spotReview.accessibility' | transloco }}:</span>
+      <span> {{ this.review.userAccessibility | number: '1.0-2' }}</span>
+    </div>
+    <div>
+      <span class="font-semibold">{{ 'spotReview.staffKindness' | transloco }}:</span>
+      <span> {{ this.review.userStaffKindness | number: '1.0-2' }}</span>
+    </div>
+    <div>
+      <span class="font-semibold">{{ 'spotReview.affordability' | transloco }}:</span>
+      <span> {{ this.review.userAffordability | number: '1.0-2' }}</span>
+    </div>
+    <div>
+      <span class="font-semibold">{{ 'spotReview.cleanliness' | transloco }}:</span>
+      <span> {{ this.review.userCleanliness | number: '1.0-2' }}</span>
+    </div>
+    <div>
+      <span class="font-semibold">{{ 'spotReview.localeQuality' | transloco }}:</span>
+      <span> {{ this.review.userLocaleQuality | number: '1.0-2' }}</span>
+    </div>
+  </div>
+</div>

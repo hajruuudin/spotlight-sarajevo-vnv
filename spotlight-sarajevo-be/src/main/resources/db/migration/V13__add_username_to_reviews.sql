@@ -1,0 +1,5 @@
+ALTER TABLE ss_spot_review
+ADD COLUMN IF NOT EXISTS username VARCHAR(255);
+
+ALTER TABLE ss_event_review
+ADD COLUMN IF NOT EXISTS username VARCHAR(255);

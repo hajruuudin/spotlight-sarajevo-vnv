@@ -1,0 +1,57 @@
+@if (this.images && this.images.length > 0) {
+<div
+  class="w-full h-48 md:h-64 p-2 rounded-2xl dark:bg-(--background-100) bg-(--background-800) flex flex-row justify-start items-center gap-2 overflow-x-scroll"
+>
+  @for (img of this.images; track $index) {
+  <img
+    [src]="img"
+    (click)="loadImageFullscreenPreview($index)"
+    class="h-full w-auto rounded-xl cursor-pointer object-cover opacity-90 hover:opacity-100 transition"
+  />
+  }
+</div>
+} @else {
+<app-not-found-component [headerMessage]="'No Images Found'" [messageDescription]="''"></app-not-found-component>
+}
+
+@if (fullscreenIndex !== null) {
+<div
+  class="fixed inset-0 bg-black/70 backdrop-blur-sm flex flex-row justify-center items-center z-50"
+  (click)="exitImageFullscreenPreview()"
+>
+  <div
+    class="max-w-3xl max-h-[90vh] flex flex-col justify-between items-center p-3 bg-black/20 rounded-2xl"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Image -->
+    <img
+      [src]="images[fullscreenIndex!]"
+      class="max-h-[80vh] w-auto object-contain rounded-xl shadow-xl"
+    />
+
+    <div class="flex flex-row justify-center items-center w-full space-x-4 my-2">
+      <!-- Left arrow -->
+
+      <app-button-primary
+        (click)="previousImage(); $event.stopPropagation()"
+        [buttonContent]="'‹'"
+        classAddons="rounded-full font-black px-6"
+      ></app-button-primary>
+
+      <!-- Close button -->
+      <app-button-primary
+        (click)="exitImageFullscreenPreview()"
+        [buttonContent]="'x'"
+        classAddons="rounded-full font-black px-8"
+      ></app-button-primary>
+
+      <!-- Right arrow -->
+      <app-button-primary
+        (click)="nextImage(); $event.stopPropagation()"
+        [buttonContent]="'›'"
+        classAddons="rounded-full font-black px-6"
+      ></app-button-primary>
+    </div>
+  </div>
+</div>
+}

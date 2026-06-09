@@ -1,0 +1,173 @@
+<section
+  animate.enter="fade-in-animation"
+  id="homepageHeadersSectionContainer"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <app-page-header
+    class="max-w-application pt-4"
+    [title]="'search.searchSpotsTitle' | transloco"
+    [subtitle]="'search.searchSpotsSubtitle' | transloco"
+  ></app-page-header>
+
+  <div
+    id="spotSearchContainer"
+    class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-4 md:px-8 space-y-4 md:space-y-0 md:space-x-4 overflow-scroll"
+  >
+    <form
+      [formGroup]="spotSearchForm"
+      class="w-full h-auto flex flex-col justify-start items-stretch space-y-4"
+    >
+      <div class="w-full flex flex-col md:flex-row gap-4 items-stretch">
+        <app-search-bar
+          formControlName="searchTerm"
+          [placeholder]="'search.searchButton' | transloco"
+          (search)="onSearchTriggered()"
+          class="flex-1"
+        ></app-search-bar>
+        @if (isPremiumUser) {
+          <app-button-primary
+            [buttonContent]="'🗺️ ' + ('search.viewMap' | transloco)"
+            [classAddons]="'px-6 whitespace-nowrap h-full w-full'"
+            (pressed)="navigateToMapOverview()"
+          ></app-button-primary>
+        }
+      </div>
+
+      <section
+        id="filterAndResultContainer"
+        class="w-full flex flex-col justify-start items-stretch space-y-4"
+      >
+        <div
+          class="w-full relative dark:bg-(--background-200) bg-(--background-400) px-2 md:px-0 rounded-2xl h-auto flex flex-col md:flex-row justify-center items-stretch"
+        >
+          <button
+            (click)="this.toggleSortingPopup()"
+            class="w-full rounded-2xl dark:bg-(--background-300) bg-(--secondary-600) my-2 my md:m-4 py-2 md:py-3 font-bold text-base md:text-2xl"
+          >
+            {{ 'search.searchSorting' | transloco }}
+          </button>
+
+          @if (this.isSortingPopupLoaded) {
+            <div
+              animate.enter="blink-in-animation"
+              animate.leave="blink-out-animation"
+              (mouseleave)="this.toggleSortingPopup()"
+              style="box-shadow: 0px 0px 20px #00000055"
+              class="transition-all absolute left-0 w-full md:w-1/2 h-auto rounded-2xl dark:bg-(--background-400) bg-(--background-900) p-4 flex flex-col space-y-2 z-30 md:mr-4"
+            >
+              <div
+                class="flex flex-col md:flex-row justify-between space-y-2 md:space-y-0 space-x-4"
+              >
+                @for (sorting of this.sortingMethods; track $index) {
+                  <app-sorting-selector
+                    [sortingMethod]="'sorting.' + sorting | transloco"
+                    [isSelected]="this.selectedSortingMethod == sorting"
+                    (selectedMethod)="this.onSortingMethodSelected(sorting)"
+                  ></app-sorting-selector>
+                }
+              </div>
+              <app-button-secondary
+                (click)="this.resetSortingFilters()"
+                [buttonContent]="'search.searchReset' | transloco"
+                [classAddons]="'px-6'"
+              ></app-button-secondary>
+            </div>
+          }
+
+          <button
+            (click)="toggleFilterPopup()"
+            class="w-full rounded-2xl dark:bg-(--background-300) bg-(--secondary-600) my-2 md:m-4 py-2 md:py-3 font-bold text-base md:text-2xl"
+          >
+            {{ 'search.searchFilters' | transloco }}
+          </button>
+
+          @if (this.isFilterPopupLoaded) {
+            <div
+              animate.enter="blink-in-animation"
+              (mouseleave)="this.toggleFilterPopup()"
+              animate.leave="blink-out-animation"
+              style="box-shadow: 0px 0px 20px #00000055"
+              class="transition-all absolute right-0 top-0 w-full md:w-1/2 h-auto rounded-2xl dark:bg-(--background-400) bg-(--background-900) p-4 flex flex-col space-y-4 z-30 md:ml-4"
+            >
+              <!-- Non-Visited Filter Toggle -->
+              <button
+                (click)="toggleNonVisitedFilter()"
+                [ngClass]="{
+                  'dark:bg-(--accent-600) bg-(--accent-200) dark:text-black text-white': showOnlyNonVisited,
+                  'dark:bg-(--background-300) bg-(--background-600) dark:text-white text-black': !showOnlyNonVisited
+                }"
+                class="w-full rounded-xl py-3 px-4 font-semibold text-base transition-all duration-200 hover:opacity-80"
+              >
+                {{ (showOnlyNonVisited ? 'search.showingNonVisited' : 'search.showOnlyNonVisited') | transloco }}
+              </button>
+
+              <!-- Category Filter Section -->
+              <div
+                class="h-96 xl:h-auto flex flex-row flex-wrap justify-center space-x-4 space-y-2 xl:overflow-y-hidden overflow-y-scroll"
+              >
+                @for (category of this.spotCategories; track $index) {
+                  <app-category-filter-selector
+                    [categoryName]="
+                      this.getCurrentLanguage() == 'en'
+                        ? category.spotCategoryNameEn
+                        : category.spotCategoryNameBs
+                    "
+                    [type]="'spot'"
+                    [isSelected]="
+                      this.selectedCategoryIds.indexOf(category.id) == -1 ? false : true
+                    "
+                    (selectionChange)="onCategoryCheckboxChange(category.id)"
+                  ></app-category-filter-selector>
+                }
+              </div>
+              <app-button-secondary
+                (click)="this.resetCategoryFilters()"
+                [buttonContent]="'search.searchReset' | transloco"
+                [classAddons]="'px-6'"
+              ></app-button-secondary>
+            </div>
+          }
+        </div>
+
+        <div class="relative w-full flex flex-col justify-center items-center lg:space-x-4">
+          <app-spinner-small-component
+            [visible]="this.isSectionLoading()"
+            message="Getting results"
+          ></app-spinner-small-component>
+          @if (this.spotSearchResults.length != 0) {
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-2 md:mt-2">
+              @for (spot of this.spotSearchResults; track $index) {
+                <app-search-spot-card
+                  (click)="this.navigateToSpotOverview(spot.slug)"
+                  [lang]="this.session.language()!"
+                  [spot]="spot"
+                ></app-search-spot-card>
+              }
+            </div>
+          } @else {
+            <app-not-found-component
+              headerMessage="No results. Sorry..."
+              [messageDescription]="'We could not find any reults for that specific spot'"
+            ></app-not-found-component>
+          }
+          @if (this.spotSearchResults.length != 0) {
+            <div class="w-full flex flex-col justify-center items-center space-y-4">
+              <span
+                class="text-base md:text-xl dark:bg-(--primary-200) bg-white rounded-2xl py-2 px-4 mt-4"
+                >{{ 'search.searchPaginationOne' | transloco }}
+                {{ this.pageNumber + 1 * this.pageSize }}
+                {{ 'search.searchPagiationTwo' | transloco }} {{ this.totalElements }}
+                {{ 'search.searchSpotsPaginationThree' | transloco }}</span
+              >
+              <app-button-primary
+                (click)="this.loadMore()"
+                [buttonContent]="'Load more'"
+                classAddons="px-3 md:px-6"
+              ></app-button-primary>
+            </div>
+          }
+        </div>
+      </section>
+    </form>
+  </div>
+</section>

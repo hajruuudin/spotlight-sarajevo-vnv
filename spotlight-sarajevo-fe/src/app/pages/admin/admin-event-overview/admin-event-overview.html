@@ -1,0 +1,34 @@
+<section class="max-w-application w-full flex flex-col justify-start items-start gap-8 mx-auto px-4 py-6">
+  <app-page-header
+    [title]="'Event Overview'"
+    [subtitle]="'Overview of all events in the system. You can search, edit, and delete events, as well as manage reviews for event organisers.'"
+  ></app-page-header>
+
+  <form class="w-full" [formGroup]="this.tableSearchForm">
+    <app-search-bar
+      formControlName="searchTerm"
+      [style]="'ADMIN'"
+      [placeholder]="'Search events based on their name...'"
+      (search)="handleEventSearch()"
+    ></app-search-bar>
+  </form>
+
+  <app-event-overview-table
+    [columnDefinitions]="this.tableDefinitions"
+    [tableData]="this.tableShorthandData"
+    [itemOverview]="this.tableSelectedItem"
+    [organiserReviews]="this.tableEventOrganiserReviews"
+    [isLoadingReviews]="this.isLoadingReviews"
+    [currentPage]="this.currentPage"
+    [totalItems]="this.totalItems"
+    [totalPages]="this.totalPages"
+    (onOverviewSelect)="handleOverviewSelect($event)"
+    (onDeleteItem)="handleDeleteItem($event)"
+    (onSaveChange)="handleUpdateItem($event)"
+    (onOrganiserSaveChange)="handleOrganiserUpdateItem($event)"
+    (onReviewLoadMore)="handleReviewLoadMore($event)"
+    (onReviewSortChange)="handleReviewSortChange($event)"
+    (onNextPage)="handleNextPage($event)"
+    (onPreviousPage)="handlePreviousPage($event)"
+  ></app-event-overview-table>
+</section>

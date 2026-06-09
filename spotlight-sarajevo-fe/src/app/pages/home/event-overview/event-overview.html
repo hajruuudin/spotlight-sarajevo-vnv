@@ -1,0 +1,414 @@
+<section
+  animate.enter="fade-in-animation"
+  id="eventOverviewHeadersSectionContainer"
+  class="w-full h-auto flex flex-col justify-start items-center"
+>
+  <div
+    #headerContainer
+    id="headerContainer"
+    class="relative flex flex-col justify-end items-center w-full h-96 dark:bg-black bg-(--primary-900)"
+  >
+    <div
+      class="hidden dark:absoulte inset-0 bg-gradient-to-r dark:from-black/100 from-white/100 via-transparent dark:to-black/100 to-white/100"
+    ></div>
+    <img
+      [src]="this.eventOverview.thumbnailImage.imageUrl"
+      [style]="
+        this.session.theme() == 'dark'
+          ? 'mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent)'
+          : ''
+      "
+      class="absolute feathered inset-0 left-auto right-auto w-3/4 h-full object-cover opacity-40"
+    />
+    <app-page-header
+      class="max-w-application relative bottom-2"
+      [title]="
+        this.session.language() == 'en'
+          ? this.eventOverview.officialNameEn
+          : this.eventOverview.officialNameBs
+      "
+      [subtitle]="
+        this.session.language() == 'en'
+          ? this.eventOverview.smallDescriptionEn
+          : this.eventOverview.smallDescriptionBs
+      "
+      [theme]="'DYNAMIC'"
+    ></app-page-header>
+
+    <div
+      id="tagContainer"
+      class="flex flex-row flex-wrap gap-2 items-center justify-center pb-4 z-20"
+    >
+      @for (tag of this.eventOverview.eventTags; track $index) {
+        <div
+          class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
+        >
+          <span class="text-sm md:text-base text-black font-semibold">{{
+            this.session.language() == 'en' ? tag.tagNameEn : tag.tagNameBs
+          }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="descriptionAndImageContainer"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center z-30 dark:bg-(--background-50) bg-white"
+  >
+    <div
+      id="descriptionAndImage"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col jusitfy-start items-center space-y-4"
+    >
+      <div class="w-full flex flex-row justify-around items-start gap-1 md:gap-4">
+        <div class="w-2/6 flex flex-col justify-center items-center">
+          <app-bnw-date-icon
+            [theme]="this.session.theme().toUpperCase()"
+            [classes]="'w-10 h-10'"
+          ></app-bnw-date-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'eventOverview.startDate' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{
+            this.eventOverview.startDate | date
+          }}</span>
+        </div>
+
+        <div class="w-2/6 md:w-3/6 flex flex-col justify-center items-center">
+          <app-bnw-location-icon
+            [theme]="this.session.theme().toUpperCase()"
+          ></app-bnw-location-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'eventOverview.location' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{ this.eventOverview.location }}</span>
+        </div>
+
+        <div class="w-2/6 flex flex-col justify-center items-center">
+          <app-bnw-category-icon
+            [theme]="this.session.theme().toUpperCase()"
+          ></app-bnw-category-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'eventOverview.category' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{
+            this.session.language() == 'en'
+              ? this.eventOverview.categoryNameEn
+              : this.eventOverview.categoryNameBs
+          }}</span>
+        </div>
+      </div>
+
+      @if (this.session.getUser() != null) {
+        <div class="w-full md:w-1/2 flex flex-row justify-around items-center space-x-2">
+          @if (this.isSaved) {
+            <app-button-primary
+              (click)="this.removeFromAllEvents()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Unsave Event'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              (click)="this.saveToAllEvents()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Save Event'"
+            ></app-button-primary>
+          }
+          <app-button-primary
+            (click)="this.openAddCollectionModal()"
+            classAddons="px-4"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Add to Collection'"
+          ></app-button-primary>
+          @if (this.isAttended) {
+            <app-button-primary
+              classAddons="px-4"
+              (click)="unmarkEventAsAttended()"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="this.isPastEvent ? ('eventOverview.unmarkHaveAttended' | transloco) : ('eventOverview.unmarkWillAttend' | transloco)"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              classAddons="px-4"
+              (click)="markEventAsAttended()"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="this.isPastEvent ? ('eventOverview.haveAttended' | transloco) : ('eventOverview.willAttend' | transloco)"
+            ></app-button-primary>
+          }
+        </div>
+      }
+
+      <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
+        <app-subheading
+          [sectionDescription]="'eventOverview.descriptionTitle' | transloco"
+          [sectionHead]="'eventOverview.descriptionHead' | transloco"
+        ></app-subheading>
+        <p class="text-base">
+          {{
+            this.session.language() == 'en'
+              ? this.eventOverview.fullDescriptionEn
+              : this.eventOverview.fullDescriptionBs
+          }}. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus ipsa impedit quidem,
+          voluptates illo quisquam consequatur sapiente dolorem rem, et provident reprehenderit
+          labore nobis fugit maiores autem error, inventore necessitatibus!
+        </p>
+      </div>
+
+      @if (this.images.length > 0) {
+        <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
+          <app-subheading
+            [sectionDescription]="'eventOverview.imagesTitle' | transloco"
+            [sectionHead]="'eventOverview.imagesHead' | transloco"
+          ></app-subheading>
+          <app-image-carousel [images]="this.images"></app-image-carousel>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="eventDetailsAndInformationContainer"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center dark:bg-(--background-100) bg-(--background-800)"
+  >
+    <div
+      id="eventDetailsAndInformation"
+      class="max-w-application px-2 md:px-4 w-full md:w-5/6 lg:w-3/4 flex flex-col jusitfy-center items-center gap-6"
+    >
+      <div
+        class="w-full lg:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-4 pb-4 pt-2"
+      >
+        <app-event-info-card
+          [iconType]="'DATE'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.theme()"
+          [startDate]="this.eventOverview.startDate"
+          [endDate]="this.eventOverview.endDate"
+        ></app-event-info-card>
+
+        <app-event-info-card
+          [iconType]="'AGE'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.theme()"
+          [ageRequirement]="this.eventOverview.ageLimit"
+        ></app-event-info-card>
+
+        <app-event-info-card
+          [iconType]="'REFUND'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.theme()"
+          [cancelRefund]="this.eventOverview.cancelRefund"
+        ></app-event-info-card>
+
+        <app-event-info-card
+          [iconType]="'LANG'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.theme()"
+          [language]="this.eventOverview.eventLanguage"
+        ></app-event-info-card>
+
+        <app-event-info-card
+          [iconType]="'RESERVATION'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.theme()"
+          [reservation]="this.eventOverview.reservation"
+        ></app-event-info-card>
+
+        <app-event-info-card
+          [iconType]="'PRICE'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.theme()"
+          [entryPrice]="this.eventOverview.entryPrice"
+        ></app-event-info-card>
+      </div>
+    </div>
+
+    <div
+      id="locationContainer"
+      [style.backgroundImage]="
+        this.session.theme() == 'dark'
+          ? 'url(/assets/images/SECTION_BG_03.png)'
+          : 'url(/assets/images/SECTION_BG_03_L.png)'
+      "
+      style="background-size: cover; background-position: center"
+      class="w-full h-auto pb-10 flex flex-col justify-center items-center dark:bg-(--background-50) bg-white"
+    >
+      <div id="location" class="w-full h-auto flex flex-col py-4 gap-4 justify-center items-center">
+        <app-subheading
+          [sectionDescription]="'eventOverview.locationTitle' | transloco"
+          [sectionHead]="'eventOverview.locationHead' | transloco"
+        ></app-subheading>
+        <app-map-regular
+          class="z-10"
+          [layoutMode]="this.session.theme()"
+          [objectLat]="this.eventOverview.eventLat"
+          [objectLong]="this.eventOverview.eventLon"
+          [objectCategoryEn]="this.eventOverview.categoryNameEn"
+          [objectCategoryBs]="this.eventOverview.categoryNameBs"
+        ></app-map-regular>
+      </div>
+    </div>
+
+    <div
+      id="organiserAndReviewContainer"
+      class="w-full pb-16 md:w-full flex flex-col jusitfy-center items-center dark:bg-(--background-100) bg-(--background-800)"
+    >
+      <div
+        id="organiserAndReview"
+        class="max-w-application w-full px-4 lg:w-2/3 flex flex-col py-4 jusitfy-center items-center space-y-8"
+      >
+        <app-subheading
+          [sectionDescription]="'eventOverview.organiserTitle' | transloco"
+          [sectionHead]="'eventOverview.organiserHead' | transloco"
+        ></app-subheading>
+
+        <div
+          class="relative w-full h-auto flex flex-col rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center dark:bg-(--background-200) bg-(--background-900)"
+        >
+          @if (this.eventOverview.organiser.overallRating != null) {
+            <div
+              class="absolute bottom-2 right-2 w-auto h-auto py-4 px-4 aspect-square rounded-2xl dark:bg-(--background-100) bg-(--background-700) font-extrabold text-2xl"
+            >
+              <span>{{ this.eventOverview.organiser.overallRating }}</span>
+            </div>
+          }
+
+          <img
+            [src]="this.eventOverview.organiser.thumbnailImage"
+            alt="Organiser thumbnail"
+            class="w-80 aspect-square h-full rounded-2xl"
+          />
+
+          <div
+            class="w-full md:w-2/3 py-4 flex flex-col items-center lg:items-center justify-center"
+          >
+            <span class="text-base md:text-lg lg:text-xl"
+              ><span class="font-semibold">{{ 'eventOverview.organiserName' | transloco }}</span>
+              {{ this.eventOverview.organiser.organiserName }}</span
+            >
+            <span class="text-base md:text-lg lg:text-xl"
+              ><span class="font-semibold">{{
+                'eventOverview.organiserCreation' | transloco
+              }}</span>
+              {{ this.eventOverview.organiser.organiserCreationDate | date }}</span
+            >
+            <span class="text-base md:text-lg lg:text-xl"
+              ><span class="font-semibold">{{
+                'eventOverview.organiserCategory' | transloco
+              }}</span>
+              {{
+                this.session.language() == 'en'
+                  ? this.eventOverview.organiser.organiserCategoryNameEn
+                  : this.eventOverview.organiser.organiserCategoryNameBs
+              }}</span
+            >
+            <div class="w-1/2 h-0.5 my-2 rounded-full dark:bg-white bg-black"></div>
+            <div class="w-full h-auto flex flex-col justify-start items-center gap-4">
+              <span
+                class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-800)"
+                ><span class="font-semibold">{{ 'eventOverview.contactPhone' | transloco }}</span>
+                {{ this.eventOverview.organiser.organiserPhone }}</span
+              >
+              <span
+                class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-800)"
+                ><span class="font-semibold">{{ 'eventOverview.contactEmail' | transloco }}</span>
+                {{ this.eventOverview.organiser.organiserEmail }}</span
+              >
+              <span
+                class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-800)"
+                ><span class="font-semibold">{{ 'eventOverview.contactWebsite' | transloco }}</span>
+                {{ this.eventOverview.organiser.organiserWebsite }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <app-subheading
+          [sectionDescription]="'eventOverview.reviewsTitle' | transloco"
+          [sectionHead]="'eventOverview.reviewsHead' | transloco"
+        ></app-subheading>
+        <div class="dark:bg-(--primary-200) bg-white p-10 rounded-2xl w-full">
+          @if (this.session.getUser() == null) {
+            <app-not-found-component
+              class="col-span-2"
+              [headerMessage]="'eventOverview.noAuthOrganiserReviewHeader' | transloco"
+              [messageDescription]="'eventOverview.noAuthOrganiserReviewSubheading' | transloco"
+            ></app-not-found-component>
+            <app-button-primary
+              class="col-span-2 w-full"
+              (click)="this.redirectToLogin()"
+              [classAddons]="'w-full'"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Log in'"
+            ></app-button-primary>
+          } @else {
+            <div class="w-full grid grid-cols-2 gap-2">
+              @if (this.userEventOrganiserReview == null) {
+                <app-not-found-component
+                  class="col-span-2"
+                  [headerMessage]="'eventOverview.noUserOrganiserReviewHeader' | transloco"
+                  [messageDescription]="'eventOverview.noUserOrganiserReviewSubheading' | transloco"
+                ></app-not-found-component>
+                <app-button-primary
+                  class="col-span-2"
+                  (click)="this.openAddModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DEFAULT'"
+                  [buttonContent]="'spotReview.create' | transloco"
+                ></app-button-primary>
+              } @else {
+                <app-organiser-reiew-card
+                  [review]="this.userEventOrganiserReview"
+                  class="col-span-2"
+                ></app-organiser-reiew-card>
+                <app-button-primary
+                  (click)="this.openEditModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DEFAULT'"
+                  [buttonContent]="'eventReview.update' | transloco"
+                ></app-button-primary>
+                <app-button-primary
+                  (click)="this.openDeleteReviewModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DANGER'"
+                  [buttonContent]="'eventReview.delete' | transloco"
+                ></app-button-primary>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="w-full flex flex-col justify-start items-center">
+          @if (this.eventOrganiserReviews.length == 0) {
+            <app-not-found-component
+              class="col-span-2"
+              [headerMessage]="'eventOverview.noOtherOrganiserReviewHeading' | transloco"
+              [messageDescription]="'eventOverview.noOtherOrganiserReviewSubheading' | transloco"
+            ></app-not-found-component>
+          } @else {
+            <div class="w-full flex flex-row justify-center items-center gap-2 mb-4">
+              @for (option of this.reviewSortOptions; track $index) {
+                <app-sorting-selector
+                  [sortingMethod]="this.reviewSortTranslationKeys[option] | transloco"
+                  [isSelected]="this.reviewSortOption === option"
+                  (selectedMethod)="this.onReviewSortChange(option)"
+                ></app-sorting-selector>
+              }
+            </div>
+            <div class="w-full flex flex-col items-stretch justify-start gap-4">
+              @for (review of this.eventOrganiserReviews; track $index) {
+                <app-organiser-reiew-card [review]="review"></app-organiser-reiew-card>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

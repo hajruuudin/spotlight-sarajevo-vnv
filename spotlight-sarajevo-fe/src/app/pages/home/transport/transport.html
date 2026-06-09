@@ -1,0 +1,206 @@
+<section
+  id="transportHeaderSection"
+  [style.backgroundImage]="
+    this.session.theme() == 'dark'
+      ? 'url(/assets/images/SECTION_BG_03.png)'
+      : 'url(/assets/images/SECTION_BG_03_L.png)'
+  "
+  style="background-size: cover; background-position: center"
+  class="w-full h-auto pt-3 pb-8 flex flex-col justify-start items-center"
+>
+  <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+    <app-page-header
+      class="max-w-application py-4"
+      [title]="'transport.headerTitle' | transloco"
+      [subtitle]="'transport.headerSubtitle' | transloco"
+    ></app-page-header>
+
+    <div class="w-full flex flex-row flex-wrap justify-center items-center gap-3 mt-4">
+      <app-button-primary
+        [buttonContent]="'transport.tramcar' | transloco"
+        [isActive]="selectedMethodId === TransportType.TRAMCAR"
+        (pressed)="selectMethod(TransportType.TRAMCAR)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
+
+      <app-button-primary
+        [buttonContent]="'transport.trolley' | transloco"
+        [isActive]="selectedMethodId === TransportType.TROLLEY"
+        (pressed)="selectMethod(TransportType.TROLLEY)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
+
+      <app-button-primary
+        [buttonContent]="'transport.bus' | transloco"
+        [isActive]="selectedMethodId === TransportType.BUS"
+        (pressed)="selectMethod(TransportType.BUS)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
+
+      <app-button-primary
+        [buttonContent]="'transport.taxi' | transloco"
+        [isActive]="selectedMethodId === TransportType.TAXI"
+        (pressed)="selectMethod(TransportType.TAXI)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
+    </div>
+
+    @if (selectedMethod) {
+      <section
+        id="transportDescriptionSection"
+        class="w-full h-auto py-8 flex flex-col xl:flex-row justify-start items-center"
+      >
+        <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+          <app-subheading [sectionHead]="'transport.description' | transloco"></app-subheading>
+
+          <p class="text-base md:text-lg text-center mt-4 max-w-3xl">
+            {{
+              session.language() === 'en'
+                ? selectedMethod.methodDescriptionEn
+                : selectedMethod.methodDescriptionBs
+            }}
+          </p>
+        </div>
+      </section>
+    }
+  </div>
+</section>
+
+<section
+  id="transportMapSection"
+  class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto py-8 flex flex-col justify-start items-center"
+>
+  <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+    <app-subheading [sectionHead]="'transport.coverage' | transloco"></app-subheading>
+
+    <div class="w-full h-[500px] rounded-2xl overflow-hidden mt-4 z-10">
+      <div
+        leaflet
+        [leafletOptions]="this.mapOptions"
+        (leafletMapReady)="onMapReady($event)"
+        class="w-full h-full"
+      ></div>
+    </div>
+  </div>
+</section>
+
+@if (!isTaxi()) {
+  <section
+    id="transportLinesSection"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full  h-auto py-8 flex flex-col justify-start items-center"
+  >
+    <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+      <app-subheading [sectionHead]="'transport.lines' | transloco"></app-subheading>
+
+      <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="dark:bg-(--secondary-400) bg-(--primary-200)">
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.lineNumber' | transloco }}
+              </th>
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.lineRoute' | transloco }}
+              </th>
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.operator' | transloco }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (line of transportLines; track line.id) {
+              <tr
+                class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors"
+              >
+                <td class="px-4 py-3 text-sm text-left md:text-base font-medium">
+                  {{ line.lineNumber }}
+                </td>
+                <td class="px-4 py-3 text-sm text-left md:text-base">
+                  {{ line.lineStart }} - {{ line.lineEnd }}
+                </td>
+                <td class="px-4 py-3 text-sm text-left md:text-base">
+                  {{ line.transportOperatorName }}
+                </td>
+              </tr>
+            }
+            @if (transportLines.length === 0) {
+              <tr>
+                <td colspan="3" class="px-4 py-8 text-center text-sm md:text-base opacity-60">
+                  No lines available
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+}
+
+@if (isTaxi()) {
+  <section
+    id="taxiServicesSection"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full h-auto py-8 flex flex-col justify-start items-center"
+  >
+    <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+      <app-subheading [sectionHead]="'transport.taxiServices' | transloco"></app-subheading>
+
+      <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="dark:bg-(--secondary-400) bg-(--primary-400)">
+              <th class="px-4 py-3 font-semibold text-sm md:text-base">
+                {{ 'transport.taxiCompany' | transloco }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-sm md:text-base">
+                {{ 'transport.taxiPhone' | transloco }}
+              </th>
+              <th class="px-4 py-3 font-semibold text-sm md:text-base">
+                {{ 'transport.taxiWebsite' | transloco }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (company of taxiCompanies; track company.id) {
+              <tr
+                class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors"
+              >
+                <td class="px-4 py-3 text-sm md:text-base font-medium">
+                  {{ company.company }}
+                </td>
+                <td class="px-4 py-3 text-sm md:text-base">
+                  {{ company.phone }}
+                </td>
+                <td class="px-4 py-3 text-sm md:text-base">
+                  @if (company.website) {
+                    <a
+                      [href]="'https://' + company.website"
+                      target="_blank"
+                      class="dark:text-(--primary-600) text-(--primary-200) hover:underline"
+                    >
+                      {{ company.website }}
+                    </a>
+                  } @else {
+                    {{ 'transport.noWebsite' | transloco }}
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+}

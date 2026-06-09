@@ -1,0 +1,54 @@
+@if (this.buttonIcon == "DEFAULT") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span>{{ this.buttonContent }}</span>
+</button>
+} @else if (this.buttonIcon == "GOOGLE") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span class="w-full h-full flex flex-row justify-center items-center">
+    <app-google-icon [theme]="this.buttonTheme"></app-google-icon>
+  </span>
+</button>
+} @else if (this.buttonIcon == "GOOGLE_REGISTER") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span class="w-full h-full flex flex-row justify-center items-center">
+    <app-google-icon [theme]="this.buttonTheme"></app-google-icon>
+    <span>oogle Register</span>
+  </span>
+</button>
+} @else if (this.buttonIcon == "COLLECTION_ADD_EDIT") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span class="w-full h-full flex flex-row justify-center items-center space-x-2">
+    {{ this.buttonContent }}
+  </span>
+</button>
+} @else if (this.buttonIcon == "MARK_WILL_ATTEND") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span class="w-full h-full flex flex-row justify-center items-center">
+    {{ this.buttonContent }}
+  </span>
+</button>
+} @else if (this.buttonIcon == "MARK_VISITED") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span class="w-full h-full flex flex-row justify-center items-center">
+    <app-spots-icon></app-spots-icon><span>{{ this.buttonContent }}</span>
+  </span>
+</button>
+}

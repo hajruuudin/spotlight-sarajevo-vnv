@@ -1,0 +1,13 @@
+<textarea
+  [ngClass]="
+    this.classAddons +
+    ' rounded-2xl dark:bg-(--background-300) bg-(--background-900) px-4 py-2 font-semibold outline-none border-2  dark:border-(--primary-400) border-(--primary-900) dark:focus:border-white focus:border-(--primary-100) hover:border-(--primary-200) transition-colors duration-200'
+  "
+  [placeholder]="this.placeholder"
+  [id]="this.id"
+  cols="10"
+  rows="10"
+  [value]="this.value"
+  (input)="onInput($event)"
+  (blur)="onTouched()"
+></textarea>

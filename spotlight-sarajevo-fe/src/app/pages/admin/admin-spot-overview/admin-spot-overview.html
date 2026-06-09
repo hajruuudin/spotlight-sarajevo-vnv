@@ -1,0 +1,34 @@
+<section class="max-w-application w-full flex flex-col justify-start items-start gap-8 mx-auto px-4 py-6">
+  <app-page-header 
+    [title]="'Spot Overview'"
+    [subtitle]="'Overview of all spots in the system. You can search, edit, and delete spots, as well as manage reviews for spot owners.'"
+  ></app-page-header>
+
+  <form class="w-full" [formGroup]="this.tableSearchForm">
+    <app-search-bar
+    formControlName="searchTerm"
+    [style]="'ADMIN'"
+    [placeholder]="'Search spots based on their name...'"
+    (search)="handleSpotSearch()"
+  ></app-search-bar>
+  </form>
+  
+
+  <app-spot-overview-table
+    [columnDefinitions]="this.tableDefinitions"
+    [tableData]="this.tableShorthandData"
+    [itemOverview]="this.tableSelectedItem"
+    [spotReviews]="this.tableSpotReviews"
+    [isLoadingReviews]="this.isLoadingReviews"
+    [currentPage]="this.currentPage"
+    [totalItems]="this.totalItems"
+    [totalPages]="this.totalPages"
+    (onSaveChange)="this.handleUpdateItem($event)"
+    (onOverviewSelect)="handleOverviewSelect($event)"
+    (onDeleteItem)="handleDeleteItem($event)"
+    (onNextPage)="handleNextPage($event)"
+    (onPreviousPage)="handlePreviousPage($event)"
+    (onReviewLoadMore)="handleReviewLoadMore($event)"
+    (onReviewSortChange)="handleReviewSortChange($event)"
+    ></app-spot-overview-table>
+</section>

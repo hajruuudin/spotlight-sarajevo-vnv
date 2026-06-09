@@ -1,0 +1,35 @@
+<div class="w-full h-screen flex flex-col justify-center items-center dark:bg-(--background-100) bg-(--background-900)">
+  <div class="max-w-application px-4 md:px-8 flex flex-col justify-center items-center w-full">
+    <!-- 404 Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-9xl md:text-[150px] font-bold dark:text-(--primary-600) text-(--primary-400) mb-4">
+        404
+      </h1>
+      <h2 class="text-3xl md:text-5xl font-bold mb-2">
+        {{ 'notFound.pageTitle' | transloco }}
+      </h2>
+    </div>
+
+    <!-- Not Found Component -->
+    <div class="mb-8 flex justify-center w-full">
+      <app-not-found-component
+        [headerMessage]="'notFound.headerMessage' | transloco"
+        [messageDescription]="'notFound.description' | transloco"
+      ></app-not-found-component>
+    </div>
+
+    <!-- Additional Info -->
+    <p class="text-lg md:text-xl text-center mb-8 max-w-2xl opacity-80">
+      {{ 'notFound.helpText' | transloco }}
+    </p>
+
+    <!-- Navigation Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <app-button-primary
+        [buttonContent]="'notFound.backHome' | transloco"
+        (pressed)="navigateHome()"
+        classAddons="px-8"
+      ></app-button-primary>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<section
+  animate.enter="fade-in-animation"
+  id="guideHeaderSectionContainer"
+  [style.backgroundImage]="
+    this.session.theme() == 'dark'
+      ? 'url(/assets/images/TOURIST_GUIDE_BG_D.jpg)'
+      : 'url(/assets/images/TOURIST_GUIDE_BG_L.jpg)'
+  "
+  style="background-size: cover; background-position: center"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="guideHeaderSection"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full"
+  >
+    <app-page-header
+      class="max-w-application py-4"
+      [title]="'guides.headerTitle' | transloco"
+      [subtitle]="'guides.headerSubtitle' | transloco"
+    ></app-page-header>
+
+    <div
+      class="w-full max-w-application h-auto grid grid-cols-1 md:grid-cols-2 gap-4 justify-start space-y-4 md:space-y-0 space-x-4 items-stretch py-4 pl-1"
+    >
+      @for (guide of mainGuides; track guide.id) {
+        <app-tourist-guide-card
+          (click)="navigateToGuide(guide.slug)"
+          [lang]="this.session.language()!"
+          [guide]="guide"
+        ></app-tourist-guide-card>
+      }
+    </div>
+  </div>
+</section>
+
+<section
+  animate.enter="fade-in-animation"
+  id="guideMainSectionContainer"
+  class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="guideMainSection"
+    class="max-w-application px-4 md:px-8 py-8 flex flex-col justify-start items-center w-full"
+  >
+    <div class="flex flex-col w-full justify-center items-center h-auto">
+      <app-subheading
+        [sectionDescription]="'guides.recentTitle' | transloco"
+        [sectionHead]="'guides.recentSpan' | transloco"
+      ></app-subheading>
+    </div>
+      
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (guide of this.touristRelatedGuides; track guide.id) {
+        <app-tourist-guide-card
+          (click)="navigateToGuide(guide.slug)"
+          [lang]="this.session.language()!"
+          [guide]="guide"
+        ></app-tourist-guide-card>
+      }
+    </div>
+
+    <div class="flex flex-col w-full justify-center items-center h-auto">
+      <app-subheading
+        [sectionDescription]="'guides.allTitle' | transloco"
+        [sectionHead]="'guides.allSpan' | transloco"
+      ></app-subheading>
+    </div>
+    <div class="w-full max-w-application h-auto grid grid-cols-1 md:grid-cols-2 py-4 gap-4">
+      @for (guide of this.allGuides; track guide.id) {
+        <app-tourist-guide-card
+          (click)="navigateToGuide(guide.slug)"
+          [lang]="this.session.language()!"
+          [guide]="guide"
+        ></app-tourist-guide-card>
+        <app-tourist-guide-card
+          (click)="navigateToGuide(guide.slug)"
+          [lang]="this.session.language()!"
+          [guide]="guide"
+        ></app-tourist-guide-card>
+        <app-tourist-guide-card
+          (click)="navigateToGuide(guide.slug)"
+          [lang]="this.session.language()!"
+          [guide]="guide"
+        ></app-tourist-guide-card>
+        <app-tourist-guide-card
+          (click)="navigateToGuide(guide.slug)"
+          [lang]="this.session.language()!"
+          [guide]="guide"
+        ></app-tourist-guide-card>
+      }
+    </div>
+  </div>
+</section>

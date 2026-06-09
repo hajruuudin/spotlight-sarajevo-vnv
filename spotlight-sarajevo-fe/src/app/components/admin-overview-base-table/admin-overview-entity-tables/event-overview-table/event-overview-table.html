@@ -1,0 +1,529 @@
+<section
+  class="max-w-application w-full rounded-2xl dark:bg-(--background-200) bg-(--background-800) flex flex-col justify-center items-stretch"
+>
+  <div
+    id="tableBody"
+    class="rounded-t-2xl w-full dark:bg-(--primary-200) bg-(--primary-200) text-white"
+  >
+    <!----------------------------------------------------------------->
+    <!------------------- TABLE COLUMN HEADERS ---------------------->
+    <!----------------------------------------------------------------->
+    <div
+      id="tableColumnHeaders"
+      class="w-full flex flex-row justify-between items-center gap-4 p-2 border-(--primary-700)"
+    >
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[0]  }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[1]  }}</div>
+      <div class="text-sm font-bold w-3/12">{{ this.columnDefinitions[2]  }}</div>
+      <div class="text-sm font-bold w-4/12">{{ this.columnDefinitions[3]  }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[4]  }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[5]  }}</div>
+      <div class="text-sm font-bold w-2/12"></div>
+    </div>
+
+    <div
+      id="tableDataContainer"
+      class="w-full dark:bg-(--background-100) bg-(--background-900) dark:text-white text-black flex flex-col justify-start items-stretch gap-2"
+    >
+    <!----------------------------------------------------------------->
+    <!----------------------- TABLE COLUMN DATA ----------------------->
+    <!----------------------------------------------------------------->
+      @for (item of this.tableData; track $index) {
+        <div class="w-full flex flex-col">
+          <div
+            class="w-full flex h-auto flex-row justify-between items-center text-center"
+            [class.bg-(--background-800)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-100)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-700)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-200)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-200)]="this.selectedItemId === item.id"
+            [class.dark:bg-(--accent-300)]="this.selectedItemId === item.id"
+          >
+            <span class="w-1/12 flex flex-col justify-center items-center">{{ item.id }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">{{ item.slug }}</span>
+            <span class="w-3/12 flex flex-col justify-center items-center">{{
+              this.columnLang == 'en' ? item.officialNameEn : item.officialNameBs
+            }}</span>
+            <span class="w-4/12 flex flex-col justify-center items-center">{{
+              this.columnLang == 'en' ? item.smallDescriptionEn : item.smallDescriptionBs
+            }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">{{
+              this.columnLang == 'en' ? item.categoryNameEn : item.categoryNameBs
+            }}</span>
+            <span class="w-1/12 flex flex-col justify-center items-center">{{ item.startDate | date }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">
+              <app-button-secondary
+                [buttonContent]="this.selectedItemId === item.id ? 'Hide' : 'View More'"
+                [size]="'SMALL'"
+                (pressed)="this.onOverviewSelected(item.id)"
+              >
+              </app-button-secondary>
+            </span>
+          </div>
+
+          <!----------------------------------------------------------------->
+          <!------------------ OVERVIEW EXTENDED SECTION ------------------->
+          <!----------------------------------------------------------------->
+          <div
+            class="w-full border-t border-b border-(--primary-700) dark:border-(--primary-400) transition-all duration-300 ease-in-out overflow-hidden"
+            [class.max-h-0]="this.selectedItemId !== item.id"
+            [class.max-h-auto]="this.selectedItemId === item.id"
+            [class.opacity-0]="this.selectedItemId !== item.id"
+            [class.opacity-100]="this.selectedItemId === item.id"
+          >
+            <div
+              class="w-full p-3 bg-(--background-900) dark:bg-(--background-200) text-black dark:text-white flex flex-col gap-3"
+            >
+              <!-- Horizontally scrollable 5-column editor -->
+              <div
+                class="w-full overflow-x-auto rounded-2xl border border-(--primary-700) dark:border-(--primary-400)"
+              >
+                <div
+                  class="min-w-[1800px] grid grid-cols-5 gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
+                >
+
+                  <!-- ================================================== -->
+                  <!-- Column 1: BASIC INFO                                -->
+                  <!-- ================================================== -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Basic Details</h4>
+
+                    <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Slug</span>
+                        <app-text-input classAddons="w-full" formControlName="slug"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Official Name BA</span>
+                        <app-text-input classAddons="w-full" formControlName="officialNameBs"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Official Name EN</span>
+                        <app-text-input classAddons="w-full" formControlName="officialNameEn"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Small Description BA</span>
+                        <app-text-input classAddons="w-full" formControlName="smallDescriptionBs"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Small Description EN</span>
+                        <app-text-input classAddons="w-full" formControlName="smallDescriptionEn"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Full Description BS</span>
+                        <app-text-area
+                          classAddons="w-full"
+                          formControlName="fullDescriptionBs"
+                          [value]="this.itemOverview?.fullDescriptionBs!"
+                        ></app-text-area>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Full Description EN</span>
+                        <app-text-area
+                          classAddons="w-full"
+                          formControlName="fullDescriptionEn"
+                          [value]="this.itemOverview?.fullDescriptionEn!"
+                        ></app-text-area>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- ================================================== -->
+                  <!-- Column 2: LOCATION, CATEGORY & TAGS                -->
+                  <!-- ================================================== -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Location, Category & Tags</h4>
+
+                    <form [formGroup]="this.locationAttributesForm" class="flex flex-col gap-2">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Latitude</span>
+                        <app-text-input classAddons="w-full" type="number" formControlName="eventLat"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Longitude</span>
+                        <app-text-input classAddons="w-full" type="number" formControlName="eventLon"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Venue / Location Name</span>
+                        <app-text-input classAddons="w-full" formControlName="location"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Location Link Slug</span>
+                        <app-text-input classAddons="w-full" formControlName="locationLinkSlug"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Category</span>
+                        <app-select-group
+                          classAddons="w-full"
+                          formControlName="categoryId"
+                          [options]="this.categoryOptions"
+                          optionLabelKey="eventCategoryNameEn"
+                          optionValueKey="id"
+                        ></app-select-group>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Tags</span>
+                        <app-multiselect-group
+                          classAddons="w-full"
+                          formControlName="eventTagIds"
+                          [options]="this.tagOptions"
+                          [minSelections]="3"
+                          [maxSelections]="5"
+                          optionLabelKey="tagNameEn"
+                          optionValueKey="id"
+                        ></app-multiselect-group>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- ================================================== -->
+                  <!-- Column 3: EVENT DETAILS                             -->
+                  <!-- ================================================== -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Event Details</h4>
+
+                    <form [formGroup]="this.eventDetailsForm" class="flex flex-col gap-3">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Start Date</span>
+                        <input
+                          type="datetime-local"
+                          formControlName="startDate"
+                          class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-3 py-2 text-sm font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200"
+                        />
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">End Date</span>
+                        <input
+                          type="datetime-local"
+                          formControlName="endDate"
+                          class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-3 py-2 text-sm font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200"
+                        />
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Entry Price (BAM)</span>
+                        <app-text-input classAddons="w-full" type="number" formControlName="entryPrice"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Event Language</span>
+                        <app-text-input classAddons="w-full" formControlName="eventLanguage"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Age Limit</span>
+                        <app-text-input classAddons="w-full" type="number" formControlName="ageLimit"></app-text-input>
+                      </div>
+
+                      <!-- Cancel Refund -->
+                      <div
+                        class="rounded-2xl border-2 border-(--background-900) dark:border-(--background-400) bg-(--primary-900) dark:bg-(--background-300) p-3 flex flex-col gap-2"
+                      >
+                        <div class="flex justify-between items-center">
+                          <span class="font-semibold text-sm">Cancellation Refund</span>
+                          <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" formControlName="cancelRefund" class="cursor-pointer w-4 h-4" />
+                            <span class="text-xs font-semibold">Offered</span>
+                          </label>
+                        </div>
+                        <span class="text-xs opacity-60">
+                          {{ this.eventDetailsForm.get('cancelRefund')?.value ? 'Refunds are offered for late cancellations.' : 'No refunds on late cancellations.' }}
+                        </span>
+                      </div>
+
+                      <!-- Reservation Required -->
+                      <div
+                        class="rounded-2xl border-2 border-(--background-900) dark:border-(--background-400) bg-(--primary-900) dark:bg-(--background-300) p-3 flex flex-col gap-2"
+                      >
+                        <div class="flex justify-between items-center">
+                          <span class="font-semibold text-sm">Reservation Required</span>
+                          <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" formControlName="reservation" class="cursor-pointer w-4 h-4" />
+                            <span class="text-xs font-semibold">Required</span>
+                          </label>
+                        </div>
+                        <span class="text-xs opacity-60">
+                          {{ this.eventDetailsForm.get('reservation')?.value ? 'Reservation is required to attend.' : 'No reservation needed.' }}
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- ================================================== -->
+                  <!-- Column 4: IMAGES                                    -->
+                  <!-- ================================================== -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Images</h4>
+
+                    <!-- Thumbnail -->
+                    <div class="flex flex-col gap-2">
+                      <span class="text-xs font-semibold">Thumbnail Image</span>
+
+                      @if (this.itemOverview?.thumbnailImage && !this.newThumbnailPreview) {
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-(--primary-600)">
+                          <img [src]="this.itemOverview!.thumbnailImage.imageUrl" alt="Current Thumbnail" class="w-full h-32 object-cover" />
+                          <div class="absolute top-1 right-1 bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">Current</div>
+                        </div>
+                      }
+
+                      @if (this.newThumbnailPreview) {
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-green-500">
+                          <img [src]="this.newThumbnailPreview" alt="New Thumbnail" class="w-full h-32 object-cover" />
+                          <div class="absolute top-1 right-1 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">New</div>
+                          <button
+                            type="button"
+                            (click)="removeThumbnailSelection()"
+                            class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                          >
+                            ✕ Remove
+                          </button>
+                        </div>
+                      }
+
+                      <label
+                        class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+                      >
+                        <input type="file" accept="image/*" (change)="onThumbnailSelected($event)" class="hidden" />
+                        {{ this.newThumbnailPreview ? 'Change Thumbnail' : this.itemOverview?.thumbnailImage?.imageUrl ? 'Replace Thumbnail' : 'Upload Thumbnail' }}
+                      </label>
+                    </div>
+
+                    <!-- New Images Upload -->
+                    <div class="flex flex-col gap-2 pt-2 border-t border-(--primary-600)">
+                      <span class="text-xs font-semibold">Add New Images</span>
+
+                      @if (this.newImagePreviews.length > 0) {
+                        <div class="grid grid-cols-2 gap-2">
+                          @for (preview of this.newImagePreviews; track $index) {
+                            <div class="relative rounded-xl overflow-hidden border-2 border-green-500">
+                              <img [src]="preview" alt="New Image" class="w-full h-24 object-cover" />
+                              <button
+                                type="button"
+                                (click)="removeNewImage($index)"
+                                class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      }
+
+                      <label
+                        class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+                      >
+                        <input type="file" accept="image/*" multiple (change)="onNewImagesSelected($event)" class="hidden" />
+                        + Add Images ({{ this.newImageFiles.length }} selected)
+                      </label>
+                    </div>
+
+                    <!-- Existing Images -->
+                    @if (this.itemOverview?.images && this.itemOverview!.images.length > 0) {
+                      <div class="flex flex-col gap-2 pt-2 border-t border-(--primary-600)">
+                        <span class="text-xs font-semibold">Existing Images</span>
+                        <div class="grid grid-cols-2 gap-2">
+                          @for (image of this.itemOverview!.images; track image.id) {
+                            <div class="flex flex-col gap-1">
+                              <div
+                                class="relative rounded-xl overflow-hidden"
+                                [class.border-2]="!isImageMarkedForDeletion(image.id)"
+                                [class.border-red-500]="isImageMarkedForDeletion(image.id)"
+                                [class.border-4]="isImageMarkedForDeletion(image.id)"
+                                [class.opacity-50]="isImageMarkedForDeletion(image.id)"
+                              >
+                                <img [src]="image.imageUrl" alt="Event Image" class="w-full h-24 object-cover" />
+                                @if (isImageMarkedForDeletion(image.id)) {
+                                  <div class="absolute inset-0 bg-red-500 bg-opacity-40 flex items-center justify-center">
+                                    <span class="text-white font-bold text-xs">MARKED FOR DELETION</span>
+                                  </div>
+                                }
+                              </div>
+                              <label class="flex items-center gap-2 cursor-pointer justify-center">
+                                <input
+                                  type="checkbox"
+                                  [checked]="isImageMarkedForDeletion(image.id)"
+                                  (change)="toggleImageForDeletion(image.id)"
+                                  class="cursor-pointer w-4 h-4"
+                                />
+                                <span class="text-xs font-semibold" [class.text-red-500]="isImageMarkedForDeletion(image.id)">Delete</span>
+                              </label>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+
+                  <!-- ================================================== -->
+                  <!-- Column 5: ORGANISER INFO & REVIEWS                  -->
+                  <!-- ================================================== -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200) h-full"
+                  >
+                    <h4 class="font-bold text-sm">Organiser</h4>
+
+                    @if (this.itemOverview?.organiser) {
+                      <!-- Organiser profile card -->
+                      <div class="flex flex-col gap-2">
+                        @if (this.itemOverview!.organiser.thumbnailImage) {
+                          <img
+                            [src]="this.itemOverview!.organiser.thumbnailImage"
+                            alt="Organiser"
+                            class="w-full h-24 object-cover rounded-xl border border-(--primary-600)"
+                          />
+                        }
+                        <div class="grid grid-cols-1 gap-1 text-xs">
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Name:</span>
+                            <span>{{ this.itemOverview!.organiser.organiserName }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Phone:</span>
+                            <span>{{ this.itemOverview!.organiser.organiserPhone }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Email:</span>
+                            <span class="truncate max-w-[120px]">{{ this.itemOverview!.organiser.organiserEmail }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Website:</span>
+                            <span class="truncate max-w-[120px]">{{ this.itemOverview!.organiser.organiserWebsite }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Category:</span>
+                            <span>{{ this.columnLang === 'en' ? this.itemOverview!.organiser.organiserCategoryNameEn : this.itemOverview!.organiser.organiserCategoryNameBs }}</span>
+                          </div>
+                        </div>
+                        <app-button-secondary
+                          [buttonContent]="'Edit Organiser'"
+                          [size]="'SMALL'"
+                          (pressed)="openOrganiserModal()"
+                        ></app-button-secondary>
+                      </div>
+
+                      <div class="w-full h-px bg-(--primary-700) dark:bg-(--primary-400)"></div>
+
+                      <!-- Rating stats -->
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-semibold">Organiser Ratings</span>
+                        <div class="grid grid-cols-2 gap-1 text-xs">
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Overall:</span>
+                            <span>{{ this.itemOverview!.organiser.overallRating | number: '1.0-2' }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Atmosphere:</span>
+                            <span>{{ this.itemOverview!.organiser.overallAtmosphere | number: '1.0-2' }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Quality:</span>
+                            <span>{{ this.itemOverview!.organiser.overallQuality | number: '1.0-2' }}</span>
+                          </div>
+                          <div class="flex flex-row justify-between">
+                            <span class="font-semibold">Enjoyability:</span>
+                            <span>{{ this.itemOverview!.organiser.overallEnjoyability | number: '1.0-2' }}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="w-full h-px bg-(--primary-700) dark:bg-(--primary-400)"></div>
+
+                      <!-- Sort controls -->
+                      <div class="flex flex-col gap-2">
+                        <span class="text-xs font-semibold">Sort Reviews By</span>
+                        <div class="flex flex-row gap-1 flex-wrap">
+                          <app-button-primary
+                            [buttonContent]="'Rating'"
+                            [buttonType]="'DEFAULT'"
+                            (click)="this.onReviewSortOptionChange('RATING_DESC')"
+                          ></app-button-primary>
+                          <app-button-primary
+                            [buttonContent]="'Alphabetical'"
+                            [buttonType]="'DEFAULT'"
+                            (click)="this.onReviewSortOptionChange('ALPHABETICAL_DESC')"
+                          ></app-button-primary>
+                        </div>
+                      </div>
+
+                      <!-- Review list -->
+                      <div
+                        class="flex-1 overflow-y-auto rounded-lg border border-(--primary-700) dark:border-(--primary-400) p-2 flex flex-col gap-2"
+                      >
+                        @if (this.isLoadingReviews) {
+                          <div class="text-xs opacity-50 text-center py-4">Loading reviews...</div>
+                        } @else if (this.organiserReviews && this.organiserReviews.length > 0) {
+                          @for (review of this.organiserReviews; track $index) {
+                            <app-organiser-reiew-card [review]="review"></app-organiser-reiew-card>
+                          }
+                        } @else {
+                          <div class="text-xs opacity-50 text-center py-4">No reviews</div>
+                        }
+                      </div>
+
+                      <!-- Load More -->
+                      <app-button-primary
+                        [buttonContent]="'Load More'"
+                        [buttonType]="'DEFAULT'"
+                        (click)="this.onReviewLoadMoreClicked()"
+                      ></app-button-primary>
+                    } @else {
+                      <div class="text-xs opacity-50 text-center py-4">
+                        Select an event to load organiser details.
+                      </div>
+                    }
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Action bar -->
+              <div
+                class="w-full rounded-2xl border border-(--primary-700) dark:border-(--primary-400) bg-(--background-800) dark:bg-(--background-100) p-3 flex flex-row justify-end items-center gap-3"
+              >
+                <app-button-primary
+                  [buttonContent]="'Delete Event'"
+                  [buttonType]="'DANGER'"
+                  [size]="'SMALL'"
+                  (pressed)="this.onDeleteItemSelected()"
+                ></app-button-primary>
+                <app-button-primary
+                  [buttonContent]="'Save Changes'"
+                  [buttonType]="'DEFAULT'"
+                  [size]="'SMALL'"
+                  (pressed)="this.onSaveChangeSelected()"
+                ></app-button-primary>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="tableFooter"
+    class="w-full dark:bg-(--primary-200) bg-(--primary-200) text-white rounded-b-2xl flex p-2 flex-row justify-between items-center"
+  >
+    <div class="text-sm">Page {{ this.currentPage + 1 }} of {{ this.totalPages }}</div>
+    <div class="flex flex-row gap-4">
+      <app-button-primary
+        [buttonContent]="'Previous Page'"
+        [buttonType]="'DEFAULT'"
+        (click)="previousPage()"
+        [classAddons]="'p-2'"
+      ></app-button-primary>
+      <app-button-primary
+        [buttonContent]="'Next Page'"
+        [buttonType]="'DEFAULT'"
+        [classAddons]="'p-2'"
+        (click)="nextPage()"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>

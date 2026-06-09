@@ -1,0 +1,353 @@
+<section class="max-w-application w-full flex flex-col justify-start items-start gap-8 mx-auto px-4 py-6">
+  <app-page-header 
+    [title]="'admin.addEvent.title' | transloco"
+    [subtitle]="'admin.addEvent.subtitle' | transloco"
+  ></app-page-header>
+
+  <!-- Five Column Form Layout -->
+  <div class="w-full overflow-x-auto rounded-2xl border border-(--primary-700) dark:border-(--primary-400)">
+    <div
+      class="min-w-[1800px] grid grid-cols-5 gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
+    >
+      <!-- Column 1: BASIC INFORMATION, DESCRIPTIONS, NAMES, SLUG -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Basic Details</h4>
+
+        <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Slug *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="slug"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Official Name BA *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="officialNameBs"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Official Name EN *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="officialNameEn"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Small Description BA *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="smallDescriptionBs"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Small Description EN *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="smallDescriptionEn"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Full Description BS *</span>
+            <app-text-area
+              classAddons="w-full"
+              formControlName="fullDescriptionBs"
+            ></app-text-area>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Full Description EN *</span>
+            <app-text-area
+              classAddons="w-full"
+              formControlName="fullDescriptionEn"
+            ></app-text-area>
+          </div>
+        </form>
+      </div>
+
+      <!-- Column 2: LAT, LONG, LOCATION, CATEGORY AND TAGS -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Location, Category & Tags</h4>
+
+        <form [formGroup]="this.locationAttributesForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Latitude *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="number"
+              step="0.0001"
+              formControlName="latitude"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Longitude *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="number"
+              step="0.0001"
+              formControlName="longitude"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Location *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="location"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Location Link Slug *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="locationLinkSlug"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Category *</span>
+            <app-select-group
+              classAddons="w-full"
+              formControlName="categoryId"
+              [options]="this.categoryOptions"
+              optionLabelKey="categoryNameEn"
+              optionValueKey="id"
+            ></app-select-group>
+          </div>
+
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Tags *</span>
+            <app-multiselect-group
+              classAddons="w-full"
+              formControlName="eventTagIds"
+              [options]="this.tagOptions"
+              optionLabelKey="tagNameEn"
+              optionValueKey="id"
+            ></app-multiselect-group>
+          </div>
+        </form>
+      </div>
+
+      <!-- Column 3: EVENT DETAILS (DATES, PRICING, LANGUAGE, AGE LIMIT, RESERVATION) -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Event Details</h4>
+
+        <form [formGroup]="this.eventDetailsForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Start Date *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="datetime-local"
+              formControlName="startDate"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">End Date *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="datetime-local"
+              formControlName="endDate"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Entry Price *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="number"
+              step="0.01"
+              formControlName="entryPrice"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex items-center gap-2">
+            <input
+              type="checkbox"
+              formControlName="cancelRefund"
+              class="w-4 h-4 cursor-pointer"
+            />
+            <span class="font-extrabold text-sm">Cancellation Refund Available</span>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Event Language *</span>
+            <app-select-group
+              classAddons="w-full"
+              formControlName="eventLanguage"
+              [options]="this.eventLanguageOptions"
+              optionLabelKey="label"
+              optionValueKey="value"
+            ></app-select-group>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Age Limit *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="number"
+              formControlName="ageLimit"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex items-center gap-2">
+            <input
+              type="checkbox"
+              formControlName="reservation"
+              class="w-4 h-4 cursor-pointer"
+            />
+            <span class="font-extrabold text-sm">Requires Reservation</span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Column 4: THUMBNAIL IMAGE AND ADDITIONAL IMAGES -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Images</h4>
+
+        <!-- Thumbnail Section -->
+        <div class="flex flex-col gap-2">
+          <span class="text-xs font-semibold">Thumbnail Image</span>
+
+          @if (this.newThumbnailPreview) {
+            <div class="relative rounded-2xl overflow-hidden border-2 border-green-500">
+              <img
+                [src]="this.newThumbnailPreview"
+                alt="New Thumbnail"
+                class="w-full h-32 object-cover"
+              />
+              <div
+                class="absolute top-1 right-1 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold"
+              >
+                Selected
+              </div>
+              <button
+                type="button"
+                (click)="removeThumbnailSelection()"
+                class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+              >
+                ✕ Remove
+              </button>
+            </div>
+          }
+
+          <label
+            class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+          >
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onThumbnailSelected($event)"
+              class="hidden"
+            />
+            {{
+              this.newThumbnailPreview
+                ? 'Change Thumbnail'
+                : 'Upload Thumbnail'
+            }}
+          </label>
+        </div>
+
+        <!-- New Images Upload Section -->
+        <div class="flex flex-col gap-2 pt-2 border-t border-(--primary-600)">
+          <span class="text-xs font-semibold">Add Images</span>
+
+          @if (this.newImagePreviews.length > 0) {
+            <div class="grid grid-cols-2 gap-2">
+              @for (preview of this.newImagePreviews; track $index) {
+                <div
+                  class="relative rounded-xl overflow-hidden border-2 border-green-500"
+                >
+                  <img
+                    [src]="preview"
+                    alt="New Image"
+                    class="w-full h-24 object-cover"
+                  />
+                  <button
+                    type="button"
+                    (click)="removeNewImage($index)"
+                    class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                  >
+                    ✕
+                  </button>
+                </div>
+              }
+            </div>
+          }
+
+          <label
+            class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+          >
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              (change)="onNewImagesSelected($event)"
+              class="hidden"
+            />
+            + Add Images ({{ this.newImageFiles.length }} selected)
+          </label>
+        </div>
+      </div>
+
+      <!-- Column 5: ACTION BUTTONS & ORGANISER SELECTION -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 justify-start bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Actions & Organiser</h4>
+
+        <!-- Organiser Selection -->
+        <div class="flex flex-col gap-2 pb-3 border-b border-(--primary-600)">
+          <span class="text-xs font-semibold">Select Organiser *</span>
+          <app-select-group
+            classAddons="w-full"
+            [options]="this.organiserOptions"
+            optionLabelKey="label"
+            optionValueKey="value"
+            (valueChanged)="onOrganiserSelected($event)"
+          ></app-select-group>
+          
+          <button
+            type="button"
+            (click)="openOrganiserModal()"
+            class="w-full rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 text-sm"
+          >
+            + Add New Organiser
+          </button>
+
+          @if (this.selectedOrganiserName) {
+            <div class="text-xs font-semibold text-green-500 dark:text-green-400">
+              Selected: {{ this.selectedOrganiserName }}
+            </div>
+          }
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col gap-2">
+          <app-button-primary
+            [buttonContent]="'Create Event'"
+            (pressed)="onCreateEvent()"
+          ></app-button-primary>
+
+          <app-button-secondary
+            [buttonContent]="'Cancel'"
+            [size]="'SMALL'"
+            (pressed)="onCancel()"
+          ></app-button-secondary>
+        </div>
+
+        <div class="text-xs text-gray-500 dark:text-gray-400 pt-4 border-t border-(--primary-600)">
+          <p class="font-semibold mb-2">Required Fields:</p>
+          <ul class="list-disc pl-4 space-y-1">
+            <li>Slug, Names, Descriptions</li>
+            <li>Latitude & Longitude</li>
+            <li>Location & Category</li>
+            <li>Start & End Date</li>
+            <li>Organiser</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

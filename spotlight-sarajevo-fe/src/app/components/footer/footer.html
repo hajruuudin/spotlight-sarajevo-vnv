@@ -1,0 +1,65 @@
+<footer
+  [style.backgroundImage]="'url(/assets/images/WM.svg)'"
+  style="background-repeat: no-repeat; background-position: center; background-size: cover;"
+  class="dark:bg-(--secondary-100) bg-(--secondary-800) w-full h-auto px-4 py-2 flex flex-col justify-between items-center"
+>
+  <div
+    id="footerContentContainer"
+    class="w-full max-w-application grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 my-8"
+  >
+    <section class="flex flex-col items-center justify-start my-2 space-y-2">
+      <h4 class="font-bold text-2xl">{{ 'footer.features.title' | transloco }}</h4>
+      <span>{{ 'footer.features.home' | transloco }}</span>
+      <span>{{ 'footer.features.events' | transloco }}</span>
+      <span>{{ 'footer.features.spots' | transloco }}</span>
+      <span>{{ 'footer.features.tourist' | transloco }}</span>
+      <span>{{ 'footer.features.discover' | transloco }}</span>
+      <span>{{ 'footer.features.about' | transloco }}</span>
+    </section>
+
+    <section class="flex flex-col items-center justify-start my-2 space-y-2">
+      <h4 class="font-bold text-2xl">{{ 'footer.community.title' | transloco }}</h4>
+      <span>{{ 'footer.community.requests' | transloco }}</span>
+      <span>{{ 'footer.community.organiser' | transloco }}</span>
+      <span>{{ 'footer.community.owners' | transloco }}</span>
+    </section>
+
+    <section class="flex flex-col items-center justify-start my-2 space-y-2">
+      <h4 class="font-bold text-2xl">{{ 'footer.contact.title' | transloco }}</h4>
+      <span>{{ 'footer.contact.landing' | transloco }}</span>
+      <span>{{ 'footer.contact.instagram' | transloco }}</span>
+      <span>{{ 'footer.contact.facebook' | transloco }}</span>
+      <span>{{ 'footer.contact.linkedin' | transloco }}</span>
+      <span>{{ 'footer.contact.email' | transloco }}</span>
+    </section>
+
+    <section class="flex flex-col items-center justify-start my-2 space-y-2">
+      <h4 class="font-bold text-2xl">{{ 'footer.important.title' | transloco }}</h4>
+      <span>{{ 'footer.important.hotlines' | transloco }}</span>
+      <span>{{ 'footer.important.transport' | transloco }}</span>
+      <span>{{ 'footer.important.weatherInfo' | transloco }}</span>
+      <span>{{ 'footer.important.holidays' | transloco }}</span>
+      <span>{{ 'footer.important.traditions' | transloco }}</span>
+    </section>
+
+    <section class="flex flex-col items-center justify-start my-2 space-y-2">
+      <h4 class="font-bold text-2xl">{{ 'footer.legal.title' | transloco }}</h4>
+      <span>{{ 'footer.legal.terms' | transloco }}</span>
+      <span>{{ 'footer.legal.community' | transloco }}</span>
+      <span>{{ 'footer.legal.location' | transloco }}</span>
+      <span>{{ 'footer.legal.report' | transloco }}</span>
+    </section>
+
+    <section class="flex flex-col items-center justify-start my-2 space-y-2">
+      <h4 class="font-bold text-2xl">{{ 'footer.account.title' | transloco }}</h4>
+      <span>{{ 'footer.account.register' | transloco }}</span>
+      <span>{{ 'footer.account.login' | transloco }}</span>
+      <span>{{ 'footer.account.stats' | transloco }}</span>
+      <span>{{ 'footer.account.collections' | transloco }}</span>
+    </section>
+  </div>
+
+  <span class="italic my-4">{{ 'footer.subheading.text' | transloco}}</span>
+
+  <span>Copyright @ SpotlightSarajevo</span>
+</footer>

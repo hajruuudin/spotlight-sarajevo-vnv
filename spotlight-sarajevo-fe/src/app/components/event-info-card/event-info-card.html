@@ -1,0 +1,45 @@
+@switch (this.iconType) { @case ('DATE') {
+<app-bnw-date-icon [theme]="this.iconTheme" [classes]="this.iconSize"></app-bnw-date-icon>
+<span>{{ 'eventOverview.eventStart' | transloco}} {{ this.startDate | date:'short' }} </span>
+<span>{{ 'eventOverview.eventEnd' | transloco}} {{ this.endDate | date:'short' }} </span>
+<!-- ----==================---- -->
+} @case ('REFUND') {
+<app-bnw-event-cancel [theme]="this.iconTheme" [classes]="this.iconSize"></app-bnw-event-cancel>
+@if (this.cancelRefund) {
+    <span>{{ 'eventOverview.eventInfoCancelYes' | transloco }}</span>
+} @else {
+    <span>{{ 'eventOverview.eventInfoCancelNo' | transloco }}</span>
+}
+<!-- ----==================---- -->
+} @case ('LANG') {
+<app-bnw-event-lang-icon [theme]="this.iconTheme" [classes]="this.iconSize"></app-bnw-event-lang-icon>
+@if (this.language != null) {
+    <span>{{ 'eventOverview.eventInfoLangYes' | transloco}}{{this.language}}</span>
+} @else {
+    <span>{{ 'eventOverview.eventInfoLangNo' | transloco}}</span>
+}
+<!-- ----==================---- -->
+} @case ('PRICE') {
+<app-bnw-event-price-icon [theme]="this.iconTheme" [classes]="this.iconSize"></app-bnw-event-price-icon>
+@if (this.entryPrice != null) {
+    <span>{{ 'eventOverview.eventInfoPriceYes' | transloco}}{{this.entryPrice}}BAM</span>
+} @else {
+    <span>{{ 'eventOverview.eventInfoPriceNo' | transloco}}</span>
+}
+<!-- ----==================---- -->
+} @case ('RESERVATION') {
+<app-bnw-event-res-icon [theme]="this.iconTheme" [classes]="this.iconSize"></app-bnw-event-res-icon>
+@if (this.reservation) {
+    <span>{{ 'eventOverview.eventInfoReservationYes' | transloco}}</span>
+} @else {
+    <span>{{ 'eventOverview.eventInfoReservationNo' | transloco}}</span>
+}
+<!-- ----==================---- -->
+} @case ('AGE') {
+<app-bnw-event-age-icon [theme]="this.iconTheme" [classes]="this.iconSize"></app-bnw-event-age-icon>
+@if (this.ageRequirement != 0) {
+    <span>{{ 'eventOverview.eventInfoAgeYes' | transloco}}{{ this.ageRequirement }}</span>
+} @else {
+    <span>{{ 'eventOverview.eventInfoAgeNo' | transloco}}</span>
+}
+}}

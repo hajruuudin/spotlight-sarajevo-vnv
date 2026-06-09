@@ -1,0 +1,25 @@
+<div 
+  class="w-full p-4 rounded-xl border-2 transition-all cursor-pointer"
+  [ngClass]="getStatusColorClass()"
+>
+  <div class="flex flex-row justify-between items-start gap-2 mb-2">
+    <div class="flex flex-row items-center gap-2">
+      <span class="text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full dark:bg-(--secondary-400) bg-(--background-800)">
+        {{ getRequestTypeIcon() }}
+      </span>
+      <div class="flex flex-col">
+        <span class="text-xs font-medium opacity-70">{{ getRequestTypeLabel() | transloco }}</span>
+        <span class="text-xs opacity-50">{{ getObjectTypeLabel() | transloco }}</span>
+      </div>
+    </div>
+    <span class="text-xs opacity-50">{{ request.createdAt | date:'dd MMM yyyy' }}</span>
+  </div>
+  
+  <h4 class="font-bold text-base line-clamp-2 mb-1">
+    {{ request.requestHeader }}
+  </h4>
+  
+  <p class="text-sm opacity-70 line-clamp-3">
+    {{ request.requestDescription }}
+  </p>
+</div>

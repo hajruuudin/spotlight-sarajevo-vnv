@@ -1,0 +1,151 @@
+<!-- MAIN CONTAINER -->
+<section class="relative w-full h-full flex flex-col justify-start items-center z-20 bg-[url(/assets/images/WM.svg)] bg-no-repeat bg-center bg-size-[50em] px-12 py-4">
+    <!-- TOP NAVBAR OVERLAY -->
+    <div class="h-2 w-full rounded-2xl bg-white my-2">
+        <div [ngClass]="this.progressBarWidth + ' h-2 rounded-2xl bg-(--primary-400) transition-all'"></div>
+    </div>
+
+    <!-- FIRST SECTION - CREDENTIALS FORM -->
+    @if (isCredentialsSectionLoaded) {
+    <section id="credentialsSection" class="w-full h-auto flex flex-col justify-center md:justify-start items-center text-center my-4">
+        <h1 class="text-xl md:text-3xl font-semibold">{{ 'register.title' | transloco }}</h1>
+        <span>{{ 'register.sectionDescription' | transloco }}</span>
+
+        <form [formGroup]="this.systemCredentialsForm" class="w-full h-auto flex flex-col justify-center items-center space-y-2 mt-4">
+            <div class="flex flex-col sm:flex-row w-full justify-center items-center space-y-2 sm:space-y-0 space-x-0 sm:space-x-2">
+                <app-text-input 
+                    classAddons="w-full" 
+                    [placeholder]="'register.firstName' | transloco"
+                    id="firstName"
+                    type="text"
+                    formControlName="firstName"
+                ></app-text-input>
+                <app-text-input 
+                    classAddons="w-full"
+                    [placeholder]="'register.lastName' | transloco"
+                    id="lastName"
+                    type="text"
+                    formControlName="lastName"
+                ></app-text-input>
+            </div>
+
+            <app-text-input 
+                    classAddons="w-full"
+                    [placeholder]="'register.email' | transloco"
+                    id="email"
+                    type="email"
+                    formControlName="email"
+            ></app-text-input>
+
+            <div class="flex flex-col sm:flex-row w-full justify-center items-center space-y-2 sm:space-y-0 space-x-0 sm:space-x-2">
+                <app-text-input 
+                    classAddons="w-full" 
+                    [placeholder]="'register.password' | transloco"
+                    id="password"
+                    type="password"
+                    formControlName="password"
+                ></app-text-input>
+                <app-text-input 
+                    classAddons="w-full"
+                    [placeholder]="'register.repeatPassword' | transloco"
+                    id="repeatPassword"
+                    type="password"
+                    formControlName="repeatPassword"
+                ></app-text-input>
+            </div>
+
+            <div class="w-1/2 h-1 rounded-full bg-(--primary-900) my-2"></div>
+
+            <div class="w-full flex flex-col md:flex-row justify-center items-center space-y-2 md:space-x-2 md:space-y-0 mt-2">
+                <app-button-regular (click)="initialiseSystemCredentials()" [buttonContent]="'register.registerButton' | transloco" classAddons="w-full" [buttonTheme]="this.session.theme()"></app-button-regular>
+                <app-button-regular (click)="this.signInWithGoogleCustom()" buttonContent="" buttonIcon="GOOGLE_REGISTER" classAddons="w-full" [buttonTheme]="this.session.theme()"></app-button-regular>
+            </div>
+
+            <span>{{ 'register.loginRedirect' | transloco }}<a routerLink="/auth/login" class="font-bold"> {{ 'register.loginRedirectLink' | transloco }}</a></span>
+        </form>
+    </section>
+    }
+
+    <!-- SECOND SECTION - SELECTING SPOT CATEGORIES -->
+    @if (isSpotCategoriesSectionLoaded) {
+    <section id="spotCategorySection" class="w-full h-auto flex flex-col justify-center md:justify-start items-center text-center my-4">
+        <h1 class="text-xl md:text-3xl font-semibold">{{ 'register.categorySectionTitle' | transloco }} {{ this.registeredFirstName }}!</h1>
+        <span>{{ 'register.categorySectionDescription' | transloco }}</span>
+
+        <div id="spotCategoryOptions" class="flex flex-row flex-wrap justify-center items-center space-x-2 h-96 md:h-64 overflow-y-scroll">
+            @for (category of this.allSpotCategories; track category.id) {
+                <app-category-selector 
+                    [categoryName]="this.session.language() == 'en' ? category.spotCategoryNameEn : category.spotCategoryNameBs"
+                    [categoryDescription]="this.session.language() == 'en' ? category.spotCategoryDescriptionEn : category.spotCategoryDescriptionBs"
+                    [type]="'spot'"
+                    [isDisabled]="selectedSpotCategories.length >= 3 && !selectedSpotCategories.includes(category.id)"
+                    (hoverChange)="onCategoryHover($event)"
+                    (selectionChange)="addCategoryToSelected(true, category.id)"
+                ></app-category-selector>
+            }
+        </div>
+
+        <span class="hidden md:inline h-10 mb-4">{{ this.currentCategoryDescription }}</span>
+
+        <app-button-regular (click)="this.moveToEventCategoriesSection(this.selectedSpotCategories)" [buttonContent]="'register.categorySectionButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
+    </section>
+    }
+
+    <!-- THIRD SECTION - SELECTING EVENT CATEGORIES -->
+    @if (isEventCategoriesSectionLoaded) {
+    <section id="eventCategorySection" class="w-full h-auto flex flex-col justify-center md:justify-start items-center text-center my-4">
+        <h1 class="text-xl md:text-3xl font-semibold">{{ 'register.categorySectionEventsTitle' | transloco }}</h1>
+        <span>{{ 'register.categorySectionEventsDescription' | transloco }}</span>
+
+        <div id="eventCategoryOptions" class="flex flex-row flex-wrap justify-center items-center space-x-2 h-96 md:h-64 overflow-y-scroll">
+            @for (category of this.allEventCategories; track category.id) {
+                <app-category-selector 
+                    [categoryName]="this.session.language() == 'en' ? category.eventCategoryNameEn : category.eventCategoryNameBs"
+                    [categoryDescription]="this.session.language() == 'en' ? category.eventCategoryDescriptionEn : category.eventCategoryDescriptionBs"
+                    [type]="'event'"
+                    [isDisabled]="selectedEventCategories.length >= 3 && !selectedEventCategories.includes(category.id)"
+                    (hoverChange)="onCategoryHover($event)"
+                    (selectionChange)="addCategoryToSelected(false, category.id)"
+                ></app-category-selector>
+            }
+        </div>
+
+        <span class="hidden md:inline h-10 mb-4">{{ this.currentCategoryDescription }}</span>
+
+        <app-button-regular (click)="this.moveToSurveySection(this.selectedEventCategories)" [buttonContent]="'register.categorySectionEventsButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
+    </section>
+    }
+
+    <!-- FOURTH SECTION - ANSWERING THE SURVEY QUESTIONS -->
+    @if (isSurveySectionLoaded) {
+    <section id="eventCategorySection" class="w-full h-auto flex flex-col justify-center md:justify-start items-center text-center my-4">
+        <h1 class="text-xl md:text-3xl font-semibold">{{ 'register.surveyTitle' | transloco }}</h1>
+        <span>{{ 'register.surveyDescription' | transloco }}</span>
+
+        <div id="questionsContainer" class="w-full flex flex-col justify-around h-auto overflow-auto p-5 mb-2">
+            @for (question of this.questions; track question.id) {
+                <app-question-component
+                    [question]="this.session.language() == 'en' ? question.questionEn! : question.questionBa!"
+                    [isSelectedA]="question.isASelected"
+                    [isSelectedB]="question.isBSelected"
+                    (isSelectedAChanged)="questionASelected(question, $event)"
+                    (isSelectedBChanged)="questionBSelected(question, $event)"
+                ></app-question-component>
+            }
+        </div>        
+
+        <app-button-regular (click)="this.moveToCompletionSection()" [buttonContent]="'register.surveyButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
+    </section>
+    }
+
+    <!-- COMPLETION SCREEN AFTER USER IS REGISTERED -->
+    @if (isCompleteSectionLoaded) {
+    <section id="completeSection" class="w-full h-auto flex flex-col justify-center items-center text-center my-4">
+        <img src="/assets/images/LogoSolo.png" alt="Spotlight Sarajevo Logo" class="w-1/2 h-auto">
+        <h1 class="text-xl md:text-3xl font-semibold">{{ 'register.finalTitle' | transloco }}</h1>
+        <span>{{ 'register.finalDescription' | transloco }}</span>
+        <app-button-regular [buttonContent]="'register.finalButton' | transloco" classAddons="w-1/2 my-4" routerLink="/homepage"></app-button-regular>
+    </section>
+    }
+</section>
+

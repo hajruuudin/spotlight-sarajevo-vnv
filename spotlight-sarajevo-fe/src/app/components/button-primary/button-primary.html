@@ -1,0 +1,8 @@
+<button
+  (click)="handleClick()"
+  [ngClass]="
+    this.classAddons + getBaseClasses() + ' ' + getBgClass()
+  "
+>
+  <span>{{ buttonContent }}</span>
+</button>

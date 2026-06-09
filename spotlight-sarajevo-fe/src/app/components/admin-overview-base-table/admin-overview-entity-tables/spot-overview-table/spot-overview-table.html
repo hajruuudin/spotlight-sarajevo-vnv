@@ -1,0 +1,581 @@
+<section
+  class="max-w-application w-full rounded-2xl dark:bg-(--background-200) bg-(--background-800) flex flex-col justify-center items-stretch"
+>
+  <div
+    id="tableBody"
+    class="rounded-t-2xl w-full dark:bg-(--primary-200) bg-(--primary-200) text-white"
+  >
+    <!----------------------------------------------------------------->
+    <!--------------------- TABLE COLUMN HEADERS ---------------------->
+    <!----------------------------------------------------------------->
+    <div
+      id="tableColumnHeaders"
+      class="w-full flex flex-row justify-between items-center gap-4 p-2 border-(--primary-700)"
+    >
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[0] | transloco }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[1] | transloco }}</div>
+      <div class="text-sm font-bold w-3/12">{{ this.columnDefinitions[2] | transloco }}</div>
+      <div class="text-sm font-bold w-4/12">{{ this.columnDefinitions[3] | transloco }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[4] | transloco }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[5] | transloco }}</div>
+      <div class="text-sm font-bold w-2/12"></div>
+    </div>
+
+    <div
+      id="tableDataContainer"
+      class="w-full dark:bg-(--background-100) bg-(--background-900) dark:text-white text-black flex flex-col justify-start items-stretch gap-2"
+    >
+    <!----------------------------------------------------------------->
+    <!----------------------- TABLE COLUMN DATA ----------------------->
+    <!----------------------------------------------------------------->
+      @for (item of this.tableData; track $index) {
+        <div class="w-full flex flex-col">
+          <div
+            class="w-full flex h-auto flex-row justify-between items-center text-center"
+            [class.bg-(--background-800)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-100)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-700)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-200)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-200)]="this.selectedItemId === item.id"
+            [class.dark:bg-(--accent-300)]="this.selectedItemId === item.id"
+          >
+            <span class="w-1/12 flex flex-col justify-center items-center">{{ item.id }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">{{ item.slug }}</span>
+            <span class="w-3/12 flex flex-col justify-center items-center">{{
+              this.columnLang == 'en' ? item.officialNameEn : item.officialNameBs
+            }}</span>
+            <span class="w-4/12 flex flex-col justify-center items-center">{{
+              this.columnLang == 'en' ? item.smallDescriptionEn : item.smallDescriptionBs
+            }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">{{
+              this.columnLang == 'en' ? item.categoryNameEn : item.categoryNameBs
+            }}</span>
+            <span class="w-1/12 flex flex-col justify-center items-center">{{
+              item.combinedRating | zeroReview
+            }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center">
+              <app-button-secondary
+                [buttonContent]="this.selectedItemId === item.id ? 'Hide' : 'View More'"
+                [size]="'SMALL'"
+                (pressed)="this.onOverviewSelected(item.id)"
+              >
+              </app-button-secondary>
+            </span>
+          </div>
+
+          <!----------------------------------------------------------------->
+          <!------------------ OVERVIEW EXTENDED SECTION -------------------->
+          <!----------------------------------------------------------------->
+          <div
+            class="w-full border-t border-b border-(--primary-700) dark:border-(--primary-400) transition-all duration-300 ease-in-out overflow-hidden"
+            [class.max-h-0]="this.selectedItemId !== item.id"
+            [class.max-h-auto]="this.selectedItemId === item.id"
+            [class.opacity-0]="this.selectedItemId !== item.id"
+            [class.opacity-100]="this.selectedItemId === item.id"
+          >
+            <div
+              class="w-full p-3 bg-(--background-900) dark:bg-(--background-200) text-black dark:text-white flex flex-col gap-3"
+            >
+              <!-- Top section: horizontally scrollable editor columns -->
+              <div
+                class="w-full overflow-x-auto rounded-2xl border border-(--primary-700) dark:border-(--primary-400)"
+              >
+                <div
+                  class="min-w-[1800px] grid grid-cols-5 gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
+                >
+                  <!-- Column 1: BASIC INFORMATION, DESCRIPTIONS, NAMES, SLUG -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Basic Details</h4>
+
+                    <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Slug</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          formControlName="slug"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Official Name BA</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          formControlName="officialNameBs"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Official Name EN</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          formControlName="officialNameEn"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Small Description BA</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          formControlName="smallDescriptionBs"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Small Description EN</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          formControlName="smallDescriptionEn"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Address</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          formControlName="address"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Full Description BS</span>
+                        <app-text-area
+                          classAddons="w-full"
+                          formControlName="fullDescriptionBs"
+                          [value]="this.itemOverview?.fullDescriptionBs!"
+                        ></app-text-area>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Full Description EN</span>
+                        <app-text-area
+                          classAddons="w-full"
+                          formControlName="fullDescriptionEn"
+                          [value]="this.itemOverview?.fullDescriptionEn!"
+                        ></app-text-area>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- Column 2: LAT, LONG, ADDRESS, CATEGORY AND TAGS -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Location, Category & Tags</h4>
+
+                    <form [formGroup]="this.attributeInformationForm" class="flex flex-col gap-2">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Lattitude</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          type="number"
+                          formControlName="latitude"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Longitude</span>
+                        <app-text-input
+                          classAddons="w-full"
+                          type="number"
+                          formControlName="longitude"
+                        ></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Category</span>
+                        <app-select-group
+                          classAddons="w-full"
+                          formControlName="categoryId"
+                          [options]="this.categoryOptions"
+                          optionLabelKey="categoryNameEn"
+                          optionValueKey="id"
+                        ></app-select-group>
+                      </div>
+
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Tags</span>
+                        <app-multiselect-group
+                          classAddons="w-full"
+                          formControlName="spotTagIds"
+                          [options]="this.tagOptions"
+                          [minSelections]="3"
+                          [maxSelections]="5"
+                          optionLabelKey="tagNameEn"
+                          optionValueKey="id"
+                        ></app-multiselect-group>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- Column 3: WORK HOURS -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Work Hours</h4>
+
+                    <form [formGroup]="this.workHoursForm" class="flex flex-col gap-3">
+                      @for (control of this.workHoursArray.controls; track $index) {
+                        <div
+                          [formGroup]="$any(control)"
+                          class="rounded-2xl border-2 border-(--background-900) dark:border-(--background-400) bg-(--primary-900) dark:bg-(--background-300) p-3 flex flex-col gap-2 transition-colors duration-200 hover:dark:border-(--primary-600) hover:border-(--background-200)"
+                        >
+                          <div class="flex justify-between items-center">
+                            <span class="font-semibold">{{ $any(control).get('day')?.value }}</span>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                formControlName="isClosed"
+                                class="cursor-pointer w-4 h-4"
+                              />
+                              <span class="text-xs font-semibold">Closed</span>
+                            </label>
+                          </div>
+
+                          @if (!$any(control).get('isClosed')?.value) {
+                            <div class="flex gap-2 items-end">
+                              <div class="flex-1 flex flex-col gap-1">
+                                <label class="text-xs font-semibold">From</label>
+                                <input
+                                  type="time"
+                                  formControlName="startTime"
+                                  class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-3 py-2 text-sm font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200"
+                                />
+                              </div>
+                              <div class="flex-1 flex flex-col gap-1">
+                                <label class="text-xs font-semibold">To</label>
+                                <input
+                                  type="time"
+                                  formControlName="endTime"
+                                  class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-3 py-2 text-sm font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200"
+                                />
+                              </div>
+                            </div>
+                          }
+                          @if ($any(control).get('isClosed')?.value) {
+                            <div class="text-sm font-semibold text-red-500 dark:text-red-400">
+                              Closed
+                            </div>
+                          }
+                        </div>
+                      }
+                    </form>
+                  </div>
+
+                  <!-- Column 4: THUMBNAIL IMAGE AND ADDITIONAL IMAGES -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Images</h4>
+
+                    <!-- Thumbnail Section -->
+                    <div class="flex flex-col gap-2">
+                      <span class="text-xs font-semibold">Thumbnail Image</span>
+
+                      @if (this.itemOverview?.thumbnailImage && !this.newThumbnailPreview) {
+                        <div
+                          class="relative rounded-2xl overflow-hidden border-2 border-(--primary-600)"
+                        >
+                          <img
+                            [src]="this.itemOverview!.thumbnailImage.imageUrl"
+                            alt="Current Thumbnail"
+                            class="w-full h-32 object-cover"
+                          />
+                          <div
+                            class="absolute top-1 right-1 bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold"
+                          >
+                            Current
+                          </div>
+                        </div>
+                      }
+
+                      @if (this.newThumbnailPreview) {
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-green-500">
+                          <img
+                            [src]="this.newThumbnailPreview"
+                            alt="New Thumbnail"
+                            class="w-full h-32 object-cover"
+                          />
+                          <div
+                            class="absolute top-1 right-1 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold"
+                          >
+                            New
+                          </div>
+                          <button
+                            type="button"
+                            (click)="removeThumbnailSelection()"
+                            class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                          >
+                            ✕ Remove
+                          </button>
+                        </div>
+                      }
+
+                      <label
+                        class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          (change)="onThumbnailSelected($event)"
+                          class="hidden"
+                        />
+                        {{
+                          this.newThumbnailPreview
+                            ? 'Change Thumbnail'
+                            : this.itemOverview?.thumbnailImage?.imageUrl
+                              ? 'Replace Thumbnail'
+                              : 'Upload Thumbnail'
+                        }}
+                      </label>
+                    </div>
+
+                    <!-- New Images Upload Section -->
+                    <div class="flex flex-col gap-2 pt-2 border-t border-(--primary-600)">
+                      <span class="text-xs font-semibold">Add New Images</span>
+
+                      @if (this.newImagePreviews.length > 0) {
+                        <div class="grid grid-cols-2 gap-2">
+                          @for (preview of this.newImagePreviews; track $index) {
+                            <div
+                              class="relative rounded-xl overflow-hidden border-2 border-green-500"
+                            >
+                              <img
+                                [src]="preview"
+                                alt="New Image"
+                                class="w-full h-24 object-cover"
+                              />
+                              <button
+                                type="button"
+                                (click)="removeNewImage($index)"
+                                class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      }
+
+                      <label
+                        class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          (change)="onNewImagesSelected($event)"
+                          class="hidden"
+                        />
+                        + Add Images ({{ this.newImageFiles.length }} selected)
+                      </label>
+                    </div>
+
+                    <!-- Existing Images Section -->
+                    @if (this.itemOverview?.images && this.itemOverview!.images.length > 0) {
+                      <div class="flex flex-col gap-2 pt-2 border-t border-(--primary-600)">
+                        <span class="text-xs font-semibold">Existing Images</span>
+
+                        <div class="grid grid-cols-2 gap-2">
+                          @for (image of this.itemOverview!.images; track image.id) {
+                            <div class="flex flex-col gap-1">
+                              <div
+                                class="relative rounded-xl overflow-hidden"
+                                [class.border-2]="!isImageMarkedForDeletion(image.id)"
+                                [class.border-red-500]="isImageMarkedForDeletion(image.id)"
+                                [class.border-4]="isImageMarkedForDeletion(image.id)"
+                                [class.opacity-50]="isImageMarkedForDeletion(image.id)"
+                              >
+                                <img
+                                  [src]="image.imageUrl"
+                                  alt="Spot Image"
+                                  class="w-full h-24 object-cover"
+                                />
+                                @if (isImageMarkedForDeletion(image.id)) {
+                                  <div
+                                    class="absolute inset-0 bg-red-500 bg-opacity-40 flex items-center justify-center"
+                                  >
+                                    <span class="text-white font-bold text-xs"
+                                      >MARKED FOR DELETION</span
+                                    >
+                                  </div>
+                                }
+                              </div>
+                              <label class="flex items-center gap-2 cursor-pointer justify-center">
+                                <input
+                                  type="checkbox"
+                                  [checked]="isImageMarkedForDeletion(image.id)"
+                                  (change)="toggleImageForDeletion(image.id)"
+                                  class="cursor-pointer w-4 h-4"
+                                />
+                                <span
+                                  class="text-xs font-semibold"
+                                  [class.text-red-500]="isImageMarkedForDeletion(image.id)"
+                                  >Delete</span
+                                >
+                              </label>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+
+                  <!-- Column 5: REVIEWS AND RATINGS -->
+                  <div
+                    class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200) h-full"
+                  >
+                    <!-- Review Overview Stats -->
+                    <div class="flex flex-col gap-2">
+                      <h4 class="font-bold text-sm">Reviews</h4>
+
+                      <!-- Overall Rating -->
+                      <div class="flex flex-row justify-between items-center">
+                        <span class="text-xs font-semibold">Overall rating</span>
+                        <span
+                          class="text-xs font-bold px-2 py-1 rounded dark:bg-(--primary-300) bg-(--accent-900)"
+                        >
+                          {{ this.itemOverview?.combinedRating | number: '1.0-2' }}
+                        </span>
+                      </div>
+
+                      <!-- Rating Attributes (6 attributes with 2 decimal places) -->
+                      <div class="grid grid-cols-2 gap-1 text-xs">
+                        <div class="flex flex-row justify-between">
+                          <span class="font-semibold"
+                            >{{ 'spotReview.atmosphere' | transloco }}:</span
+                          >
+                          <span>{{ this.itemOverview?.combinedAtmosphere | number: '1.0-2' }}</span>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                          <span class="font-semibold"
+                            >{{ 'spotReview.accessibility' | transloco }}:</span
+                          >
+                          <span>{{
+                            this.itemOverview?.combinedAccessibility | number: '1.0-2'
+                          }}</span>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                          <span class="font-semibold"
+                            >{{ 'spotReview.staffKindness' | transloco }}:</span
+                          >
+                          <span>{{
+                            this.itemOverview?.combinedStaffKindness | number: '1.0-2'
+                          }}</span>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                          <span class="font-semibold"
+                            >{{ 'spotReview.affordability' | transloco }}:</span
+                          >
+                          <span>{{
+                            this.itemOverview?.combinedAffordability | number: '1.0-2'
+                          }}</span>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                          <span class="font-semibold"
+                            >{{ 'spotReview.cleanliness' | transloco }}:</span
+                          >
+                          <span>{{
+                            this.itemOverview?.combinedCleanliness | number: '1.0-2'
+                          }}</span>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                          <span class="font-semibold"
+                            >{{ 'spotReview.localeQuality' | transloco }}:</span
+                          >
+                          <span>{{
+                            this.itemOverview?.combinedLocaleQuality | number: '1.0-2'
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="w-full h-px bg-(--primary-700) dark:bg-(--primary-400)"></div>
+
+                    <!-- Sort Options -->
+                    <div class="flex flex-col gap-2">
+                      <span class="text-xs font-semibold">Sort Reviews By</span>
+                      <div class="flex flex-row gap-1 flex-wrap">
+                        <app-button-primary
+                          [buttonContent]="'spotOverview.sortRating' | transloco"
+                          [buttonType]="'DEFAULT'"
+                          (click)="this.onReviewSortOptionChange('RATING_DESC')"
+                        ></app-button-primary>
+
+                        <app-button-primary
+                          [buttonContent]="'spotOverview.sortAlphabetical' | transloco"
+                          [buttonType]="'DEFAULT'"
+                          (click)="this.onReviewSortOptionChange('ALPHABETICAL_DESC')"
+                        ></app-button-primary>
+                      </div>
+                    </div>
+
+                    <!-- Reviews Container (Scrollable) -->
+                    <div
+                      class="flex-1 overflow-y-auto rounded-lg border border-(--primary-700) dark:border-(--primary-400) p-2 flex flex-col gap-2"
+                    >
+                      @if (this.isLoadingReviews) {
+                        <div
+                          class="text-xs opacity-50 text-center py-4 flex items-center justify-center h-full"
+                        >
+                          <span>Loading reviews...</span>
+                        </div>
+                      } @else if (this.spotReviews && this.spotReviews.length > 0) {
+                        @for (review of this.spotReviews; track $index) {
+                          <app-admin-spot-review-card
+                            [review]="review"
+                          ></app-admin-spot-review-card>
+                        }
+                      } @else {
+                        <div class="text-xs opacity-50 text-center py-4">No reviews</div>
+                      }
+                    </div>
+
+                    <!-- Load More Button -->
+                    <app-button-primary
+                      [buttonContent]="'Load More'"
+                      [buttonType]="'DEFAULT'"
+                      (click)="this.onReviewLoadMoreClicked()"
+                    ></app-button-primary>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom section: fixed action bar -->
+              <div
+                class="w-full rounded-2xl border border-(--primary-700) dark:border-(--primary-400) bg-(--background-800) dark:bg-(--background-100) p-3 flex flex-row justify-end items-center gap-3"
+              >
+                <app-button-primary
+                  [buttonContent]="'Delete Spot'"
+                  [buttonType]="'DANGER'"
+                  [size]="'SMALL'"
+                  (pressed)="this.onDeleteItemSelected()"
+                ></app-button-primary>
+                <app-button-primary
+                  [buttonContent]="'Save Changes'"
+                  [buttonType]="'DEFAULT'"
+                  [size]="'SMALL'"
+                  (pressed)="this.onSaveChangeSelected()"
+                ></app-button-primary>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="tableFooter"
+    class="w-full dark:bg-(--primary-200) bg-(--primary-200) text-white rounded-b-2xl flex p-2 flex-row justify-between items-center"
+  >
+    <div class="text-sm">Page {{ this.currentPage + 1 }} of {{ this.totalPages }}</div>
+    <div class="flex flex-row gap-4">
+      <app-button-primary
+        [buttonContent]="'Previous Page'"
+        [buttonType]="'DEFAULT'"
+        (click)="previousPage()"
+        [classAddons]="'p-2'"
+      ></app-button-primary>
+      <app-button-primary
+        [buttonContent]="'Next Page'"
+        [buttonType]="'DEFAULT'"
+        [classAddons]="'p-2'"
+        (click)="nextPage()"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>

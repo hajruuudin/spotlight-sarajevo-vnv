@@ -1,0 +1,2 @@
+ALTER TABLE ss_tourist_guide
+    ADD COLUMN IF NOT EXISTS slug VARCHAR NOT NULL;

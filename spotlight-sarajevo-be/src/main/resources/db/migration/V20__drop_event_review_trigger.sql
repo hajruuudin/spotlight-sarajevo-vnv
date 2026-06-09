@@ -1,0 +1,1 @@
+DROP TRIGGER IF EXISTS trg_event_review_check ON ss_event_organiser_reviews;

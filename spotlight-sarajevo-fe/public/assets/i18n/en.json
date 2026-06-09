@@ -1,0 +1,568 @@
+{
+  "errors": {
+    "spot": {
+      "INVALID_REQUEST_CONTENT": "The provided spot information is invalid.",
+      "SPOT_NOT_FOUND": "The requested spot could not be found.",
+      "EMPTY_SPOT_REQUEST_BODY": "Please provide spot information to continue.",
+      "SPOT_UNAUTHORIZED_ACCESS": "You do not have permission to access this spot.",
+      "SPOT_UPDATE_EXCEPTION": "There was an error updating the spot. Please try again.",
+      "SPOT_REVIEW_NOT_FOUND": "The requested review could not be found.",
+      "SPOT_REVIEW_CONFLICT": "This review already exists or conflicts with another entry."
+    },
+    "event": {
+      "INVALID_REQUEST_CONTENT": "The provided event information is invalid.",
+      "EVENT_NOT_FOUND": "The requested event could not be found.",
+      "EVENT_UNAUTHORIZED_ACCESS": "You do not have permission to access this event.",
+      "EVENT_UPDATE_EXCEPTION": "There was an error updating the event. Please try again.",
+      "EVENT_ORGANISER_REVIEW_NOT_FOUND": "The organizer review could not be found."
+    },
+    "collection": {
+      "COLLECTION_FIND_UNAUTHORISED": "You do not have permission to view this collection.",
+      "COLLECTION_REQUEST_INVALID": "The collection request is invalid.",
+      "COLLECTION_NOT_FOUND": "The requested collection could not be found.",
+      "COLLECTION_UNAUTHORISED_ACCESS": "You do not have permission to modify this collection.",
+      "COLLECTION_INVALID_TYPE": "The collection type is invalid.",
+      "COLLECTION_ITEM_NOT_FOUND": "The item you are looking for is not in this collection.",
+      "COLLECTION_SYSTEM_EXCEPTION": "There was a system error with the collection. Please try again.",
+      "COLLECTION_NAME_CONFLICT": "A collection with this name already exists."
+    },
+    "touristGuide": {
+      "TOURIST_GUIDE_BAD_REQUEST": "The provided tourist guide information is invalid.",
+      "TOURIST_GUIDE_NOT_FOUND": "The requested tourist guide could not be found.",
+      "TOURIST_GUIDE_C_BR": "There was an error creating the tourist guide. Please try again.",
+      "TOURIST_GUIDE_C_AU": "You do not have permission to create or modify tourist guides.",
+      "TOURIST_GUIDE_C_SLUG": "A guide with this slug already exists."
+    },
+    "media": {
+      "MEDIA_C_BR": "There was an error processing the media file. Please try again."
+    },
+    "transport": {
+      "TRANSPORT_METHOD_NOT_FOUND": "The requested transport method could not be found.",
+      "TRANSPORT_INVALID_REQUEST": "The transport request information is invalid."
+    },
+    "auth" : {
+      "AUTH_INVALID_CREDENTIALS": "Invalid login credentials. Please try again.",
+      "AUTH_USER_NOT_FOUND": "No user found with this email.",
+      "AUTH_EMAIL_ALREADY_EXISTS": "A user with this email already exists.",
+      "AUTH_WEAK_PASSWORD": "The password is too weak. Please choose a stronger password.",
+      "AUTH_UNAUTHORIZED_ACCESS": "You do not have permission to access this resource.",
+      "AUTH_INVALID_TOKEN": "The token is invalid or has expired. Please log in again.",
+      "AUTH_SPOT_ID_MISSING": "Spot ID is required for this operation.",
+      "AUTH_EVENT_ID_MISSING": "Event ID is required for this operation."
+    }
+  },
+  "navbar": {
+    "homepage": "Homepage",
+    "browseSpots": "Browse Spots",
+    "browseEvents": "Browse Events",
+    "discover": "Discover",
+    "touristGuides": "Tourist Guides",
+    "collections": "Your Collections",
+    "communityRequests": "Community Requests",
+    "publicTransport": "Public Transport",
+    "profile": "Your Profile"
+  },
+  "common": {
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "adminNavbar": {
+    "dashboard": "Dashboard",
+    "dataOverview": "Data Overview",
+    "addNew": "Add New",
+    "spotsOverview": "Spots Overview",
+    "eventsOverview": "Events Overview",
+    "guidesOverview": "Guides Overview",
+    "usersOverview": "Users Overview",
+    "transportOverview": "Transport Overview",
+    "requestsOverview": "Requests Overview",
+    "addSpot": "Add Spot",
+    "addEvent": "Add Event",
+    "addGuide": "Add Guide"
+  },
+  "admin" : {
+    "dashboard" : {
+      "title" : "Admin Dashboard",
+      "subtitle" : "An overview of important information"
+    },
+    "spotOverview" : {
+      "title" : "Overview of Spots",
+      "subtitle" : "Spots and all of their information",
+      "tableKeys" : {
+        "id" : "ID",
+        "slug" : "SLUG",
+        "officialName" : "OFFICIAL NAME",
+        "smallDescription" : "SMALL DESCRIPTION",
+        "categoryName" : "CATEGORY NAME",
+        "thumbnail" : "THUMBNAIL",
+        "combinedRating" : "RATING"
+      },
+      "delete" : "Delete Spot",
+      "deleteConfirm" : "Are you sure you want to delete this spot? This action cannot be undone."
+    },
+    "addSpot" : {
+      "title" : "Create New Spot",
+      "subtitle" : "Add a new spot to the system"
+    },
+    "addEvent" : {
+      "title" : "Create New Event",
+      "subtitle" : "Add a new event to the system"
+    },
+    "eventOverview" : {
+      "title" : "Overview of Events",
+      "subtitle" : "Events and all of their information",
+      "delete" : "Delete Event",
+      "deleteConfirm" : "Are you sure you want to delete this event? This action cannot be undone."
+    },
+    "transportOverview" : {
+      "title" : "Overview of Public Transport",
+      "subtitle" : "Public Transport Methods and all of their information"
+    },
+    "usersOverview" : {
+      "title" : "Overview of Users",
+      "subtitle" : "Users and all of their information"
+    },
+    "requestsOverview" : {
+      "title" : "Overview of Requests",
+      "subtitle" : "Community Requests and all of their information"
+    }
+  },
+  "footer": {
+    "features": {
+      "title": "Features",
+      "home": "Homepage",
+      "events": "Events",
+      "spots": "Spots",
+      "tourist": "Tourist Guides",
+      "discover": "Discover",
+      "about": "About"
+    },
+    "community": {
+      "title": "Community",
+      "requests": "Community Requests",
+      "organiser": "Event Organisers",
+      "owners": "Local Owners"
+    },
+    "contact": {
+      "title": "Contact",
+      "landing": "Landing Page",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "email": "Email"
+    },
+    "important": {
+      "title": "Important",
+      "hotlines": "Emergency Numbers",
+      "transport": "Public Transport",
+      "weatherInfo": "Weather Info",
+      "holidays": "National Holidays",
+      "traditions": "Sarajevo Traditions"
+    },
+    "legal": {
+      "title": "Legal",
+      "terms": "Terms of Service",
+      "community": "Adding Events & Spots",
+      "location": "Location Consent",
+      "report": "Report an Error / Bug"
+    },
+    "account": {
+      "title": "Profile",
+      "register": "Register account",
+      "login": "Login",
+      "stats": "Your Statistics",
+      "collections": "Your Collections"
+    },
+    "subheading": {
+      "text": "A place to discover events, visit spots, learn about the culture and contribute to the community. Made in Sarajevo <3"
+    }
+  },
+  "register": {
+    "title": "Welcome to SpotlightSarajevo!",
+    "sectionDescription": "Where all events, spots and iconic moments are collected together! Please register Your account to use the Application",
+    "firstName": "First name...",
+    "lastName": "Last name...",
+    "email": "Email...",
+    "password": "Password...",
+    "repeatPassword": "Repeat password...",
+    "registerButton": "Register",
+    "loginRedirect": "Already have an account?",
+    "loginRedirectLink": "Login here!",
+    "categorySectionTitle": "Nice to meet You, ",
+    "categorySectionDescription": "Now, to better enhance Your experience, tell us which spots You like to visit the most. Select three categories that match Your vibe.",
+    "categorySectionButton": "Continue",
+    "categorySectionEventsTitle": "Now, onto Events!",
+    "categorySectionEventsDescription": "Lovely choices! Now, it's time to do the same for events. Select three categories that match Your vibe.",
+    "categorySectionEventsButton": "Continue",
+    "surveyTitle": "Lastly, a couple of questions...",
+    "surveyDescription": "We're almost done! Before finishing, please answer just a couple of questions for us to better uderstand who the users of our application are!",
+    "surveyButton": "Finalize",
+    "finalTitle": "Welcome aboard!",
+    "finalDescription": "Countless events and spots are waiting to be discovered! We wish You the best experience @ SpotlightSarajevo!",
+    "finalButton": "Homepage"
+  },
+  "login": {
+    "emailInput": "Email...",
+    "passwordInput": "Password...",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordLink": "Reset it here",
+    "register": "New to SpotlightSarajevo?",
+    "registerLink": "Register here!"
+  },
+  "homepage": {
+    "headerTitle": "Homepage",
+    "headerSubtitle": "An overview of recent happenings, Your favourites and headline events!",
+    "headlineSectionSpot": "Todays headline Spot",
+    "headlineSectionEvent": "Todays headline Event",
+    "headlineSectionFavourites": "Based on Your favourite spots",
+    "popularSectionSpotsSpan": "POPULAR",
+    "popularSectionSpots": "Always popular places in Sarajevo",
+    "popularSectionEventsSpan": "COMING UP",
+    "popularSectionEvents": "Upcoming events in Sarajevo",
+    "discoverSectionLandmarksSpan": "DISCOVER",
+    "discoverSectionLandmarks": "Discover Sarajevos Culture",
+    "discoverSectionCategoriesSpan": "CATEGORIES",
+    "discoverSectionCategories": "Explore Different Categories",
+    "viewAllButton": "View All",
+    "noEventsOnDateHeader": "No events on this date",
+    "noEventsOnDateDescription": "There are no events scheduled for the selected date. Try selecting a different day!"
+  },
+  "discover": {
+    "headerTitle": "Discover",
+    "headerSubtitle": "Discover the most popular spots & upcoming events!",
+    "recentSpan": "RECENT",
+    "recentTitle": "Recently added spots to explore",
+    "landmarkSpan": "LANDMARK",
+    "landmarkTitle": "Discover Historical sites & Landmarks",
+    "popularSpan": "POPULAR",
+    "popularTitle": "These are the top rated & popular spots in Sarajevo",
+    "eventSpan": "EVENTS",
+    "eventTitle": "View some upcoming events",
+    "favouriteSpotsSpan": "FAVOURITE SPOTS",
+    "favouriteSpotsTitle": "Based on Your favourite locals & spots!",
+    "favouriteEventsSpan": "FAVOURITE EVENTS",
+    "favouriteEventsTitle": "From Your personal event categories"
+  },
+  "search": {
+    "searchSpotsTitle": "Browse Spots",
+    "searchEventsTitle": "Browse Events",
+    "searchSpotsSubtitle": "Browse and serach for spots in Sarajevo",
+    "searchEventsSubtitle": "Browse and serach for events in Sarajevo",
+    "searchPaginationOne": "Showing",
+    "searchPagiationTwo": " out of ",
+    "searchSpotsPaginationThree": "spots",
+    "searchEventsPaginationThree": "events",
+    "searchLoadMoreButton": "Load More",
+    "searchFilters": "Filters",
+    "searchSorting": "Sorting",
+    "searchButton": "Search",
+    "searchReset": "Remove filters",
+    "viewCalendar": "View Calendar",
+    "viewMap": "View Map",
+    "showOnlyNonVisited": "Show Only Non-Visited Spots",
+    "showingNonVisited": "✓ Showing Non-Visited Spots Only"
+  },
+  "sorting": {
+    "ALPHABETICAL": "Alphabetical",
+    "POPULARITY": "By Populariy",
+    "DATE_UPCOMING": "Upcoming",
+    "DATE_PAST": "Past Events",
+    "RATING": "Top Rated",
+    "PROXIMITY": "Nearest to Me"
+  },
+  "spotOverview": {
+    "rating": "RATING",
+    "address": "ADDRESS",
+    "category": "CATEGORY",
+    "descriptionHead": "DESCRIPTION",
+    "descriptionTitle" : "About this Spot",
+  
+    "imagesHead": "SPOT IMAGES",
+    "imagesTitle": "View images of this spot",
+    "workHoursHead": "WORK HOURS",
+    "workHoursTitle": "Working hours of this spot",
+
+    "closed": "Closed",
+
+    "ratingsHead": "RATINGS",
+    "ratingsTitle": "Detailed ratings of this spot",
+
+    "locationHead": "SPOT LOCATION",
+    "locationTitle": "Location of this spot on the map",
+    "noGraphHeading": "No reviews are present for this spot",
+    "noGraphDesc": "Once reviews are made, a graph will be shown to represent the stats of the spot",
+    "reviewsHead": "REVIEWS",
+    "reviewsTitle": "What other users say about this place",
+    "noAuthReviewHeader": "Log in to leave reviews and see Your reviews!",
+    "noAuthReviewSubheading": "Its only a quick step! Create an account if You dont have one already!",
+    "noUserReviewHeader": "You havent reviewed this place.",
+    "noUserReviewSubheading": "Leave a review if You have visited. It helps others and the owners.",
+    "noOtherReviewHeading": "No other users have left reviews for this spot yet!",
+    "noOtherReviewSubheading": "Leave a review if You have visited. It helps others and the owners.",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Rating ↑",
+    "sortRatingDesc": "Rating ↓"
+  },
+  "spotReview": {
+    "create": "Add Review",
+    "update": "Edit Review",
+    "delete": "Delete Review",
+    "cancel": "Cancel",
+    "accessibility": "Accessibility",
+    "accessibilityDesc": "How easy is it to get to the location? Distance, transport?",
+    "affordability": "Affordability",
+    "affordabilityDesc": "What is the price-range of the spot? A lower rating indicated bigger prices",
+    "staffKindness": "Staff Kindness",
+    "staffKindnessDesc": "How easy is it to get to the location? Distance, transport?",
+    "atmosphere": "Atmosphere",
+    "atmosphereDesc": "What is the price-range of the spot? A lower rating indicated bigger prices",
+    "localeQuality": "Locale Quality",
+    "localeQualityDesc": "How easy is it to get to the location? Distance, transport?",
+    "cleanliness": "Cleanliness",
+    "cleanlinessDesc": "What is the price-range of the spot? A lower rating indicated bigger prices",
+    "rating": "Overall Rating",
+    "ratingDesc": "Your final overall rating of the spot, including all of the above mentioned statistics and Your own personal experiences (This carries the most weight in calculating the Spot review).",
+    "deleteConfirm": "Are You sure You want to delete Your current review for this Spot?",
+    "deleteConfirmMessage": "Yes, delete review"
+  },
+  "eventOverview": {
+    "startDate": "START DATE",
+    "location": "LOCATION",
+    "category": "CATEGORY",
+    "descriptionHead": "DESCRIPTION",
+    "descriptionTitle" : "About this Event",
+    "eventPassed": "Event Passed",
+    "willAttend": "Mark as will attend",
+    "haveAttended": "Mark as attended",
+    "unmarkWillAttend": "Unmark as will attend",
+    "unmarkHaveAttended": "Unmark as attended",
+  
+    "imagesHead": "EVENT IMAGES",
+    "imagesTitle": "View images of this event",
+
+    "locationHead": "EVENT LOCATION",
+    "locationTitle": "Location of this event on the map",
+
+    "organiserHead": "ORGANISER INFO",
+    "organiserTitle": "Information about the event organiser",
+
+    "reviewsHead": "ORGANISER REVIEWS",
+    "reviewsTitle": "What other users say about this organiser",
+
+    "eventStart": "Event starts at:",
+    "eventEnd": "Event ends at:",
+    "eventInfoAgeYes": "You have to be at least the required age to enter this event: ",
+    "eventInfoAgeNo": "There is no age limit for this event. Everyone is welcome!",
+    "eventInfoReservationYes": "You have to reserve a spot to enter this event. Contant the organisers.",
+    "eventInfoReservationNo": "There is no reservation required for this event. Come as You are!",
+    "eventInfoPriceYes": "This events lowest entry price ticket is: ",
+    "eventInfoPriceNo": "This event is free and carries to entry cost.",
+    "eventInfoCancelYes": "The organisers offer refunds for lat cancellations. Contact them for more info!",
+    "eventInfoCancelNo": "The organisers do NOT offer refunds for late cancellations.",
+    "eventInfoLangYes": "The predominant language of this event is: ",
+    "eventInfoLangNo": "There is no predominant langauge for this event. A multilingual atmosphere is welcome!",
+    "organiserName": "Organiser Name: ",
+    "organiserCreation": "Organisation formed / founded on: ",
+    "organiserCategory": "Predominantly makinng events in this category: ",
+    "organiserContact": "Contact options",
+    "contactPhone": "Phone: ",
+    "contactEmail": "Email: ",
+    "contactWebsite": "Website: ",
+    "noAuthOrganiserReviewHeader": "Log in to leave reviews and see your reviews!",
+    "noAuthOrganiserReviewSubheading": "It's only a quick step! Create an account if you don't have one already!",
+    "noUserOrganiserReviewHeader": "You haven't reviewed this organiser.",
+    "noUserOrganiserReviewSubheading": "Leave a review if you have attended this organiser's events. It helps them and other users of SpotlightSarajevo.",
+    "noOtherOrganiserReviewHeading": "No other users have left reviews for this organiser yet!",
+    "noOtherOrganiserReviewSubheading": "Seems empty and lonely. Leave a review and become the first!",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Rating ↑",
+    "sortRatingDesc": "Rating ↓"
+  },
+  "eventReview": {
+    "create": "Add Review",
+    "update": "Edit Review",
+    "delete": "Delete Review",
+    "cancel": "Cancel",
+    "atmosphere": "Atmosphere",
+    "atmosphereDesc": "What was the atmosphere of the event? Lively, good, welcome, warm? A higher rating indicates better feeling!",
+    "enjoyability": "Enjoyability",
+    "enjoyabilityDesc": "How enjoyabel was the event for its purpose? Did You have a good time with the organisation and activities?",
+    "quality": "Quality",
+    "qualityDesc": "What was the quality of the organisation? Infrastructure, time-value, staff, performance?",
+    "rating": "Overall Rating",
+    "ratingDesc": "Your final overall rating of the organiser, including all of the above mentioned statistics and Your own personal experiences (This carries the most weight in calculating the Organiser review).",
+    "deleteConfirm": "Are You sure You want to delete Your current review for this Organiser?",
+    "deleteConfirmMessage": "Yes, delete review"
+  },
+  "collection": {
+    "headerTitle": "Collections",
+    "headerSubtitle": "A view of the spots / events You saved.",
+    "addCollection": "Add Collection",
+    "create": "Create Collection",
+    "edit": "Edit Collection",
+    "addToCollection": "Add to collections",
+    "cancel": "Cancel",
+    "noCollectionItemsHeading": "No items in this collection",
+    "noCollectionItemsSubheading": "Add spots or events to this collection to view them here",
+    "finishAdd": "Finalise",
+    "collectionEmpty": " is empty!",
+    "collectionEmptyDesc": "Browse and add spots to make it less lonely!",
+    "allSpotsEmptyHeader": "You havent saved any spots yet!",
+    "allEventsEmptyHeader": "You havent saved any events yet!",
+    "allSpotsHeader": "All Spots",
+    "allEventsHeader": "All Events",
+    "allSpotsDesc": "Spots You've saved to Your collections",
+    "allEventsDesc": "Events You've saved to Your collections",
+    "allSpotsEmptyDesc": "All spots You save will show up here.",
+    "allEventsEmptyDesc": "All events You save will show up here",
+    "deleteConfirm": "Are You sure You want to delete this collection?",
+    "deleteConfirmMessage": "Yes, delete collection",
+    "noCollectionsHeader": "No collections",
+    "noCollectionsDesc": "Create collections on Your profile and then add to them!"
+  },
+  "guides": {
+    "headerTitle": "Tourist Guides",
+    "headerSubtitle": "Explore Sarajevo through the eyes of locals and tourists alike!",
+    "mainnSpan": "TOURIST GUIDES",
+    "mainTitle": "Popular Tourist Guides",
+    "recentSpan": "RECENT",
+    "recentTitle": "Recently added tourist guides",
+    "allSpan": "ALL GUIDES",
+    "allTitle": "Browse all available tourist guides",
+    "viewAllButton": "View All"
+  },
+   "guideOverview" : {
+    "aboutThisGuide" : "ABOUT THIS GUIDE"
+  },
+  "transport": {
+    "headerTitle": "Public Transport",
+    "headerSubtitle": "An overview of all available public transport methods in Sarajevo",
+    "tramcar": "Tramcar",
+    "trolley": "Trolley",
+    "bus": "Bus",
+    "taxi": "Taxi",
+    "coverage": "TRANSPORT COVERAGE",
+    "description": "DESCRIPTION",
+    "usefulInfo": "USEFUL INFORMATION",
+    "lines": "AVAILABLE LINES",
+    "lineNumber": "Line",
+    "lineRoute": "Route",
+    "operator": "Operator",
+    "taxiServices": "TAXI SERVICES",
+    "taxiCompany": "Company",
+    "taxiPhone": "Phone",
+    "taxiWebsite": "Website",
+    "noWebsite": "N/A"
+  },
+  "notFound": {
+    "pageTitle": "Page Not Found",
+    "headerMessage": "Oops! Something went wrong",
+    "description": "The page you're looking for doesn't exist or has been moved. Don't worry, you can navigate back to the homepage.",
+    "helpText": "If you believe this is an error, please report it to us or try navigating using the menu.",
+    "backHome": "Back to Homepage"
+  },
+  "profile" : {
+    "headerTitle": "Your Profile",
+    "headerSubtitle": "View and manage your personal information and settings.",
+
+    "statsSectionHead": "YOUR STATISTICS",
+    "statsSectionTitle": "Statistical overview of your activities in Sarajevo",
+    "spotsVisitedOne": "You have visited...",
+    "spotsVisitedTwo": "locations!",
+    "eventsAttendedOne": "You have attended...",
+    "eventsAttendedTwo": "events!",
+    "communityRequestsOne": "You have submitted...",
+    "communityRequestsTwo": "requests to the community!",
+
+    "communityRequestsSectionHead": "COMMUNITY REQUESTS",
+    "communityRequestsSectionTitle": "Help us improve SpotlightSarajevo",
+    "communityRequestsSectionParagraphOne": "Here you can submit requests to add new locations or events that are not currently in the SpotlightSarajevo system. Your requests help us keep our database current and relevant for all users.",
+    "communityRequestsSectionParagraphTwo": "If you know of a location or event that is not currently in the system, feel free to submit a report using our form, and our administrators will review your request as quickly as possible. The more locations and events in the system, the better for the entire city!",
+    "makeRequestButton": "Make Request",
+
+    "premiumAccountSectionHead": "PREMIUM",
+    "premiumAccountSectionTitle": "Become a premium member of SpotlightSarajevo!",
+    "premiumAccountSectionParagraphOne": "SpotlightSarajevo services are designed to provide a quick and easy guide through Sarajevo for all its residents and tourists. We value every individual who chooses to use our application and understand that each person has their own vision of the application's functionality.",
+    "premiumAccountSectionParagraphTwo": "Nevertheless, our developers always work hard to improve the application and populate the system as needed. That is why every part of the financial benefit the application generates is vitally important to us.",
+    "premiumAccountSectionParagraphThree": "We understand that paying for online services is not for everyone, so for people who choose to do so, we have added bonus features to the application to further enhance your experience. Become a monthly premium member of SpotlightSarajevo and enjoy additional benefits!",
+    "subscribeButton": "Subscribe Now",
+    "premiumBenefitOne": "Ad-free experience",
+    "premiumBenefitTwo": "Dedicated Map Search for locations and events",
+    "premiumBenefitThree": "Calendar view of upcoming events",
+    "premiumBenefitFour": "Unlimited custom collections",
+    "premiumStatusInfo": "You are currently a premium member! Thank you for supporting SpotlightSarajevo! Your benefits include:",
+    "unsubscribeButton": "Cancel subscription",
+    "logout": "Logout"
+  },
+  "premiumBenefits": {
+    "title": "Upgrade to Premium!",
+    "subtitle": "You've tried to access a premium feature. Upgrade your account to unlock exclusive features and enhance your SpotlightSarajevo experience!",
+    "benefitOne": "Full Map View - Browse all spots on an interactive map",
+    "benefitTwo": "Event Calendar - View all upcoming events in calendar format",
+    "benefitThree": "Proximity Search - Find spots nearest to your location",
+    "benefitFour": "Ad-Free Experience - Enjoy the app without interruptions",
+    "upgradeButton": "Upgrade to Premium"
+  },
+  "communityRequest": {
+    "headerTitle": "Community Requests",
+    "headerSubtitle": "Something not added? Make a request!",
+    "addRequestButton": "Add New Request",
+    "pendingColumn": "Pending",
+    "approvedColumn": "Approved",
+    "rejectedColumn": "Rejected",
+    "emptyPending": "No pending requests",
+    "emptyApproved": "No approved requests yet",
+    "emptyRejected": "No rejected requests",
+    "emptyAll": "You haven't made any requests yet",
+    "emptyAllDescription": "Click the button above to submit your first community request!",
+    "cardCreatedAt": "Created",
+    "modalTitle": "New Community Request",
+    "modalSubmit": "Submit Request",
+    "modalCancel": "Cancel",
+    "requestType": "Request Type",
+    "objectType": "Object Type",
+    "requestHeader": "Request Title",
+    "requestHeaderPlaceholder": "Enter a brief title for your request...",
+    "requestDescription": "Request Description",
+    "requestDescriptionPlaceholder": "Describe your request in detail...",
+    "requestTypeAdd": "Add New",
+    "requestTypeUpdate": "Update Existing",
+    "requestTypeRemove": "Remove",
+    "requestTypeOther": "Other",
+    "objectTypeSpot": "Spot / Location",
+    "objectTypeEvent": "Event",
+    "spotDetailsTitle": "Spot Details",
+    "eventDetailsTitle": "Event Details",
+    "spotName": "Spot Name",
+    "spotNamePlaceholder": "Enter the spot name...",
+    "spotAddress": "Address",
+    "spotAddressPlaceholder": "Enter the address...",
+    "spotDescription": "Description",
+    "spotDescriptionPlaceholder": "Describe the spot...",
+    "spotCategory": "Category",
+    "eventName": "Event Name",
+    "eventNamePlaceholder": "Enter the event name...",
+    "eventLocation": "Location",
+    "eventLocationPlaceholder": "Where is the event held?",
+    "eventDescription": "Description",
+    "eventDescriptionPlaceholder": "Describe the event...",
+    "eventDate": "Event Date",
+    "validationError": "Please fill in all required fields",
+    "submitSuccess": "Request submitted successfully!",
+    "submitError": "Failed to submit request. Please try again."
+  },
+  "spotMap": {
+    "searchPlaceholder": "Search spots on map...",
+    "filterButton": "Filter Categories",
+    "loadError": "Failed to load spots. Please try again."
+  },
+  "eventCalendar": {
+    "title": "Event Calendar",
+    "subtitle": "Browse events by date on the calendar",
+    "eventsOnDate": "Events on",
+    "noEventsHeader": "No events on this date",
+    "noEventsDescription": "There are no events scheduled for this date. Try selecting another day!"
+  }
+}

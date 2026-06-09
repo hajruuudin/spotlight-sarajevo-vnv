@@ -1,0 +1,438 @@
+<section
+  class="max-w-application w-full rounded-2xl dark:bg-(--background-200) bg-(--background-800) flex flex-col justify-center items-stretch"
+>
+  <div
+    id="tableBody"
+    class="rounded-t-2xl w-full dark:bg-(--primary-200) bg-(--primary-200) text-white"
+  >
+    <!----------------------------------------------------------------->
+    <!------------------- TABLE COLUMN HEADERS ----------------------->
+    <!----------------------------------------------------------------->
+    <div
+      id="tableColumnHeaders"
+      class="w-full flex flex-row justify-between items-center gap-4 p-2 border-(--primary-700)"
+    >
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[0] }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[1] }}</div>
+      <div class="text-sm font-bold w-3/12">{{ this.columnDefinitions[2] }}</div>
+      <div class="text-sm font-bold w-3/12">{{ this.columnDefinitions[3] }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[4] }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[5] }}</div>
+      <div class="text-sm font-bold w-2/12"></div>
+    </div>
+
+    <div
+      id="tableDataContainer"
+      class="w-full dark:bg-(--background-100) bg-(--background-900) dark:text-white text-black flex flex-col justify-start items-stretch gap-2"
+    >
+      <!----------------------------------------------------------------->
+      <!----------------------- TABLE COLUMN DATA ----------------------->
+      <!----------------------------------------------------------------->
+      @for (item of this.tableData; track $index) {
+        <div class="w-full flex flex-col">
+          <div
+            class="w-full flex h-auto flex-row justify-between items-center text-center"
+            [class.bg-(--background-800)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-100)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-700)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-200)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-200)]="this.selectedItemId === item.id"
+            [class.dark:bg-(--accent-300)]="this.selectedItemId === item.id"
+          >
+            <span class="w-1/12 flex flex-col justify-center items-center text-sm">{{ item.id }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center text-sm break-all">{{ item.slug }}</span>
+            <span class="w-3/12 flex flex-col justify-center items-center text-sm px-1">{{ item.guideTitleEn }}</span>
+            <span class="w-3/12 flex flex-col justify-center items-center text-sm px-1 opacity-70">{{ item.guideSmallDescriptionEn }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center text-sm">{{ item.categoryNameEn }}</span>
+            <span class="w-1/12 flex flex-col justify-center items-center">
+              @if (item.thumbnailImage.imageUrl) {
+                <img
+                  [src]="item.thumbnailImage.imageUrl"
+                  alt="Guide thumbnail"
+                  class="w-8 h-8 object-cover rounded-lg border border-(--primary-600)"
+                />
+              } @else {
+                <div class="w-8 h-8 rounded-lg bg-(--background-300) border border-(--primary-600) flex items-center justify-center">
+                  <span class="text-xs opacity-40">—</span>
+                </div>
+              }
+            </span>
+            <span class="w-2/12 flex flex-col justify-center items-center">
+              <app-button-secondary
+                [buttonContent]="this.selectedItemId === item.id ? 'Hide' : 'View More'"
+                [size]="'SMALL'"
+                (pressed)="this.onOverviewSelected(item.id)"
+              ></app-button-secondary>
+            </span>
+          </div>
+
+          <!----------------------------------------------------------------->
+          <!------------------ OVERVIEW EXTENDED SECTION ------------------->
+          <!----------------------------------------------------------------->
+          <div
+            class="w-full border-t border-b border-(--primary-700) dark:border-(--primary-400) transition-all duration-300 ease-in-out overflow-hidden"
+            [class.max-h-0]="this.selectedItemId !== item.id"
+            [class.max-h-auto]="this.selectedItemId === item.id"
+            [class.opacity-0]="this.selectedItemId !== item.id"
+            [class.opacity-100]="this.selectedItemId === item.id"
+          >
+            <div
+              class="w-full p-3 bg-(--background-900) dark:bg-(--background-200) text-black dark:text-white flex flex-col gap-3"
+            >
+              <!-- Horizontally scrollable editor (flex row: 2 fixed cols + N section cols + add col) -->
+              <div
+                class="w-full overflow-x-auto rounded-2xl border border-(--primary-700) dark:border-(--primary-400)"
+              >
+                <div
+                  class="flex flex-row gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
+                  style="width: max-content; min-width: 100%;"
+                >
+
+                  <!-- ================================================== -->
+                  <!-- Column 1: BASIC DETAILS                             -->
+                  <!-- ================================================== -->
+                  <div
+                    class="w-[320px] min-w-[320px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Basic Details</h4>
+
+                    <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Slug</span>
+                        <app-text-input classAddons="w-full" formControlName="slug"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Guide Title BA</span>
+                        <app-text-input classAddons="w-full" formControlName="guideTitleBs"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Guide Title EN</span>
+                        <app-text-input classAddons="w-full" formControlName="guideTitleEn"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Small Description BA</span>
+                        <app-text-input classAddons="w-full" formControlName="guideSmallDescriptionBs"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Small Description EN</span>
+                        <app-text-input classAddons="w-full" formControlName="guideSmallDescriptionEn"></app-text-input>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Full Description BA</span>
+                        <app-text-area
+                          classAddons="w-full"
+                          formControlName="guideFullDescriptionBs"
+                          [value]="this.itemOverview?.guideFullDescriptionBs!"
+                        ></app-text-area>
+                      </div>
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Full Description EN</span>
+                        <app-text-area
+                          classAddons="w-full"
+                          formControlName="guideFullDescriptionEn"
+                          [value]="this.itemOverview?.guideFullDescriptionEn!"
+                        ></app-text-area>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- ================================================== -->
+                  <!-- Column 2: CATEGORY + CONTACT INFO + THUMBNAIL      -->
+                  <!-- ================================================== -->
+                  <div
+                    class="w-[320px] min-w-[320px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200)"
+                  >
+                    <h4 class="font-bold text-sm">Category & Info</h4>
+
+                    <!-- Category (editable) -->
+                    <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+                      <div class="w-full flex flex-col justify-start items-stretch">
+                        <span class="font-extrabold">Category</span>
+                        <app-select-group
+                          classAddons="w-full"
+                          formControlName="categoryId"
+                          [options]="this.categoryOptions"
+                          optionLabelKey="label"
+                          optionValueKey="value"
+                        ></app-select-group>
+                      </div>
+                    </form>
+
+                    <!-- Guide Type (read-only badge) -->
+                    <div
+                      class="rounded-2xl border-2 border-(--background-400) bg-(--background-300) p-3 flex flex-row items-center justify-between"
+                    >
+                      <span class="text-xs font-semibold">Guide Type</span>
+                      <span
+                        class="inline-block text-xs font-bold px-2 py-1 rounded-full"
+                        [class.bg-blue-600]="this.itemOverview?.guideType === 'SYSTEM'"
+                        [class.bg-orange-600]="this.itemOverview?.guideType === 'EXTERNAL'"
+                      >
+                        {{ this.itemOverview?.guideType ?? '—' }}
+                      </span>
+                    </div>
+
+                    <!-- Contact Info (EXTERNAL only) -->
+                    @if (this.isExternal()) {
+                      <div class="flex flex-col gap-2">
+                        <span class="font-extrabold text-sm">Contact Info</span>
+                        @if (this.contactInfoEntries().length > 0) {
+                          @for (entry of this.contactInfoEntries(); track entry.key) {
+                            <div
+                              class="rounded-2xl border-2 border-(--background-400) bg-(--background-300) p-3 flex flex-col gap-1"
+                            >
+                              <span class="text-xs font-bold opacity-60 uppercase tracking-wide">{{ entry.key }}</span>
+                              <span class="text-sm font-semibold break-all">{{ entry.value }}</span>
+                            </div>
+                          }
+                        } @else {
+                          <div
+                            class="rounded-2xl border-2 border-(--background-400) bg-(--background-300) p-3 flex items-center justify-center"
+                          >
+                            <span class="text-xs opacity-50">No contact info available.</span>
+                          </div>
+                        }
+                      </div>
+                    }
+
+                    <!-- Thumbnail -->
+                    <div class="flex flex-col gap-2 mt-auto pt-2 border-t border-(--primary-600)">
+                      <span class="font-extrabold text-sm">Thumbnail Image</span>
+
+                      @if (this.itemOverview?.thumbnailImage && !this.newThumbnailPreview) {
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-(--primary-600)">
+                          <img
+                            [src]="this.itemOverview!.thumbnailImage"
+                            alt="Current Thumbnail"
+                            class="w-full h-36 object-cover"
+                          />
+                          <div
+                            class="absolute top-1 right-1 bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold"
+                          >Current</div>
+                        </div>
+                      }
+
+                      @if (this.newThumbnailPreview) {
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-green-500">
+                          <img
+                            [src]="this.newThumbnailPreview"
+                            alt="New Thumbnail"
+                            class="w-full h-36 object-cover"
+                          />
+                          <div
+                            class="absolute top-1 right-1 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold"
+                          >New</div>
+                          <button
+                            type="button"
+                            (click)="removeThumbnailSelection()"
+                            class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                          >✕ Remove</button>
+                        </div>
+                      }
+
+                      <label
+                        class="rounded-2xl bg-(--background-300) px-4 py-2 font-semibold border-2 border-(--background-400) hover:border-(--primary-600) transition-colors duration-200 cursor-pointer text-center text-sm"
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          (change)="onThumbnailSelected($event)"
+                          class="hidden"
+                        />
+                        {{
+                          this.newThumbnailPreview
+                            ? 'Change Thumbnail'
+                            : this.itemOverview?.thumbnailImage
+                              ? 'Replace Thumbnail'
+                              : 'Upload Thumbnail'
+                        }}
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- ================================================== -->
+                  <!-- Section Columns (one per section, max 6)           -->
+                  <!-- ================================================== -->
+                  @for (section of this.sectionControls; track $index) {
+                    <div
+                      class="w-[300px] min-w-[300px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+                    >
+                      <!-- Section header -->
+                      <div class="flex items-center justify-between gap-1">
+                        <h4 class="font-bold text-sm shrink-0">
+                          Section {{ $index + 1 }}
+                          @if (this.sectionIds[$index] == null) {
+                            <span class="ml-1 text-xs font-normal text-green-400">New</span>
+                          } 
+                        </h4>
+                        <div class="flex items-center gap-1 ml-auto">
+                          <button
+                            type="button"
+                            [disabled]="$index === 0"
+                            (click)="moveSectionUp($index)"
+                            class="px-1.5 py-0.5 text-xs bg-(--background-400) hover:bg-(--background-300) disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                            title="Move up"
+                          >↑</button>
+                          <button
+                            type="button"
+                            [disabled]="$index === sectionsFormArray.length - 1"
+                            (click)="moveSectionDown($index)"
+                            class="px-1.5 py-0.5 text-xs bg-(--background-400) hover:bg-(--background-300) disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                            title="Move down"
+                          >↓</button>
+                          <button
+                            type="button"
+                            (click)="removeSection($index)"
+                            class="px-1.5 py-0.5 text-xs bg-red-500 hover:bg-red-600 text-white rounded transition-colors"
+                            title="Delete section"
+                          >✕</button>
+                        </div>
+                      </div>
+
+                      <!-- Section thumbnail -->
+                      <div class="flex flex-col gap-1">
+                        @if (this.sectionExistingThumbnailUrls[$index] && !this.sectionNewThumbnailPreviews[$index]) {
+                          <div class="relative rounded-xl overflow-hidden border-2 border-(--primary-600)">
+                            <img
+                              [src]="this.sectionExistingThumbnailUrls[$index]"
+                              alt="Section image"
+                              class="w-full h-28 object-cover"
+                            />
+                            <div
+                              class="absolute top-1 right-1 bg-blue-500 text-white px-1.5 py-0.5 rounded text-xs font-bold"
+                            >Current</div>
+                          </div>
+                        }
+                        @if (this.sectionNewThumbnailPreviews[$index]) {
+                          <div class="relative rounded-xl overflow-hidden border-2 border-green-500">
+                            <img
+                              [src]="this.sectionNewThumbnailPreviews[$index]"
+                              alt="New section image"
+                              class="w-full h-28 object-cover"
+                            />
+                            <div
+                              class="absolute top-1 right-1 bg-green-500 text-white px-1.5 py-0.5 rounded text-xs font-bold"
+                            >New</div>
+                            <button
+                              type="button"
+                              (click)="removeSectionThumbnail($index)"
+                              class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-1.5 py-0.5 rounded text-xs font-bold transition-colors"
+                            >✕</button>
+                          </div>
+                        }
+                        <label
+                          class="rounded-xl bg-(--background-300) px-3 py-1.5 font-semibold border-2 border-(--background-400) hover:border-(--primary-600) transition-colors duration-200 cursor-pointer text-center text-xs"
+                        >
+                          <input
+                            type="file"
+                            accept="image/*"
+                            (change)="onSectionThumbnailSelected($index, $event)"
+                            class="hidden"
+                          />
+                          {{
+                            this.sectionNewThumbnailPreviews[$index]
+                              ? 'Change Image'
+                              : this.sectionExistingThumbnailUrls[$index]
+                                ? 'Replace Image'
+                                : 'Upload Image'
+                          }}
+                        </label>
+                      </div>
+
+                      <!-- Section form fields -->
+                      <form [formGroup]="section" class="flex flex-col gap-2">
+                        <div class="w-full flex flex-col justify-start items-stretch">
+                          <span class="text-xs font-extrabold">Title BA</span>
+                          <app-text-input classAddons="w-full" formControlName="sectionTitleBs"></app-text-input>
+                        </div>
+                        <div class="w-full flex flex-col justify-start items-stretch">
+                          <span class="text-xs font-extrabold">Title EN</span>
+                          <app-text-input classAddons="w-full" formControlName="sectionTitleEn"></app-text-input>
+                        </div>
+                        <div class="w-full flex flex-col justify-start items-stretch">
+                          <span class="text-xs font-extrabold">Body BA</span>
+                          <app-text-area
+                            classAddons="w-full"
+                            formControlName="sectionBodyBs"
+                            [value]="section.get('sectionBodyBs')?.value"
+                          ></app-text-area>
+                        </div>
+                        <div class="w-full flex flex-col justify-start items-stretch">
+                          <span class="text-xs font-extrabold">Body EN</span>
+                          <app-text-area
+                            classAddons="w-full"
+                            formControlName="sectionBodyEn"
+                            [value]="section.get('sectionBodyEn')?.value"
+                          ></app-text-area>
+                        </div>
+                      </form>
+                    </div>
+                  }
+
+                  <!-- ================================================== -->
+                  <!-- Add Section Column (shown when sections < 6)       -->
+                  <!-- ================================================== -->
+                  @if (this.sectionsFormArray.length < this.MAX_SECTIONS) {
+                    <div
+                      class="w-[180px] min-w-[180px] rounded-2xl border-2 border-dashed border-(--primary-600) dark:border-(--primary-500) p-3 flex flex-col items-center justify-center gap-3 bg-transparent cursor-pointer hover:bg-(--background-300) transition-colors duration-200"
+                      (click)="addSection()"
+                    >
+                      <div
+                        class="w-12 h-12 rounded-full border-2 border-(--primary-500) flex items-center justify-center"
+                      >
+                        <span class="text-2xl font-light text-(--primary-400)">+</span>
+                      </div>
+                      <span class="text-sm font-semibold text-(--primary-400) text-center">Add Section</span>
+                      <span class="text-xs opacity-50 text-center">
+                        {{ this.sectionsFormArray.length }} / {{ this.MAX_SECTIONS }} sections
+                      </span>
+                    </div>
+                  }
+
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="w-full flex flex-row justify-end items-center gap-3 mt-1">
+                <app-button-primary
+                  [buttonContent]="'Delete Guide'"
+                  [buttonType]="'DANGER'"
+                  [size]="'SMALL'"
+                  (pressed)="this.onDeleteItemSelected()"
+                ></app-button-primary>
+                <app-button-primary
+                  [buttonContent]="'Save Changes'"
+                  [buttonType]="'DEFAULT'"
+                  [size]="'SMALL'"
+                  (pressed)="this.onSaveChangeSelected()"
+                ></app-button-primary>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="tableFooter"
+    class="w-full dark:bg-(--primary-200) bg-(--primary-200) text-white rounded-b-2xl flex p-2 flex-row justify-between items-center"
+  >
+    <div class="text-sm">Page {{ this.currentPage + 1 }} of {{ this.totalPages }}</div>
+    <div class="flex flex-row gap-4">
+      <app-button-primary
+        [buttonContent]="'Previous Page'"
+        [buttonType]="'DEFAULT'"
+        (click)="previousPage()"
+        [classAddons]="'p-2'"
+      ></app-button-primary>
+      <app-button-primary
+        [buttonContent]="'Next Page'"
+        [buttonType]="'DEFAULT'"
+        [classAddons]="'p-2'"
+        (click)="nextPage()"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>

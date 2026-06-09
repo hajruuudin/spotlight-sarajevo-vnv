@@ -1,0 +1,98 @@
+<app-page-header 
+  class="max-w-application pt-4" 
+  [title]="'communityRequest.headerTitle' | transloco" 
+  [subtitle]="'communityRequest.headerSubtitle' | transloco">
+</app-page-header>
+
+<section class="w-full max-w-application px-4 py-6">
+  <!-- Add Request Button -->
+  <div class="w-full flex justify-center mb-6">
+    <app-button-primary
+      (click)="openAddRequestModal()"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'communityRequest.addRequestButton' | transloco"
+      [classAddons]="'px-8'"
+    ></app-button-primary>
+  </div>
+
+  <!-- Empty State - All columns empty -->
+  @if (isAllEmpty) {
+    <div class="w-full flex flex-col items-center justify-center py-12">
+      <app-not-found-component
+        [headerMessage]="'communityRequest.emptyAll' | transloco"
+        [messageDescription]="'communityRequest.emptyAllDescription' | transloco"
+      ></app-not-found-component>
+    </div>
+  } @else {
+    <!-- Three Column Grid -->
+    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+      
+      <!-- Pending Column -->
+      <div class="flex flex-col">
+        <div class="sticky top-0 z-10 pb-2">
+          <h3 class="text-lg font-bold text-center py-2 rounded-xl bg-yellow-500/20 border-2 border-yellow-500">
+            {{ 'communityRequest.pendingColumn' | transloco }}
+            <span class="text-sm font-normal opacity-70">({{ pendingRequests.length }})</span>
+          </h3>
+        </div>
+        <div class="flex flex-col gap-3 overflow-y-auto max-h-[60vh] pr-1 custom-scrollbar">
+          @if (pendingRequests.length === 0) {
+            <app-not-found-component
+              [headerMessage]="'communityRequest.emptyPending' | transloco"
+              [messageDescription]="''"
+            ></app-not-found-component>
+          } @else {
+            @for (request of pendingRequests; track request.id) {
+              <app-community-request-card [request]="request"></app-community-request-card>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Approved Column -->
+      <div class="flex flex-col">
+        <div class="sticky top-0 z-10 pb-2">
+          <h3 class="text-lg font-bold text-center py-2 rounded-xl bg-green-500/20 border-2 border-green-500">
+            {{ 'communityRequest.approvedColumn' | transloco }}
+            <span class="text-sm font-normal opacity-70">({{ approvedRequests.length }})</span>
+          </h3>
+        </div>
+        <div class="flex flex-col gap-3 overflow-y-auto max-h-[60vh] pr-1 custom-scrollbar">
+          @if (approvedRequests.length === 0) {
+            <app-not-found-component
+              [headerMessage]="'communityRequest.emptyApproved' | transloco"
+              [messageDescription]="''"
+            ></app-not-found-component>
+          } @else {
+            @for (request of approvedRequests; track request.id) {
+              <app-community-request-card [request]="request"></app-community-request-card>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Rejected Column -->
+      <div class="flex flex-col">
+        <div class="sticky top-0 z-10 pb-2">
+          <h3 class="text-lg font-bold text-center py-2 rounded-xl bg-red-500/20 border-2 border-red-500">
+            {{ 'communityRequest.rejectedColumn' | transloco }}
+            <span class="text-sm font-normal opacity-70">({{ rejectedRequests.length }})</span>
+          </h3>
+        </div>
+        <div class="flex flex-col gap-3 overflow-y-auto max-h-[60vh] pr-1 custom-scrollbar">
+          @if (rejectedRequests.length === 0) {
+            <app-not-found-component
+              [headerMessage]="'communityRequest.emptyRejected' | transloco"
+              [messageDescription]="''"
+            ></app-not-found-component>
+          } @else {
+            @for (request of rejectedRequests; track request.id) {
+              <app-community-request-card [request]="request"></app-community-request-card>
+            }
+          }
+        </div>
+      </div>
+
+    </div>
+  }
+</section>

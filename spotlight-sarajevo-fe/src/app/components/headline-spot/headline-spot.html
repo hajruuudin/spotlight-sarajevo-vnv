@@ -1,0 +1,37 @@
+@if (this.spot) {
+<div
+  [ngClass]="this.classAddons"
+  class="dark:bg-black bg-(--primary-200) text-(--text-900) h-auto outline-2 dark:outline-(--primary-200) outline-(--primary-700) hover:outline-2 hover:dark:outline-(--primary-500) hover:outline-(--primary-100) flex flex-row rounded-2xl hover:pl-1 transition-all"
+>
+  <div class="p-3 flex flex-col md:mt-16 mt-6 justify-center items-start w-2/3 md:w-1/2 z-20">
+    <span class="text-sm md:text-xl">{{
+      this.lang == 'en' ? this.spot.categoryNameEn : this.spot.categoryNameBs
+    }}</span>
+    <div class="w-1/4 bg-white h-0.5 rounded-full"></div>
+    <h3 class="text-xl md:text-3xl font-bold mt-1 whitespace-nowrap">
+      {{ this.lang == 'en' ? this.spot.officialNameEn : this.spot.officialNameBs }}
+    </h3>
+    <span class="text-sm md:text-base whitespace-nowrap">{{
+      this.lang == 'en' ? this.spot.smallDescriptionEn : this.spot.smallDescriptionBs
+    }}</span>
+    <div
+      class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
+    >
+      <span class="text-xs md:text-base text-black font-semibold">{{
+        this.lang == 'en' ? this.spot.spotTags[0].tagNameEn : this.spot.spotTags[0].tagNameBs
+      }}</span>
+    </div>
+  </div>
+  <div
+    class="w-1/2 md:w-2/3 lg:w-1/2 h-auto rounded-r-2xl relative z-10"
+    [style.backgroundImage]="
+      this.spot.thumbnailImage ? 'url(' + this.spot.thumbnailImage.imageUrl + ')' : ''
+    "
+    style="background-size: cover; background-position: end; transform: scale(1)"
+  >
+    <div
+      class="absolute inset-0 rounded-r-2xl bg-gradient-to-r dark:from-black from-(--primary-200) dark:via-black/20 via-(--primary-700)/30 to-transparent"
+    ></div>
+  </div>
+</div>
+}

@@ -1,0 +1,287 @@
+<section class="max-w-application w-full mx-auto px-4 py-6">
+  <app-page-header
+    [title]="'Add Guide'"
+    [subtitle]="'Add a new tourist guide to the system'"
+  ></app-page-header>
+
+  <div class="w-full overflow-x-auto rounded-2xl border border-(--primary-700) dark:border-(--primary-400) mt-6">
+    <div
+      class="flex flex-row gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
+      style="width: max-content; min-width: 100%;"
+    >
+      <!-- ================================================== -->
+      <!-- Column 1: BASIC DETAILS                             -->
+      <!-- ================================================== -->
+      <div
+        class="w-[320px] min-w-[320px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+      >
+        <h4 class="font-bold text-sm">Basic Details</h4>
+
+        <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Guide Title BA</span>
+            <app-text-input classAddons="w-full" formControlName="guideTitleBs"></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Guide Title EN</span>
+            <app-text-input classAddons="w-full" formControlName="guideTitleEn"></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Small Description BA</span>
+            <app-text-input classAddons="w-full" formControlName="guideSmallDescriptionBs"></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Small Description EN</span>
+            <app-text-input classAddons="w-full" formControlName="guideSmallDescriptionEn"></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Full Description BA</span>
+            <app-text-area classAddons="w-full" formControlName="guideFullDescriptionBs"></app-text-area>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Full Description EN</span>
+            <app-text-area classAddons="w-full" formControlName="guideFullDescriptionEn"></app-text-area>
+          </div>
+        </form>
+      </div>
+
+      <!-- ================================================== -->
+      <!-- Column 2: CATEGORY + GUIDE TYPE + THUMBNAIL       -->
+      <!-- ================================================== -->
+      <div
+        class="w-[320px] min-w-[320px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200)"
+      >
+        <h4 class="font-bold text-sm">Category & Type</h4>
+
+        <!-- Category Select -->
+        <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Category</span>
+            <app-select-group
+              classAddons="w-full"
+              formControlName="categoryId"
+              [options]="this.categoryOptions"
+              optionLabelKey="label"
+              optionValueKey="value"
+            ></app-select-group>
+          </div>
+
+          <!-- Guide Type Select -->
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Guide Type</span>
+            <app-select-group
+              classAddons="w-full"
+              formControlName="guideType"
+              [options]="this.guideTypeOptions"
+              optionLabelKey="label"
+              optionValueKey="value"
+            ></app-select-group>
+          </div>
+        </form>
+
+        <!-- Thumbnail -->
+        <div class="flex flex-col gap-2 mt-auto pt-2 border-t border-(--primary-600)">
+          <span class="font-extrabold text-sm">Thumbnail Image</span>
+
+          @if (this.newThumbnailPreview) {
+            <div class="relative rounded-2xl overflow-hidden border-2 border-green-500">
+              <img
+                [src]="this.newThumbnailPreview"
+                alt="New Thumbnail"
+                class="w-full h-36 object-cover"
+              />
+              <div class="absolute top-1 right-1 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
+                New
+              </div>
+              <button
+                type="button"
+                (click)="removeThumbnailSelection()"
+                class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+              >
+                ✕ Remove
+              </button>
+            </div>
+          }
+
+          <label
+            class="rounded-2xl bg-(--background-300) px-4 py-2 font-semibold border-2 border-(--background-400) hover:border-(--primary-600) transition-colors duration-200 cursor-pointer text-center text-sm"
+          >
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onThumbnailSelected($event)"
+              class="hidden"
+            />
+            {{ this.newThumbnailPreview ? 'Change Thumbnail' : 'Upload Thumbnail' }}
+          </label>
+        </div>
+      </div>
+
+      <!-- ================================================== -->
+      <!-- Column 3: CONTACT INFO (EXTERNAL ONLY)             -->
+      <!-- ================================================== -->
+      @if (this.isExternal()) {
+        <div
+          class="w-[320px] min-w-[320px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+        >
+          <h4 class="font-bold text-sm">Contact Information</h4>
+
+          <form [formGroup]="this.contactInfoForm" class="flex flex-col gap-2">
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Email</span>
+              <app-text-input classAddons="w-full" formControlName="email"></app-text-input>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Phone</span>
+              <app-text-input classAddons="w-full" formControlName="phone"></app-text-input>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Website</span>
+              <app-text-input classAddons="w-full" formControlName="website"></app-text-input>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Address</span>
+              <app-text-input classAddons="w-full" formControlName="address"></app-text-input>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Social Media</span>
+              <app-text-input classAddons="w-full" formControlName="socialMedia"></app-text-input>
+            </div>
+          </form>
+        </div>
+      }
+
+      <!-- ================================================== -->
+      <!-- Section Columns (one per section, max 5)           -->
+      <!-- ================================================== -->
+      @for (section of this.sectionControls; track $index) {
+        <div
+          class="w-[300px] min-w-[300px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
+        >
+          <!-- Section header -->
+          <div class="flex items-center justify-between gap-1">
+            <h4 class="font-bold text-sm shrink-0">
+              Section {{ $index + 1 }}
+              <span class="ml-1 text-xs font-normal text-green-400">New</span>
+            </h4>
+            <div class="flex items-center gap-1 ml-auto">
+              <button
+                type="button"
+                [disabled]="$index === 0"
+                (click)="moveSectionUp($index)"
+                class="px-1.5 py-0.5 text-xs bg-(--background-400) hover:bg-(--background-300) disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                title="Move up"
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                [disabled]="$index === sectionsFormArray.length - 1"
+                (click)="moveSectionDown($index)"
+                class="px-1.5 py-0.5 text-xs bg-(--background-400) hover:bg-(--background-300) disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                title="Move down"
+              >
+                ↓
+              </button>
+              <button
+                type="button"
+                (click)="removeSection($index)"
+                class="px-1.5 py-0.5 text-xs bg-red-500 hover:bg-red-600 text-white rounded transition-colors"
+                title="Delete section"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+
+          <!-- Section thumbnail -->
+          <div class="flex flex-col gap-1">
+            @if (this.sectionNewThumbnailPreviews[$index]) {
+              <div class="relative rounded-xl overflow-hidden border-2 border-green-500">
+                <img
+                  [src]="this.sectionNewThumbnailPreviews[$index]"
+                  alt="New section image"
+                  class="w-full h-28 object-cover"
+                />
+                <div class="absolute top-1 right-1 bg-green-500 text-white px-1.5 py-0.5 rounded text-xs font-bold">
+                  New
+                </div>
+                <button
+                  type="button"
+                  (click)="removeSectionThumbnail($index)"
+                  class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-1.5 py-0.5 rounded text-xs font-bold transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+            }
+            <label
+              class="rounded-xl bg-(--background-300) px-3 py-1.5 font-semibold border-2 border-(--background-400) hover:border-(--primary-600) transition-colors duration-200 cursor-pointer text-center text-xs"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onSectionThumbnailSelected($index, $event)"
+                class="hidden"
+              />
+              {{ this.sectionNewThumbnailPreviews[$index] ? 'Change Image' : 'Upload Image' }}
+            </label>
+          </div>
+
+          <!-- Section form fields -->
+          <form [formGroup]="section" class="flex flex-col gap-2">
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Title BA</span>
+              <app-text-input classAddons="w-full" formControlName="sectionTitleBs"></app-text-input>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Title EN</span>
+              <app-text-input classAddons="w-full" formControlName="sectionTitleEn"></app-text-input>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Body BA</span>
+              <app-text-area classAddons="w-full text-xs" formControlName="sectionBodyBs"></app-text-area>
+            </div>
+            <div class="w-full flex flex-col justify-start items-stretch">
+              <span class="text-xs font-extrabold">Body EN</span>
+              <app-text-area classAddons="w-full text-xs" formControlName="sectionBodyEn"></app-text-area>
+            </div>
+          </form>
+        </div>
+      }
+
+      <!-- ================================================== -->
+      <!-- Add Section Column (shown when sections < MAX)     -->
+      <!-- ================================================== -->
+      @if (this.sectionControls.length < this.MAX_SECTIONS) {
+        <div
+          class="w-[300px] min-w-[300px] rounded-2xl border-2 border-dashed border-(--primary-600) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200) items-center justify-center"
+        >
+          <button
+            type="button"
+            (click)="addSection()"
+            class="w-full px-4 py-3 bg-(--primary-600) hover:bg-(--primary-700) text-white font-semibold rounded-xl transition-colors"
+          >
+            + Add Section
+          </button>
+          <span class="text-xs opacity-50 text-center">
+            {{ this.sectionControls.length }} / {{ this.MAX_SECTIONS }}
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Save and Cancel Buttons -->
+  <div class="w-full flex justify-end gap-3 mt-6">
+    <app-button-secondary
+      [buttonContent]="'Cancel'"
+      (pressed)="cancel()"
+    ></app-button-secondary>
+    <app-button-primary
+      [buttonContent]="'Create Guide'"
+      (pressed)="createGuide()"
+    ></app-button-primary>
+  </div>
+</section>
+

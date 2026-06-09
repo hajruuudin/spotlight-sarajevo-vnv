@@ -1,0 +1,21 @@
+<div class="w-full flex flex-col justify-center items-center my-4">
+  <h3 class="text-center w-3/4 italic mb-2">{{ this.question }}</h3>
+  <div class="w-full sm:w-3/4 md:w-2/3 flex flex-row">
+    <div
+      (click)="onYesClick()"
+      class="w-full md:w-1/2 h-12 rounded-l-2xl border-l-2 border-t-2 border-b-2 border-(--primary-400)  font-bold flex justify-center items-center cursor-pointer {{
+        yesButtonStyle()
+      }} transition-colors duration-200"
+    >
+      ✅ YES
+    </div>
+    <div
+      (click)="onNoClick()"
+      class="w-full md:w-1/2 h-12 rounded-r-2xl border-r-2 border-t-2 border-b-2 border-(--primary-400) font-bold flex justify-center items-center cursor-pointer {{
+        noButtonStyle()
+      }} transition-colors duration-200"
+    >
+      ❌ NO
+    </div>
+  </div>
+</div>

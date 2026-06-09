@@ -1,0 +1,201 @@
+<section
+  animate.enter="fade-in-animation"
+  id="discoverHeaderAndFirstSectionContainer"
+  [style.backgroundImage]="
+    this.session.theme() == 'dark'
+      ? 'url(/assets/images/SECTION_BG_03.png)'
+      : 'url(/assets/images/SECTION_BG_03_L.png)'
+  "
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="discoverHeaderAndFirstSection"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full"
+  >
+    <app-page-header
+      class="max-w-application py-4"
+      [title]="'discover.headerTitle' | transloco"
+      [subtitle]="'discover.headerSubtitle' | transloco"
+    ></app-page-header>
+
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+      <app-subheading
+        [sectionHead]="'discover.recentSpan' | transloco"
+        [sectionDescription]="'discover.recentTitle' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (spot of recentlyAddedSpots; track spot.id) {
+        <app-small-spot-card 
+          (click)="navigateToSpotOverview(spot.slug)"
+          [lang]="this.session.language()!" 
+          [spot]="spot">
+        </app-small-spot-card>
+      }
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application mb-8">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+      <app-subheading
+        [sectionHead]="'discover.landmarkSpan' | transloco"
+        [sectionDescription]="'discover.landmarkTitle' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (spot of landmarkSpots; track spot.id) {
+        <app-historical-spot-card
+          (click)="navigateToSpotOverview(spot.slug)"
+          [lang]="this.session.language()!"
+          [spot]="spot"
+        ></app-historical-spot-card>
+      }
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>
+
+<section
+  animate.enter="fade-in-animation"
+  id="discoverPopularUpcomingSectionContainer"
+  class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="discoverPopularUpcomingSection"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full py-4"
+  >
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">
+      <app-subheading
+        [sectionHead]="'discover.popularSpan' | transloco"
+        [sectionDescription]="'discover.popularTitle' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (spot of popularSpots; track spot.id) {
+        <app-small-spot-card 
+          (click)="navigateToSpotOverview(spot.slug)"
+          [lang]="this.session.language()!" 
+          [spot]="spot">
+        </app-small-spot-card>
+      }
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application mb-8">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+      <app-subheading
+        [sectionHead]="'discover.eventSpan' | transloco"
+        [sectionDescription]="'discover.eventTitle' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (event of this.upcomingEvents; track event.id) {
+        <app-small-event-card
+          (click)="navigateToEventOverview(event.slug)"
+          [lang]="this.session.language()!"
+          [event]="event"
+        ></app-small-event-card>
+      }
+    </div>
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>
+
+<section
+  animate.enter="fade-in-animation"
+  id="discoverFavouritesSectionContainer"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="discoverFavouritesSection"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full py-4"
+  >
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">
+      <app-subheading
+        [sectionHead]="'discover.favouriteSpotsSpan' | transloco"
+        [sectionDescription]="'discover.favouriteSpotsTitle' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (spot of favouriteSpots; track spot.id) {
+        <app-small-spot-card 
+          (click)="navigateToSpotOverview(spot.slug)"
+          [lang]="this.session.language()!" 
+          [spot]="spot">
+        </app-small-spot-card>
+      }
+    </div>
+
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application mb-8">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+
+    <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+      <app-subheading
+        [sectionHead]="'discover.eventSpan' | transloco"
+        [sectionDescription]="'discover.eventTitle' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
+    </div>
+    <div
+      class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
+    >
+      @for (event of this.upcomingEvents; track event.id) {
+        <app-small-event-card
+          (click)="navigateToEventOverview(event.slug)"
+          [lang]="this.session.language()!"
+          [event]="event"
+        ></app-small-event-card>
+      }
+    </div>
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
+  </div>
+</section>

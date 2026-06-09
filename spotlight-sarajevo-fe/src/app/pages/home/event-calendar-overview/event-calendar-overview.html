@@ -1,0 +1,54 @@
+<section
+  animate.enter="fade-in-animation"
+  id="eventCalendarSectionContainer"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <app-page-header
+    class="max-w-application pt-4"
+    [title]="'eventCalendar.title' | transloco"
+    [subtitle]="'eventCalendar.subtitle' | transloco"
+  ></app-page-header>
+
+  <div
+    id="eventCalendarContent"
+    class="max-w-application w-full flex flex-col lg:flex-row justify-center items-center lg:justify-start px-4 md:px-8 gap-6"
+  >
+    <!-- Left Side: Calendar Widget -->
+    <div class="w-3/4 lg:w-5/12 xl:w-5/12 lg:sticky lg:top-24 shrink-0">
+      <app-calendar-widget
+        [lang]="this.session.language()"
+        [eventDatesMap]="this.eventDatesMap"
+        (dateSelected)="onDateSelected($event)"
+        (monthChanged)="onMonthChanged($event)"
+      ></app-calendar-widget>
+    </div>
+
+    <!-- Right Side: Events List -->
+    <div class="w-3/4 lg:w-7/12 xl:w-7/12 flex flex-col space-y-4">
+      <app-spinner-small-component
+        [visible]="this.isEventsLoading"
+        message="Loading events..."
+      ></app-spinner-small-component>
+
+      @if (!this.isEventsLoading) {
+        @if (this.eventsForDay.length > 0) {
+          <div class="flex flex-col space-y-4 max-h-[70vh] overflow-y-auto p-1">
+            @for (event of this.eventsForDay; track event.id) {
+              <app-search-event-card
+                (click)="navigateToEventOverview(event.slug)"
+                [lang]="this.session.language()"
+                [event]="event"
+                class="cursor-pointer"
+              ></app-search-event-card>
+            }
+          </div>
+        } @else {
+          <app-not-found-component
+            [headerMessage]="'eventCalendar.noEventsHeader' | transloco"
+            [messageDescription]="'eventCalendar.noEventsDescription' | transloco"
+          ></app-not-found-component>
+        }
+      }
+    </div>
+  </div>
+</section>

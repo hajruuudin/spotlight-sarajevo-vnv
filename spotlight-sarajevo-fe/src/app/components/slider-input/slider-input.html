@@ -1,0 +1,19 @@
+<div class="flex flex-col gap-2 w-full">
+  <input
+    type="range"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [value]="value"
+    (input)="handleChange($event)"
+    (blur)="onTouched()"
+    [class]="
+      sliderClass +
+      ' w-full cursor-pointer dark:accent-(--primary-600) accent-(--primary-300)'
+    "
+  />
+
+  <div [class]="valueClass + ' text-center text-xl font-bold'">
+    {{ value }}
+  </div>
+</div>

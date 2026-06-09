@@ -1,0 +1,8 @@
+@if (this.buttonIcon == "DEFAULT") {
+<button
+  (click)="this.handleClick()"
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
+>
+  <span>{{ this.buttonContent }}</span>
+</button>
+}

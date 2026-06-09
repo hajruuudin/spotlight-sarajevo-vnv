@@ -1,0 +1,51 @@
+<!-- REVIEW HEADER: TITLE - USER - DATE -->
+ @if (this.review.header != '') {
+    <div class="w-full flex flex-col justify-center items-start">
+    <div class="w-full flex flex-row justify-between items-center gap-4">
+        <span class="font-semibold w-auto text-lg md:text-2xl text-start">{{ this.review.header }}</span>
+        <span [ngClass]="'font-extrabold text-lg md:text-2xl dark:bg-(--primary-300) bg-(--accent-900) rounded-2xl p-2 '">{{ this.review.userOverallRating }}</span>
+    </div>
+    
+    <div class="w-full flex flex-row justify-between items-center gap-8">
+        <span class="italic text-sm md:text-base">{{ this.review.username }}</span>
+        @if (this.review.modified != null) {
+            <span class="italic text-sm md:text-base">Last Edited: {{ this.review.modified | date }}</span>
+        }
+    </div>
+</div>
+<div class="w-full h-0.5 my-2 rounded-full dark:bg-(--primary-900) bg-black"></div>
+ } @else {
+    <div class="w-full flex flex-col justify-center items-start">
+    <div class="w-full flex flex-row justify-between items-center gap-4">
+        <span class="font-semibold w-auto text-lg md:text-2xl text-start">Overall rating</span>
+        <span [ngClass]="'font-extrabold text-lg md:text-2xl dark:bg-(--primary-300) bg-(--accent-900) rounded-2xl p-2 '">{{ this.review.userOverallRating }}</span>
+    </div>
+    
+    <div class="w-full flex flex-row justify-between items-center gap-8">
+        <span class="italic text-sm md:text-base">{{ this.review.username }}</span>
+        @if (this.review.modified != null) {
+            <span class="italic text-sm md:text-base">Last Edited: {{ this.review.modified | date }}</span>
+        }
+        
+    </div>
+</div>
+ }
+
+<!-- REVIEW HEADER: TITLE - USER - DATE -->
+
+<!-- REVIEW BODY: CONTENT OF THE REVIEW -->
+ <div class="w-full flex flex-col justify-center items-start">
+    <p class="font-normal w-auto text-sm md:text-base text-start">
+        {{ this.review.body }}
+    </p>
+ </div>
+<div class="w-full h-0.5 my-2 rounded-full dark:bg-(--primary-900) bg-black"></div>
+<!-- REVIEW BODY: CONTENT OF THE REVIEW -->
+
+<!-- REVIEW FOOTER: RATINGS OF THE REVIEW -->
+<div class="w-full grid grid-cols-1">
+    <span class="font-bold text-base md:text-lg">{{ 'eventReview.atmosphere' | transloco }}: <span class="font-normal">{{ this.review.userOrganiserAtmosphere }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'eventReview.enjoyability' | transloco }}: <span class="font-normal">{{ this.review.userOrganiserEnjoyability }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'eventReview.quality' | transloco }}: <span class="font-normal">{{ this.review.userOrganiserQuality }}</span></span>
+</div>
+ <!-- REVIEW FOOTER: RATINGS OF THE REVIEW -->

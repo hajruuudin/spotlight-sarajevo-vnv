@@ -1,0 +1,153 @@
+<section
+  animate.enter="fade-in-animation"
+  id="homepageHeadersSectionContainer"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <app-page-header
+    class="max-w-application pt-4"
+    [title]="'search.searchEventsTitle' | transloco"
+    [subtitle]="'search.searchEventsSubtitle' | transloco"
+  ></app-page-header>
+
+  <div
+    id="spotSearchContainer"
+    class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-4 md:px-8 space-y-4 md:space-y-0 md:space-x-4 overflow-scroll"
+  >
+    <form
+      [formGroup]="eventSearchForm"
+      class="w-full h-auto flex flex-col justify-start items-stretch space-y-4"
+    >
+      <div class="w-full flex flex-col md:flex-row gap-4 items-stretch">
+        <app-search-bar
+          formControlName="searchTerm"
+          [placeholder]="'search.searchButton' | transloco"
+          (search)="onSearchTriggered($event)"
+          class="flex-1"
+        ></app-search-bar>
+        @if (isPremiumUser) {
+          <app-button-primary
+            [buttonContent]="'📅 ' + ('search.viewCalendar' | transloco)"
+            [classAddons]="'px-6 whitespace-nowrap h-full w-full'"
+            (pressed)="navigateToCalendarOverview()"
+          ></app-button-primary>
+        }
+      </div>
+
+      <section
+        id="filterAndResultContainer"
+        class="w-full flex flex-col justify-start items-stretch space-y-4"
+      >
+        <div
+          class="w-full relative dark:bg-(--background-200) bg-(--background-400) px-2 md:px-0 rounded-2xl h-auto flex flex-col md:flex-row justify-center items-stretch"
+        >
+          <button
+            (click)="this.toggleSortingPopup()"
+            class="dark:bg-(--background-300) bg-(--secondary-600) w-full rounded-2xl my-2 my md:m-4 py-2 md:py-3 font-bold text-base md:text-2xl"
+          >
+            {{ 'search.searchSorting' | transloco }}
+          </button>
+          <!-- SORTING POPUP SECTION -->
+          @if (this.isSortingPopupLoaded) {
+          <div
+            animate.enter="blink-in-animation"
+            animate.leave="blink-out-animation"
+            style="box-shadow: 0px 0px 20px #00000055"
+            class="transition-all absolute left-0 w-full md:w-1/2 h-auto rounded-2xl dark:bg-(--background-400) bg-(--background-900) p-4 flex flex-col space-y-2 z-30 md:mr-4"
+            (mouseleave)="this.toggleSortingPopup()"
+          >
+            <div class="flex flex-col md:flex-row justify-between space-y-2 md:space-y-0 space-x-4">
+              @for (sorting of this.sortingMethods; track $index) {
+              <app-sorting-selector
+                [sortingMethod]="'sorting.' + sorting | transloco"
+                [isSelected]="this.selectedSortingMethod == sorting"
+                (selectedMethod)="this.onSortingMethodSelected(sorting)"
+              ></app-sorting-selector>
+              }
+            </div>
+            <app-button-secondary
+              (click)="this.resetSortingFilters()"
+              [buttonContent]="'search.searchReset' | transloco"
+              [classAddons]="'px-6'"
+            ></app-button-secondary>
+          </div>
+          }
+
+          <button
+            (click)="toggleFilterPopup()"
+            class="w-full rounded-2xl dark:bg-(--background-300) bg-(--secondary-600) my-2 md:m-4 py-2 md:py-3 font-bold text-base md:text-2xl"
+          >
+            {{ 'search.searchFilters' | transloco }}
+          </button>
+          <!-- FILTER POPUP SECTION -->
+          @if (this.isFilterPopupLoaded) {
+          <div
+            animate.enter="blink-in-animation"
+            animate.leave="blink-out-animation"
+            style="box-shadow: 0px 0px 20px #00000055"
+            class="transition-all absolute right-0 top-0 w-full md:w-1/2 h-auto rounded-2xl dark:bg-(--background-400) bg-(--background-900) p-4 flex flex-col space-y-4 z-30 md:ml-4"
+            (mouseleave)="this.toggleFilterPopup()"
+          >
+            <div
+              class="h-96 xl:h-auto flex flex-row flex-wrap justify-center space-x-4 space-y-2 xl:overflow-y-hidden overflow-y-scroll"
+            >
+              @for (category of this.eventCategories; track $index) {
+              <app-category-filter-selector
+                [categoryName]="
+                  this.session.language() == 'en'
+                    ? category.eventCategoryNameEn
+                    : category.eventCategoryNameBs
+                "
+                [type]="'event'"
+                [isSelected]="this.selectedCategoryIds.indexOf(category.id) == -1 ? false : true"
+                (selectionChange)="onCategoryCheckboxChange(category.id)"
+              ></app-category-filter-selector>
+              }
+            </div>
+            <app-button-secondary
+              (click)="this.resetCategoryFilters()"
+              [buttonContent]="'search.searchReset' | transloco"
+              [classAddons]="'px-6'"
+            ></app-button-secondary>
+          </div>
+          }
+        </div>
+
+        <div class="relative w-full flex flex-col justify-center items-center lg:space-x-4">
+          <app-spinner-small-component
+            [visible]="this.isSectionLoading()"
+            message="Getting results"
+          ></app-spinner-small-component>
+          @if (this.eventSearchResults.length != 0) {
+          <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-2 md:mt-2">
+            @for (event of this.eventSearchResults; track $index) {
+            <app-search-event-card
+              (click)="this.navigateToEventOverview(event.slug)"
+              [lang]="this.session.language()!"
+              [event]="event"
+            ></app-search-event-card>
+            }
+          </div>
+          } @else {
+          <app-not-found-component
+            headerMessage="No results. Sorry..."
+            [messageDescription]="'We could not find any reults for that specific event'"
+          ></app-not-found-component>
+          } @if (this.eventSearchResults.length != 0) {
+          <div class="w-full flex flex-col justify-center items-center space-y-4">
+            <span class="text-base md:text-xl"
+              >{{ 'search.searchPaginationOne' | transloco }} {{ this.eventSearchResults.length }}
+              {{ 'search.searchPagiationTwo' | transloco }} {{ this.totalElements }}
+              {{ 'search.searchEventsPaginationThree' | transloco }}</span
+            >
+            <app-button-secondary
+              (click)="this.loadMore()"
+              [buttonContent]="'Load more'"
+              classAddons="px-6"
+            ></app-button-secondary>
+          </div>
+          }
+        </div>
+      </section>
+    </form>
+  </div>
+</section>

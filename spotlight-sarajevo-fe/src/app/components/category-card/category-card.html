@@ -1,0 +1,31 @@
+<div
+  [style.background-color]="
+    spotCategoryModel
+      ? spotCategoryModel.spotCategoryColorCode + 'AA'
+      : eventCategoryModel?.eventCategoryColorCode + 'AA'
+  "
+  [ngClass]="'w-72 md:w-96 h-32 flex flex-row justify-center items-center rounded-2xl'"
+>
+  @if (this.spotCategoryModel == null) { @if (!this.isDescriptionShown) {
+  <span class="uppercase font-semibold px-2">{{
+    this.lang == 'en' ? this.eventCategoryModel?.eventCategoryNameEn : this.eventCategoryModel?.eventCategoryNameBs
+  }}</span>
+  } @else {
+    <div class="flex flex-col justify-center items-center">
+      <span class="uppercase font-semibold px-2">{{
+        this.lang == 'en' ? this.eventCategoryModel?.eventCategoryNameEn : this.eventCategoryModel?.eventCategoryNameBs
+      }}</span>
+      <span class="font-normal px-2">{{ this.lang == 'en' ? this.eventCategoryModel?.eventCategoryDescriptionEn : this.eventCategoryModel?.eventCategoryDescriptionBs }}</span>
+    </div>
+  } } @else { @if (!this.isDescriptionShown) {
+  <span class="uppercase font-semibold px-2">{{ this.lang == 'en' ? this.spotCategoryModel.spotCategoryNameEn : this.spotCategoryModel.spotCategoryNameBs }}</span>
+  } @else {
+    <div class="flex flex-col justify-center items-center">
+      <span class="uppercase font-semibold px-2">{{ this.lang == 'en' ? this.spotCategoryModel.spotCategoryNameEn : this.spotCategoryModel.spotCategoryNameBs }}</span>
+      <span class="font-normal px-2">
+        {{ this.lang == 'en' ? this.spotCategoryModel.spotCategoryDescriptionEn : this.spotCategoryModel.spotCategoryDescriptionBs }}
+      </span>
+    </div>
+  
+  } }
+</div>

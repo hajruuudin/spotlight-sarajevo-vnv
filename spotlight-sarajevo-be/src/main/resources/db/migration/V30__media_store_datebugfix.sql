@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS ss_media_store
+    ALTER COLUMN created_by TYPE VARCHAR(255);

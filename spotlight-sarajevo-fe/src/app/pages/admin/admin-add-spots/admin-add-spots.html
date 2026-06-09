@@ -1,0 +1,307 @@
+<section class="max-w-application w-full flex flex-col justify-start items-start gap-8 mx-auto px-4 py-6">
+  <app-page-header 
+    [title]="'admin.addSpot.title' | transloco"
+    [subtitle]="'admin.addSpot.subtitle' | transloco"
+  ></app-page-header>
+
+  <!-- Five Column Form Layout -->
+  <div class="w-full overflow-x-auto rounded-2xl border border-(--primary-700) dark:border-(--primary-400)">
+    <div
+      class="min-w-[1800px] grid grid-cols-5 gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
+    >
+      <!-- Column 1: BASIC INFORMATION, DESCRIPTIONS, NAMES, SLUG -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Basic Details</h4>
+
+        <form [formGroup]="this.basicInformationForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Slug *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="slug"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Official Name BA *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="officialNameBs"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Official Name EN *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="officialNameEn"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Small Description BA *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="smallDescriptionBs"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Small Description EN *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="smallDescriptionEn"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Address *</span>
+            <app-text-input
+              classAddons="w-full"
+              formControlName="address"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Full Description BS *</span>
+            <app-text-area
+              classAddons="w-full"
+              formControlName="fullDescriptionBs"
+            ></app-text-area>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Full Description EN *</span>
+            <app-text-area
+              classAddons="w-full"
+              formControlName="fullDescriptionEn"
+            ></app-text-area>
+          </div>
+        </form>
+      </div>
+
+      <!-- Column 2: LAT, LONG, ADDRESS, CATEGORY AND TAGS -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Location, Category & Tags</h4>
+
+        <form [formGroup]="this.attributeInformationForm" class="flex flex-col gap-2">
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Latitude *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="number"
+              step="0.0001"
+              formControlName="latitude"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Longitude *</span>
+            <app-text-input
+              classAddons="w-full"
+              type="number"
+              step="0.0001"
+              formControlName="longitude"
+            ></app-text-input>
+          </div>
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Category *</span>
+            <app-select-group
+              classAddons="w-full"
+              formControlName="categoryId"
+              [options]="this.categoryOptions"
+              optionLabelKey="categoryNameEn"
+              optionValueKey="id"
+            ></app-select-group>
+          </div>
+
+          <div class="w-full flex flex-col justify-start items-stretch">
+            <span class="font-extrabold">Tags (3-5 required) *</span>
+            <app-multiselect-group
+              classAddons="w-full"
+              formControlName="spotTagIds"
+              [options]="this.tagOptions"
+              [minSelections]="3"
+              [maxSelections]="5"
+              optionLabelKey="tagNameEn"
+              optionValueKey="id"
+            ></app-multiselect-group>
+          </div>
+        </form>
+      </div>
+
+      <!-- Column 3: WORK HOURS -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Work Hours</h4>
+
+        <form [formGroup]="this.workHoursForm" class="flex flex-col gap-3">
+          @for (control of this.workHoursArray.controls; track $index) {
+            <div
+              [formGroup]="$any(control)"
+              class="rounded-2xl border-2 border-(--background-900) dark:border-(--background-400) bg-(--primary-900) dark:bg-(--background-300) p-3 flex flex-col gap-2 transition-colors duration-200 hover:dark:border-(--primary-600) hover:border-(--background-200)"
+            >
+              <div class="flex justify-between items-center">
+                <span class="font-semibold">{{ $any(control).get('day')?.value }}</span>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    formControlName="isClosed"
+                    class="cursor-pointer w-4 h-4"
+                  />
+                  <span class="text-xs font-semibold">Closed</span>
+                </label>
+              </div>
+
+              @if (!$any(control).get('isClosed')?.value) {
+                <div class="flex gap-2 items-end">
+                  <div class="flex-1 flex flex-col gap-1">
+                    <label class="text-xs font-semibold">From</label>
+                    <input
+                      type="time"
+                      formControlName="startTime"
+                      class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-3 py-2 text-sm font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200"
+                    />
+                  </div>
+                  <div class="flex-1 flex flex-col gap-1">
+                    <label class="text-xs font-semibold">To</label>
+                    <input
+                      type="time"
+                      formControlName="endTime"
+                      class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-3 py-2 text-sm font-semibold outline-none border-2 dark:border-(--background-400) border-(--background-900) dark:focus:border-white focus:border-black hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200"
+                    />
+                  </div>
+                </div>
+              }
+              @if ($any(control).get('isClosed')?.value) {
+                <div class="text-sm font-semibold text-red-500 dark:text-red-400">
+                  Closed
+                </div>
+              }
+            </div>
+          }
+        </form>
+      </div>
+
+      <!-- Column 4: THUMBNAIL IMAGE AND ADDITIONAL IMAGES -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Images</h4>
+
+        <!-- Thumbnail Section -->
+        <div class="flex flex-col gap-2">
+          <span class="text-xs font-semibold">Thumbnail Image</span>
+
+          @if (this.newThumbnailPreview) {
+            <div class="relative rounded-2xl overflow-hidden border-2 border-green-500">
+              <img
+                [src]="this.newThumbnailPreview"
+                alt="New Thumbnail"
+                class="w-full h-32 object-cover"
+              />
+              <div
+                class="absolute top-1 right-1 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold"
+              >
+                Selected
+              </div>
+              <button
+                type="button"
+                (click)="removeThumbnailSelection()"
+                class="absolute top-1 left-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+              >
+                ✕ Remove
+              </button>
+            </div>
+          }
+
+          <label
+            class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+          >
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onThumbnailSelected($event)"
+              class="hidden"
+            />
+            {{
+              this.newThumbnailPreview
+                ? 'Change Thumbnail'
+                : 'Upload Thumbnail'
+            }}
+          </label>
+        </div>
+
+        <!-- New Images Upload Section -->
+        <div class="flex flex-col gap-2 pt-2 border-t border-(--primary-600)">
+          <span class="text-xs font-semibold">Add Images</span>
+
+          @if (this.newImagePreviews.length > 0) {
+            <div class="grid grid-cols-2 gap-2">
+              @for (preview of this.newImagePreviews; track $index) {
+                <div
+                  class="relative rounded-xl overflow-hidden border-2 border-green-500"
+                >
+                  <img
+                    [src]="preview"
+                    alt="New Image"
+                    class="w-full h-24 object-cover"
+                  />
+                  <button
+                    type="button"
+                    (click)="removeNewImage($index)"
+                    class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-bold transition-colors"
+                  >
+                    ✕
+                  </button>
+                </div>
+              }
+            </div>
+          }
+
+          <label
+            class="rounded-2xl dark:bg-(--background-300) bg-(--primary-900) px-4 py-2 font-semibold border-2 dark:border-(--background-400) border-(--background-900) hover:dark:border-(--primary-600) hover:border-(--background-200) transition-colors duration-200 cursor-pointer text-center text-sm"
+          >
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              (change)="onNewImagesSelected($event)"
+              class="hidden"
+            />
+            + Add Images ({{ this.newImageFiles.length }} selected)
+          </label>
+        </div>
+      </div>
+
+      <!-- Column 5: ACTION BUTTONS -->
+      <div
+        class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 justify-start bg-transparent"
+      >
+        <h4 class="font-bold text-sm">Actions</h4>
+
+        <div class="flex flex-col gap-2">
+          <app-button-primary
+            [buttonContent]="'Create Spot'"
+            (pressed)="onCreateSpot()"
+          ></app-button-primary>
+
+          <app-button-secondary
+            [buttonContent]="'Cancel'"
+            [size]="'SMALL'"
+            (pressed)="onCancel()"
+          ></app-button-secondary>
+        </div>
+
+        <div class="text-xs text-gray-500 dark:text-gray-400 pt-4 border-t border-(--primary-600)">
+          <p class="font-semibold mb-2">Required Fields:</p>
+          <ul class="list-disc pl-4 space-y-1">
+            <li>Slug, Names, Descriptions</li>
+            <li>Address</li>
+            <li>Latitude & Longitude</li>
+            <li>Category</li>
+            <li>3-5 Tags</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

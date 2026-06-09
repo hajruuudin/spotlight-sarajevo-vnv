@@ -1,0 +1,28 @@
+<div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+  <label 
+    *ngFor="let option of options"
+    (click)="toggleValue(option)"
+    [ngClass]="{ 'opacity-50 cursor-not-allowed': disabled, 'cursor-pointer': !disabled }"
+    class="flex p-2 rounded-2xl border-2 border-(--primary-400) bg-(--background-300) items-center space-x-3 group w-full"
+  >
+    <div 
+      [ngClass]="{
+        'border-(--accent-800) bg-blue-50': isSelected(option.value),
+        'border-(--primary-500) bg-(--primary-400)': !isSelected(option.value)
+      }"
+      class="relative flex items-center justify-center w-6 h-6 border-2 rounded-sm transition-all duration-200 group-hover:border-(--primary-800)"
+    >
+      <div 
+        [ngClass]="{ 'scale-100 opacity-100': isSelected(option.value), 'scale-0 opacity-0': !isSelected(option.value) }"
+        class="w-4 h-4 bg-(--accent-600) rounded-sm transition-transform duration-200 ease-out"
+      ></div>
+    </div>
+
+    <span 
+      [ngClass]="{ 'text-white font-bold': isSelected(option.value), 'text-gray-200 font-normal': !isSelected(option.value) }"
+      class="text-lg select-none"
+    >
+      {{ option.label }}
+    </span>
+  </label>
+</div>

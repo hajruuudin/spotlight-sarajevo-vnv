@@ -1,0 +1,379 @@
+<!-- WEB NAVBAR -->
+<nav
+  id="navbarUserMain"
+  [style]="
+    this.session.theme() == 'dark' ? 'box-shadow: 0px -5px 100px #00000055;' : ''
+  "
+  class="whitespace-nowrap hidden md:flex w-full h-14 dark:bg-(--background-200) bg-(--background-800) flex-row justify-between items-center"
+>
+  <div id="navIconContainer" class="w-1/6 flex flex-row justify-start items-center ml-4">
+    <img src="/assets/images/LogoSolo.png" class="h-14" />
+  </div>
+  <div id="navListContainer" class="w-4/6">
+    <ul class="grow flex flex-row justify-center items-center space-x-3">
+      <li class="relative group">
+        <span>
+          <app-discover-icon
+            classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+          ></app-discover-icon>
+        </span>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+        >
+          <span
+            routerLink="/discover"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-discover-icon classes="w-6"></app-discover-icon>
+            <a class="block text-center py-1">{{ 'navbar.discover' | transloco }}</a>
+          </span>
+        </div>
+      </li>
+      <li class="relative group">
+        <app-spots-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+        ></app-spots-icon>
+        <!-- SEARCH RELATED FUNCTIONS -->
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-48 transition-all duration-200"
+        >
+          <span
+            routerLink="/spots"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-spots-icon classes="w-6"></app-spots-icon>
+            <a class="block text-center py-1">{{ 'navbar.browseSpots' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/events"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-events-icon classes="w-6"></app-events-icon>
+            <a class="block text-center py-1">{{ 'navbar.browseEvents' | transloco }}</a>
+          </span>
+        </div>
+      </li>
+      <li class="relative group">
+        <span>
+          <app-homepage-icon
+            classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+          ></app-homepage-icon
+        ></span>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+        >
+          <span
+            routerLink="/homepage"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-homepage-icon classes="w-6"></app-homepage-icon>
+            <a class="block text-center py-1">{{ 'navbar.homepage' | transloco }}</a>
+          </span>
+        </div>
+      </li>
+      <li class="relative group">
+        <span>
+          <app-guides-icon
+            classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+          ></app-guides-icon
+        ></span>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+        >
+          <span
+            routerLink="/guide"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-guides-icon classes="w-6"></app-guides-icon>
+            <a class="block text-center py-1">{{ 'navbar.touristGuides' | transloco }}</a>
+          </span>
+        </div>
+      </li>
+      <li class="relative group">
+        <app-collection-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+        ></app-collection-icon>
+        <div
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-64 text-center transition-all duration-200"
+        >
+          <span
+            routerLink="/collections"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-collection-icon classes="w-6"></app-collection-icon>
+            <a class="block text-center py-1">{{ 'navbar.collections' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/requests"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-request-icon classes="w-6"></app-request-icon>
+            <a class="block text-center py-1">{{ 'navbar.communityRequests' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/transport"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-transport-icon classes="w-6"></app-transport-icon>
+            <a class="block text-center py-1">{{ 'navbar.publicTransport' | transloco }}</a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div id="navProfileContainer" class="w-1/6 flex flex-row justify-end items-center mr-4">
+    <div
+      class="w-auto h-10 rounded-full left-auto mr-4 dark:bg-(--primary-200) bg-(--primary-500) transition-all flex flex-row justify-center items-center"
+    >
+      <button
+        id="themer"
+        class="dark:bg-(--primary-300) bg-(--primary-600) text-dark w-auto h-full rounded-l-full flex justify-center items-center"
+        (click)="toggleTheme()"
+      >
+        <img
+          [src]="
+            this.session.theme() === 'dark'
+              ? '/assets/icons/DARK.svg'
+              : '/assets/icons/LIGHT.svg'
+          "
+          alt="Toggle Theme"
+          class="w-8 h-8 mx-2"
+        />
+      </button>
+
+      <button
+        id="language"
+        class="dark:bg-(--primary-300) bg-(--primary-600) text-dark w-auto h-full rounded-r-full flex justify-center items-center"
+        (click)="toggleLanguage()"
+      >
+        <img
+          [src]="
+            this.session.language() === 'en'
+              ? '/assets/icons/EN.svg'
+              : '/assets/icons/BA.svg'
+          "
+          class="w-8 h-8 mx-2"
+        />
+      </button>
+    </div>
+    @if (this.session.user()) {
+    <a routerLink="/profile"
+      ><app-profile-icon
+        classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
+      ></app-profile-icon
+    ></a>
+    } @else {
+    <app-button-primary
+      (click)="this.navigateToLogin()"
+      classAddons="px-4"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'Login'"
+    ></app-button-primary>
+    }
+  </div>
+</nav>
+
+<!-- RESPONSIVE MOBILE NAVBAR -->
+<nav
+  id="navbarUserMainMobile"
+  style="box-shadow: 0px -5px 100px #00000055"
+  class="md:hidden w-full h-16 dark:bg-(--background-200) bg-(--background-800) sticky top-0 flex flex-row justify-between items-center"
+>
+  <div id="navIconContainerMobile" class="w-1/5 flex flex-row justify-start items-center ml-2">
+    <img src="/assets/images/LogoSolo.png" class="h-14" />
+    @if (this.session.getUser() == null) {
+    <app-button-primary
+      (click)="this.navigateToLogin()"
+      classAddons="self-start w-full px-4"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'Login'"
+    ></app-button-primary>
+    }
+  </div>
+  <div id="navProfileContainerMobile" class="w-3/5 flex flex-row justify-end items-center">
+    <div
+      class="w-auto h-10 rounded-full left-auto dark:bg-(--primary-200) bg-(--primary-500) transition-all flex flex-row justify-center items-center"
+    >
+      <button
+        id="themer"
+        class="bg-(--primary-300) text-dark w-auto h-full rounded-l-full flex justify-center items-center px-2"
+        (click)="toggleTheme()"
+      >
+        <img
+          [src]="
+            this.session.theme() === 'dark'
+              ? '/assets/icons/DARK.svg'
+              : '/assets/icons/LIGHT.svg'
+          "
+          alt="Toggle Theme"
+          class="w-8 h-8 mx-2"
+        />
+      </button>
+
+      <button
+        id="language"
+        class="bg-(--primary-300) text-dark w-auto h-full rounded-r-full flex justify-center items-center px-2"
+        (click)="toggleLanguage()"
+      >
+        <img
+          [src]="
+            this.session.language() === 'en'
+              ? '/assets/icons/EN.svg'
+              : '/assets/icons/BA.svg'
+          "
+          class="w-10 h-8"
+        />
+      </button>
+    </div>
+  </div>
+  <a (click)="this.toggleMobileNavbar()"
+    ><app-hamburger-icon
+      classes="w-9 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-10 transition-all mr-2"
+    ></app-hamburger-icon
+  ></a>
+</nav>
+<!-- HAMBURGER ICON LOADABLE SECTION -->
+@if (isMobileNavbarLoaded) {
+<section
+  id="hamburgerLoadableSection"
+  class="md:hidden w-full flex flex-col justify-start items-start max-h-0 opacity-0 overflow-hidden transition-all duration-300 ease-out"
+  [class.max-h-screen]="this.isMobileNavbarOpen"
+  [class.opacity-100]="this.isMobileNavbarOpen"
+>
+  <ul class="w-full flex flex-col dark:bg-(--background-100) bg-(--background-900)">
+    <li
+      routerLink="/homepage"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) px-6 py-3 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-homepage-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-100"
+        ></app-homepage-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-normal text-xl">Homepage</span>
+    </li>
+    <li
+      class="hover:dark:bg-(--background-50) px-6 py-3 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-spots-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-100"
+        ></app-spots-icon
+      ></a>
+      <span class="font-normal text-xl">Browse</span>
+    </li>
+    <li
+      routerLink="/spots"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) pr-6 pl-12 py-2 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-spots-icon
+          classes="w-6 dark:text-white text-(--primary-100) opacity-100"
+        ></app-spots-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-light text-lg">Browse Spots</span>
+    </li>
+    <li
+      routerLink="/events"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) pr-6 pl-12 py-2 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-events-icon
+          classes="w-6 dark:text-white text-(--primary-100) opacity-100"
+        ></app-events-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-light text-lg">Browse Events</span>
+    </li>
+    <li
+      routerLink="/discover"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) px-6 py-3 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-discover-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-100"
+        ></app-discover-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-normal text-xl">Discover</span>
+    </li>
+    <li
+      routerLink="/guides"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) px-6 py-3 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-guides-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-100"
+        ></app-guides-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-normal text-xl">Tourist Guides</span>
+    </li>
+    <li
+      class="hover:dark:bg-(--background-50) px-6 py-3 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-collection-icon
+          classes="w-8 dark:text-white text-(--primary-100) opacity-100"
+        ></app-collection-icon
+      ></a>
+      <span class="font-normal text-xl">More Sections</span>
+    </li>
+    <li
+      routerLink="/collections"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) pr-6 pl-12 py-2 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-collection-icon
+          classes="w-6 dark:text-white text-(--primary-100) opacity-100"
+        ></app-collection-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-light text-lg">Your Collections</span>
+    </li>
+    <li
+      routerLink="/requests"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) pr-6 pl-12 py-2 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-request-icon
+          classes="w-6 dark:text-white text-(--primary-100) opacity-100"
+        ></app-request-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-light text-lg">Community Requests</span>
+    </li>
+    <li
+      routerLink="/transport"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) pr-6 pl-12 py-2 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-transport-icon
+          classes="w-6 dark:text-white text-(--primary-100) opacity-100"
+        ></app-transport-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-light text-lg">Public Transport</span>
+    </li>
+    @if (this.session.getUser() == null) {
+    <!-- Skip this segment -->
+    } @else {
+    <li
+      routerLink="/profile"
+      (click)="this.toggleMobileNavbar()"
+      class="hover:dark:bg-(--background-50) pr-6 pl-12 py-2 flex flex-row justify-start items-center space-x-4"
+    >
+      <a
+        ><app-profile-icon
+          classes="w-6 dark:text-white text-(--primary-100) opacity-100"
+        ></app-profile-icon
+      ></a>
+      <span routerLinkActive="font-bold" class="font-light text-lg">Your Profile</span>
+    </li>
+    }
+  </ul>
+</section>
+}

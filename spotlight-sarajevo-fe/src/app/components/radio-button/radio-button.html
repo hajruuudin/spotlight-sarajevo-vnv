@@ -1,0 +1,26 @@
+<label 
+  (click)="select()"
+  [ngClass]="{ 'opacity-50 cursor-not-allowed': disabled, 'cursor-pointer': !disabled }"
+  class="flex items-center space-x-3 group w-full"
+>
+  <div 
+    [ngClass]="{
+      'border-(--accent-800) bg-blue-50': selected,
+      'border-(--primary-500) bg-(--primary-400)': !selected,
+      
+    }"
+    class="relative flex items-center justify-center w-6 h-6 border-2 rounded-full transition-all duration-200 group-hover:border-(--primary-800)"
+  >
+    <div 
+      [ngClass]="{ 'scale-100 opacity-100': selected, 'scale-0 opacity-0': !selected }"
+      class="w-4 h-4 bg-(--accent-600) rounded-full transition-transform duration-200 ease-out"
+    ></div>
+  </div>
+
+  <span 
+    [ngClass]="{ 'text-white font-bold': selected, 'text-gray-200 font-normal': !selected }"
+    class="text-lg select-none"
+  >
+    {{ label }}
+  </span>
+</label>
