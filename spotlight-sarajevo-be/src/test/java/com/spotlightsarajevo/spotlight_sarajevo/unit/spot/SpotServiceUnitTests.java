@@ -134,7 +134,6 @@ public class SpotServiceUnitTests {
 
         assertNotNull(result);
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
-        Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
         assertNotNull(result.getBody());
         Assertions.assertEquals(1, result.getBody().getTotalElements());
         Assertions.assertEquals(model, result.getBody().getContent().get(0));
