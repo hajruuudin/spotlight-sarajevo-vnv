@@ -1,4 +1,4 @@
-package com.spotlightsarajevo.spotlight_sarajevo.unit.tag;
+package com.spotlightsarajevo.spotlight_sarajevo.unit;
 
 import com.spotlightsarajevo.modules.tag.api.dto.TagModel;
 import com.spotlightsarajevo.modules.tag.domain.TagDAO;

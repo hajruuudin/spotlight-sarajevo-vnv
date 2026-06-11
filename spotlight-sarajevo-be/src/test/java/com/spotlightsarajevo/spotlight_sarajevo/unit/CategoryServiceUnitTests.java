@@ -1,4 +1,4 @@
-package com.spotlightsarajevo.spotlight_sarajevo.unit.category;
+package com.spotlightsarajevo.spotlight_sarajevo.unit;
 
 import com.spotlightsarajevo.modules.category.api.dto.EventCategoryModel;
 import com.spotlightsarajevo.modules.category.api.dto.SpotCategoryModel;

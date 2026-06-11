@@ -1,6 +1,5 @@
-package com.spotlightsarajevo.spotlight_sarajevo.unit.transport;
+package com.spotlightsarajevo.spotlight_sarajevo.unit;
 
-import com.spotlightsarajevo.common.enums.ExceptionCodes;
 import com.spotlightsarajevo.common.exceptions.TransportExceptions;
 import com.spotlightsarajevo.common.utils.CommonFunctions;
 import com.spotlightsarajevo.modules.auth.domain.entity.UserEntity;

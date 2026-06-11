@@ -1,8 +1,7 @@
-package com.spotlightsarajevo.spotlight_sarajevo.unit.event;
+package com.spotlightsarajevo.spotlight_sarajevo.unit;
 
 import com.spotlightsarajevo.common.enums.ObjectType;
 import com.spotlightsarajevo.common.exceptions.EventExceptions;
-import com.spotlightsarajevo.common.specifications.EventSpecification;
 import com.spotlightsarajevo.common.utils.CommonFunctions;
 import com.spotlightsarajevo.modules.auth.domain.entity.UserEntity;
 import com.spotlightsarajevo.modules.event.api.dto.*;
@@ -16,8 +15,6 @@ import com.spotlightsarajevo.modules.event.service.EventServiceImpl;
 import com.spotlightsarajevo.modules.event.utils.EventUtilities;
 import com.spotlightsarajevo.modules.media.api.dto.MediaStoreCreateModel;
 import com.spotlightsarajevo.modules.media.utils.MediaUtilities;
-import com.spotlightsarajevo.modules.spot.domain.entity.SpotEntity;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,8 +32,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.swing.text.html.parser.Entity;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 
@@ -45,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

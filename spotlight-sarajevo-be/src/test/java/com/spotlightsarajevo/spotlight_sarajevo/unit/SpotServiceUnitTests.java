@@ -1,4 +1,4 @@
-package com.spotlightsarajevo.spotlight_sarajevo.unit.spot;
+package com.spotlightsarajevo.spotlight_sarajevo.unit;
 
 import com.spotlightsarajevo.common.enums.ObjectType;
 import com.spotlightsarajevo.common.exceptions.EventExceptions;
